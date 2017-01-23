@@ -48,7 +48,7 @@ exports.updateJugador = function(req, res) {
 	Jugador.findById(req.params.id, function(err, jugador) {
 
 		if(err) return res.send(500, err.message);
-		if (!jugador) {return res.send(500, "Jugador not found");}
+		if (!jugador) {return res.send(404, "Jugador not found");}
 
 		jugador.nombre 				= req.body.nombre,
 		jugador.apellido			= req.body.apellido,
@@ -70,7 +70,7 @@ exports.updateJugador = function(req, res) {
 exports.deleteJugador = function(req, res) {
 	Jugador.findById(req.params.id, function(err, jugador) {
 		if(err) return res.send(500, err.message);
-		if (!jugador) {return res.send(500, "Jugador not found");}
+		if (!jugador) {return res.send(404, "Jugador not found");}
 		jugador.remove(function(err) {
 			if(err) return res.send(500, err.message);
       		res.status(200).jsonp("Successfully deleted");

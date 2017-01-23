@@ -31,11 +31,11 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-var models     = require('./models/jugador')(app, mongoose);
+var models   = require('./models/includingModels')(app, mongoose);
 
 // routes ======================================================================
 require('./config/routes.js')(express,app, passport); // load our routes and pass in our app and fully configured passport
-require('./config/jugadorRoutes')(express,app);
+// require('./config/jugadorRoutes')(express,app);
 
 // Start server
 app.listen(3000, function() {

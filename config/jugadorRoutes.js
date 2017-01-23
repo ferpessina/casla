@@ -1,4 +1,3 @@
-
 var JugadorCtrl = require('../controllers/jugadorController');
 
 module.exports = function(express,app) {
