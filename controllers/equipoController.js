@@ -56,17 +56,28 @@ exports.updateEquipo = function(req, res) {
 		Torneo.findById(req.body.torneo_actual, function(err, torneo) {
 			if(err) return res.send(500, err.message);
 			if (!torneo) {return res.send(404, "Torneo id not found");}
+
+			var antiguoTorneo = equipo.torneo_actual;		//guardo antiguo torneo
+			var isNuevoTorneo = antiguoTorneo != req.body.torneo_actual;
 			
 			equipo.nombre 				= req.body.nombre,
 			equipo.torneo_actual		= req.body.torneo_actual
 
 			equipo.save(function(err) {
 				if(err) return res.send(500, err.message);
-				torneo.equipos.push(equipo);
-				torneo.save(function(err) {
-					if(err) return res.send(500, err.message);
-		      		res.status(200).jsonp(equipo);
-				});
+				if(isNuevoTorneo){  //si cambio el equipo, debo sacarlo de anterior y agregarlo al nuevo
+					torneo.equipos.push(equipo);
+					torneo.save(function(err) {
+						if(err) return res.send(500, err.message);
+					});
+					Torneo.findById(antiguoTorneo, function(err, torneo_antiguo) {
+						torneo_antiguo.equipos.pop(equipo);
+						torneo_antiguo.save(function(err, torneo_antiguo) {
+							if(err) return res.send(500, err.message);
+						});
+					});
+				}
+				res.status(200).jsonp(equipo);
 			});
 		});
 	});

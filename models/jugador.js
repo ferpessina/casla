@@ -13,7 +13,8 @@ var jugadorSchema = new Schema({
   // apto_medico:  		{},
   email: 				      {type:String},
   capitan:            {type:Boolean},
-  subcapitan:         {type:Boolean}
+  subcapitan:         {type:Boolean},
+  equipo:             {type: Schema.Types.ObjectId, ref: 'Equipo'}
 });
 
 module.exports = mongoose.model('Jugador', jugadorSchema);

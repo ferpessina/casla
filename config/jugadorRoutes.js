@@ -5,8 +5,8 @@ module.exports = function(express,app) {
 	var jugadores = express.Router();
 
 	jugadores.route('/')
-	  .get(JugadorCtrl.findAllJugadores)
-	  .post(JugadorCtrl.addJugador);
+	  .get(JugadorCtrl.findAllJugadores) //SOLO PARA TEST, NO DEBERIA USARSE
+	  .post(JugadorCtrl.addJugador); 
 
 	jugadores.route('/:id')
 	  .get(JugadorCtrl.findById)

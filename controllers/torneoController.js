@@ -29,7 +29,8 @@ exports.addTorneo = function(req, res) {
 
 	var torneo = new Torneo({
 		nombre:    				req.body.nombre,
-		jugadores_por_equipo: 	req.body.jugadores_por_equipo
+		jugadores_por_equipo: 	req.body.jugadores_por_equipo,
+		activo: 				true //por defecto sera activo
 	});
 
 	torneo.save(function(err, torneo) {
@@ -46,7 +47,8 @@ exports.updateTorneo = function(req, res) {
 		if (!torneo) {return res.send(404, "Torneo not found");}
 
 		torneo.nombre 				= req.body.nombre,
-		torneo.jugadores_por_equipo	= req.body.jugadores_por_equipo
+		torneo.jugadores_por_equipo	= req.body.jugadores_por_equipo,
+		torneo.activo				= req.body.activo
 
 		torneo.save(function(err) {
 			if(err) return res.send(500, err.message);

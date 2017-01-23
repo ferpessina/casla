@@ -3,7 +3,8 @@ var mongoose = require('mongoose'),
 
 var torneoSchema = new Schema({  
   nombre: 				{ type: String},
-  jugadores_por_equipo:  	{ type: Number},
+  jugadores_por_equipo: { type: Number},
+  activo: 				{type: Boolean},
   equipos:[
       {type: Schema.Types.ObjectId, ref: 'Equipo'}
   ]
