@@ -1,0 +1,35 @@
+{
+  "name": "casla",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilanrosenfeld7/casla.git"
+  },
+  "author": "lancha-dante",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ilanrosenfeld7/casla/issues"
+  },
+  "dependencies": {
+     "connect-flash": "~0.1.1",
+     "cookie-parser": "~1.0.0",
+     "autoloader": "^2.1.0",
+     "bcrypt-nodejs": "latest",
+     "body-parser": "~1.0.0",
+     "mongoose": "~3.6.11",
+     "express": "^4.7.1",
+     "express-session": "~1.0.0",
+     "method-override": "^2.1.2",
+     "morgan": "~1.0.0",
+     "passport": "~0.1.17",
+     "passport-local": "~0.1.6",
+     "socket.io": "^1.7.2",
+     "ejs": "~0.8.5"
+  },
+  "homepage": "https://github.com/ilanrosenfeld7/casla#readme"
+}
