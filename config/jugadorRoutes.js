@@ -94,34 +94,31 @@ module.exports = function(express,app) {
 	 */
 	 jugadores.get('/:id', JugadorCtrl.findById);
 
+
 	 /**
 	 * @swagger
 	 * /jugador/{id}:
 	 *   put:
-	 *     tags: Jugador
+	 *     tags:
+	 *       - Jugador
 	 *     description: Updates a single jugador
-	 *     produces: application/json
-	 *     parameters: [
-	 *		 {
-	 *         name: id,
-	 *         description: Jugador's id,
-	 *         in: path,
-	 *         required: true,
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: id
+	 *         description: Jugador's id
+	 *         in: path
+	 *         required: true
 	 *         type: integer
-	 *       },
-	 *		 {
-	 *         name: jugador,
-	 *         in: body,
-	 *         description: Fields for the Jugador resource,
-	 *         schema: {
-	 *           type: array,
+	 *       - name: jugador
+	 *         description: New fields for the Jugador resource
+	 *         in: body
+	 *         required: true
+	 *         schema:
 	 *           $ref: '#/definitions/Jugador'
-	 *		   }
-	 *	     }
-	 *	   ]
 	 *     responses:
 	 *       200:
-	 *         description: Successfully updated
+	 *         description: Successfully created
 	 */
 	 jugadores.put('/:id', JugadorCtrl.updateJugador);
 
