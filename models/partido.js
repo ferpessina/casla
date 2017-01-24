@@ -17,7 +17,9 @@ var partidoSchema = new Schema({
   ],
   cambios:[
       {type: Schema.Types.ObjectId, ref: 'Cambio'}
-  ]
+  ],
+  referi:             {type: Schema.Types.ObjectId, ref: 'Referi'},
+  mejor_jugador:      {type: Schema.Types.ObjectId, ref: 'Jugador'}
 });
 
 module.exports = mongoose.model('Partido', partidoSchema);

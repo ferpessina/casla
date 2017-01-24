@@ -77,6 +77,25 @@ exports.addEquipo = function(req, res) {
 	});
 };
 
+//PUT - Agrega una cancha al torneo
+exports.addCancha = function(req, res) {
+	Torneo.findById(req.params.id, function(err, torneo) {
+		if(err) return res.send(500, err.message);
+		if (!torneo) {return res.send(404, "Torneo not found");}
+
+		Cancha.findById(req.params.cancha, function(err, cancha) {
+			if(err) return res.send(500, err.message);
+			if (!cancha) {return res.send(404, "Cancha not found");}
+
+			torneo.canchas.push(cancha);
+			torneo.save(function(err) {
+				if(err) return res.send(500, err.message);
+	      		res.status(200).jsonp(cancha);
+			});
+		});
+	});
+};
+
 //DELETE - Delete a torneo with specified ID
 exports.deleteTorneo = function(req, res) {
 	Torneo.findById(req.params.id, function(err, torneo) {
