@@ -3,6 +3,7 @@ module.exports = function(express,app, passport) {
     require('./jugadorRoutes')(express,app);
     require('./torneoRoutes')(express,app);
     require('./equipoRoutes')(express,app);
+
 	// =====================================
     // HOME PAGE (with login links) ========
     // =====================================
