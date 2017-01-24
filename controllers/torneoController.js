@@ -59,23 +59,23 @@ exports.updateTorneo = function(req, res) {
 
 
 //PUT - Agrega un equipo al torneo
-exports.addEquipo = function(req, res) {
-	Torneo.findById(req.params.id, function(err, torneo) {
-		if(err) return res.send(500, err.message);
-		if (!torneo) {return res.send(404, "Torneo not found");}
+// exports.addEquipo = function(req, res) {
+// 	Torneo.findById(req.params.id, function(err, torneo) {
+// 		if(err) return res.send(500, err.message);
+// 		if (!torneo) {return res.send(404, "Torneo not found");}
 
-		Equipo.findById(req.params.equipo, function(err, equipo) {
-			if(err) return res.send(500, err.message);
-			if (!equipo) {return res.send(404, "Equipo not found");}
+// 		Equipo.findById(req.params.equipo, function(err, equipo) {
+// 			if(err) return res.send(500, err.message);
+// 			if (!equipo) {return res.send(404, "Equipo not found");}
 
-			torneo.equipos.push(equipo);
-			torneo.save(function(err) {
-				if(err) return res.send(500, err.message);
-	      		res.status(200).jsonp(torneo);
-			});
-		});
-	});
-};
+// 			torneo.equipos.push(equipo);
+// 			torneo.save(function(err) {
+// 				if(err) return res.send(500, err.message);
+// 	      		res.status(200).jsonp(torneo);
+// 			});
+// 		});
+// 	});
+// };
 
 //DELETE - Delete a torneo with specified ID
 exports.deleteTorneo = function(req, res) {
