@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Cancha = mongoose.model('Cancha');
 var Torneo  = mongoose.model('Torneo');
 
-//GET - Return all equipos in the DB
+//GET - Return all canchas in the DB
 exports.findAllCanchas = function(req, res) {
 	Cancha.find(function(err, canchas) {
     if(err) res.send(500, err.message);
@@ -12,7 +12,7 @@ exports.findAllCanchas = function(req, res) {
 	});
 };
 
-//GET - Return an equipo with specified ID
+//GET - Return an cancha with specified ID
 exports.findById = function(req, res) {
 	Cancha.findById(req.params.id, function(err, cancha) {
     if(err) return res.send(500, err.message);
@@ -22,7 +22,7 @@ exports.findById = function(req, res) {
 	});
 };
 
-//POST - Insert a new Equipo in the DB
+//POST - Insert a new cancha in the DB
 exports.addCancha = function(req, res) {
 	console.log('POST');
 	console.log(req.body);
