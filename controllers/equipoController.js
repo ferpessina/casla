@@ -18,7 +18,7 @@ exports.findById = function(req, res) {
     if(err) return res.send(500, err.message);
     if(!equipo) return res.send(404, "Equipo not found");
     console.log('GET /equipo/' + req.params.id);
-		res.status(200).jsonp(jugador);
+		res.status(200).jsonp(equipo);
 	});
 };
 

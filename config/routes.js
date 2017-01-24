@@ -7,7 +7,7 @@ module.exports = function(express,app, passport) {
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
-        res.render('index.ejs'); // load the index.ejs file
+        res.render('./ejs/index.ejs'); // load the index.ejs file
     });
 
     // =====================================
@@ -72,15 +72,15 @@ module.exports = function(express,app, passport) {
 
     //VIEWS
     app.get('/goleadores', function(req, res) {
-        res.render('goleadores.ejs'); // load the index.ejs file
+        res.render('./ejs/goleadores.ejs'); // load the index.ejs file
     });
 
     app.get('/sanciones', function(req, res) {
-        res.render('sanciones.ejs'); // load the index.ejs file
+        res.render('./ejs/sanciones.ejs'); // load the index.ejs file
     });
 
     app.get('/fairplay', function(req, res) {
-        res.render('fairplay.ejs'); // load the index.ejs file
+        res.render('./ejs/fairplay.ejs'); // load the index.ejs file
     });
 
 }
