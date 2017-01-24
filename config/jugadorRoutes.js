@@ -101,13 +101,24 @@ module.exports = function(express,app) {
 	 *     tags: Jugador
 	 *     description: Updates a single jugador
 	 *     produces: application/json
-	 *     parameters:
-	 *       name: jugador
-	 *       in: body
-	 *       description: Fields for the Jugador resource
-	 *       schema:
-	 *         type: array
-	 *         $ref: '#/definitions/Jugador'
+	 *     parameters: [
+	 *		 {
+	 *         name: id,
+	 *         description: Jugador's id,
+	 *         in: path,
+	 *         required: true,
+	 *         type: integer
+	 *       },
+	 *		 {
+	 *         name: jugador,
+	 *         in: body,
+	 *         description: Fields for the Jugador resource,
+	 *         schema: {
+	 *           type: array,
+	 *           $ref: '#/definitions/Jugador'
+	 *		   }
+	 *	     }
+	 *	   ]
 	 *     responses:
 	 *       200:
 	 *         description: Successfully updated
