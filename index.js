@@ -10,6 +10,8 @@ var express         = require("express"),
     bodyParser      = require('body-parser'),
     port            = process.env.PORT || 8080;
 
+var swagger = require('./config/swaggerConfig')(app);
+
 // Connection to DB
 mongoose.connect('mongodb://localhost/casla', function(err, res) {
   if(err) throw err;
