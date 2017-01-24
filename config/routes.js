@@ -3,11 +3,12 @@ module.exports = function(express,app, passport) {
     require('./jugadorRoutes')(express,app);
     require('./torneoRoutes')(express,app);
     require('./equipoRoutes')(express,app);
+    require('./canchaRoutes')(express,app);
 	// =====================================
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
-        res.render('./ejs/index.ejs'); // load the index.ejs file
+        res.render('index.ejs'); // load the index.ejs file
     });
 
     // =====================================
@@ -69,20 +70,6 @@ module.exports = function(express,app, passport) {
         failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
-
-    //VIEWS
-    app.get('/goleadores', function(req, res) {
-        res.render('./ejs/goleadores.ejs'); // load the index.ejs file
-    });
-
-    app.get('/sanciones', function(req, res) {
-        res.render('./ejs/sanciones.ejs'); // load the index.ejs file
-    });
-
-    app.get('/fairplay', function(req, res) {
-        res.render('./ejs/fairplay.ejs'); // load the index.ejs file
-    });
-
 }
 
 // route middleware to make sure a user is logged in

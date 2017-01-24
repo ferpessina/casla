@@ -7,6 +7,9 @@ var torneoSchema = new Schema({
   activo: 				{type: Boolean},
   equipos:[
       {type: Schema.Types.ObjectId, ref: 'Equipo'}
+  ],
+  canchas:[
+      {type: Schema.Types.ObjectId, ref: 'Cancha'}
   ]
 });
 
