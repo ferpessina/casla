@@ -69,6 +69,20 @@ module.exports = function(express,app, passport) {
         failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
+
+    //VIEWS
+    app.get('/goleadores', function(req, res) {
+        res.render('goleadores.ejs'); // load the index.ejs file
+    });
+
+    app.get('/sanciones', function(req, res) {
+        res.render('sanciones.ejs'); // load the index.ejs file
+    });
+
+    app.get('/fairplay', function(req, res) {
+        res.render('fairplay.ejs'); // load the index.ejs file
+    });
+
 }
 
 // route middleware to make sure a user is logged in

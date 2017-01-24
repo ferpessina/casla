@@ -20,14 +20,14 @@
       <!-- header -->
       <header class="header-main">
         <div class="header-lower clearfix">
-			<?php include ("menu.php");?>
+			<%- include menu.ejs %>
         </div>  
 </header>
 
        <!-- banner section -->
       <div class="innerbannerwrap">
         <div class="content"></div>
-        <div class="innerbannerfairplay">
+        <div class="innerbanner">
           <h2 class="bannerHeadline">Fair <span>Play</span></h2>
         </div>
       </div>
@@ -339,8 +339,7 @@
 
       <!-- footer -->
       <footer ><!--class="footer-type01"-->
-		<?php include ("footer.php");?>
-	
+	   <%- include footer.ejs %>
       </footer>
     </div>
     
