@@ -8,8 +8,10 @@ var express         = require("express"),
 	  cookieParser 	  = require('cookie-parser'),
 	  session      	  = require('express-session'),
     bodyParser      = require('body-parser'),
-    port            = process.env.PORT || 8080;
+    port            = process.env.PORT || 8080,
+    Client          = require('node-rest-client').Client;
 
+client = new Client();
 var swagger = require('./config/swaggerConfig')(app);
 
 // Connection to DB
@@ -38,7 +40,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 var models   = require('./models/includingModels')(app, mongoose);
 
 // routes ======================================================================
-require('./config/routes.js')(express,app, passport); // load our routes and pass in our app and fully configured passport
+require('./config/routes.js')(express,app, passport,client); // load our routes and pass in our app and fully configured passport
 // require('./config/jugadorRoutes')(express,app);
 
 // Start server

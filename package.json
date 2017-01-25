@@ -27,6 +27,7 @@
     "method-override": "^2.1.2",
     "mongoose": "~3.6.11",
     "morgan": "~1.0.0",
+    "node-rest-client": "^2.0.1",
     "passport": "~0.1.17",
     "passport-local": "~0.1.6",
     "passport-local-roles": "^1.0.1",
