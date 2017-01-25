@@ -1,4 +1,4 @@
-var EquipoCtrl = require('../controllers/equipoController');
+var EquipoCtrl = require('../services/equipoService');
 
 module.exports = function(express,app) {
 

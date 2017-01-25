@@ -1,4 +1,4 @@
-var TorneoCtrl = require('../controllers/torneoController');
+var TorneoCtrl = require('../services/torneoService');
 
 module.exports = function(express,app) {
 

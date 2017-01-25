@@ -1,4 +1,4 @@
-var UserCtrl = require('../controllers/userController');
+var UserCtrl = require('../services/userService');
 
 module.exports = function(express,app) {
 

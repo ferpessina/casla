@@ -1,9 +1,9 @@
 module.exports = function(express,app, passport, client, logger) {
 
-    require('./jugadorRoutes')(express,app);
-    require('./torneoRoutes')(express,app);
-    require('./equipoRoutes')(express,app);
-    require('./userRoutes')(express,app);
+    require('../RESTServices/jugadorRESTService')(express,app);
+    require('../RESTServices/torneoRESTService')(express,app);
+    require('../RESTServices/equipoRESTService')(express,app);
+    require('../RESTServices/userRESTService')(express,app);
 	// =====================================
     // HOME PAGE (with login links) ========
     // =====================================

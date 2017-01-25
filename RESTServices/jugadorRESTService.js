@@ -1,4 +1,4 @@
-var JugadorCtrl = require('../controllers/jugadorController');
+var JugadorCtrl = require('../services/jugadorService');
 
 module.exports = function(express,app) {
 	/**
