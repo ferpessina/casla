@@ -43,14 +43,14 @@ module.exports = function(express,app, passport, client, logger) {
 
     // process the signup form
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/admin', // redirect to the secure profile section
-        failureRedirect : '/admin', // redirect back to the signup page if there is an error
+        successRedirect : '/usuarios', // redirect to the secure profile section
+        failureRedirect : '/usuarios', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
 
     app.post('/signupadmin', passport.authenticate('local-signup-admin', {
-        successRedirect : '/admin', // redirect to the secure profile section
-        failureRedirect : '/admin', // redirect back to the signup page if there is an error
+        successRedirect : '/usuarios', // redirect to the secure profile section
+        failureRedirect : '/usuarios', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
 
@@ -63,24 +63,28 @@ module.exports = function(express,app, passport, client, logger) {
 
     //VIEWS
     app.get('/goleadores', function(req, res) {
-        res.render('./ejs/goleadores.ejs'); // load the index.ejs file
+        res.render('./ejs/goleadores.ejs',{user: req.user}); 
     });
 
     app.get('/sanciones', function(req, res) {
-        res.render('./ejs/sanciones.ejs'); // load the index.ejs file
+        res.render('./ejs/sanciones.ejs', {user: req.user}); 
     });
 
     app.get('/fairplay', function(req, res) {
-        res.render('./ejs/fairplay.ejs'); // load the index.ejs file
+        res.render('./ejs/fairplay.ejs', {user: req.user}); 
     });
 
     app.get('/delegado', isDelegado, function(req, res) {
-        res.render('./ejs/delegado.ejs'); // load the index.ejs file
+        res.render('./ejs/delegado.ejs', {user: req.user}); 
     });
 
-    app.get('/admin', isAdmin, function(req, res) {
+    app.get('/agregarUsuarios', isAdmin, function(req, res) {
+         res.render('./ejs/agregarUsuarios.ejs', {user: req.user, message: req.flash('loginMessage')}); 
+    });
+
+    app.get('/usuarios', isAdmin, function(req, res) {
         client.get("http://localhost:3000/user", function (data, response) {
-            res.render('./ejs/admin.ejs', { message: req.flash('signupMessage'), users: data });
+            res.render('./ejs/usuarios.ejs', { message: req.flash('signupMessage'), users: data, user: req.user, resultado: req.session.statusDelete});
         });  
     });
 
@@ -88,9 +92,8 @@ module.exports = function(express,app, passport, client, logger) {
         console.log(req.body.userid);
         client.delete("http://localhost:3000/user/"+req.body.userid, function (data, response) {
             console.log("DELETE /user/"+req.body.userid);
-            var mensaje = "El usuario no se pudo eliminar";
-            if(response.statusCode == 200) mensaje="El usuario ha sido eliminado con exito";
-            res.render('./ejs/resultadoEliminarUser.ejs', {resultado: mensaje});
+            req.session.statusDelete = response.statusCode;
+            res.redirect('/usuarios');
         });  
     });
 

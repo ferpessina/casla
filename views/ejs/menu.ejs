@@ -114,13 +114,16 @@
                                     <% } %>
                                     <% if ((user.role == "ADMIN") || (user.role =="SUPER_ADMIN")) { %>
                                         <li>
-                                      <a href="/admin">
-                                      Alta de usuarios
-                                      <span></span>
-                                      <span></span>
-                                      <span></span>
+                                      <a>Usuarios 
+                                      <span></span> 
+                                      <span></span> 
+                                      <span></span> 
                                       <span></span>
                                       </a>
+                                                  <ul class="sub-menu">
+                                    <li><a href="/usuarios">Administrar</a></li>
+                                    <li><a href="/agregarUsuarios">Agregar nuevos</a></li>
+                                    </ul>
                                     </li>
                                     <% } %>
                                     <% if ((user.role == "DELEGADO") || (user.role =="SUPER_ADMIN")) { %>
