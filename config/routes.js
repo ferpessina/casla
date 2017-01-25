@@ -3,11 +3,12 @@ module.exports = function(express,app, passport) {
     require('./jugadorRoutes')(express,app);
     require('./torneoRoutes')(express,app);
     require('./equipoRoutes')(express,app);
+    require('./userRoutes')(express,app);
 	// =====================================
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
-        res.render('./ejs/index.ejs'); // load the index.ejs file
+        res.render('./ejs/index.ejs', {user: req.user}); // load the index.ejs file
     });
 
     // =====================================
@@ -17,7 +18,7 @@ module.exports = function(express,app, passport) {
     app.get('/login', function(req, res) {
 
         // render the page and pass in any flash data if it exists
-        res.render('login.ejs', { message: req.flash('loginMessage') }); 
+        res.render('./ejs/login/login.ejs', { message: req.flash('loginMessage') }); 
     });
 
     // process the login form
@@ -30,7 +31,7 @@ module.exports = function(express,app, passport) {
     app.get('/signup', function(req, res) {
 
         // render the page and pass in any flash data if it exists
-        res.render('signup.ejs', { message: req.flash('signupMessage') });
+        res.render('./ejs/login/signup.ejs', { message: req.flash('signupMessage') });
     });
 
     // process the signup form
@@ -42,7 +43,7 @@ module.exports = function(express,app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs', {
+        res.render('./ejs/login/profile.ejs', {
             user : req.user // get the user out of session and pass to template
         });
     });
@@ -58,14 +59,14 @@ module.exports = function(express,app, passport) {
 
     // process the signup form
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/profile', // redirect to the secure profile section
+        successRedirect : '/', // redirect to the secure profile section
         failureRedirect : '/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
 
        // process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/profile', // redirect to the secure profile section
+        successRedirect : '/', // redirect to the secure profile section
         failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
@@ -83,13 +84,60 @@ module.exports = function(express,app, passport) {
         res.render('./ejs/fairplay.ejs'); // load the index.ejs file
     });
 
+    app.get('/delegado', isDelegado, function(req, res) {
+        res.render('./ejs/delegado.ejs'); // load the index.ejs file
+    });
+
+    app.get('/admin', isAdmin, function(req, res) {
+        res.render('./ejs/admin.ejs'); // load the index.ejs file
+    });
+
+    app.get('/superadmin', isSuperAdmin, function(req, res) {
+        res.render('./ejs/superadmin.ejs'); // load the index.ejs file
+    });
+
+    
+
 }
 
-// route middleware to make sure a user is logged in
+// route middleware to make sure a user is logged in (DELEGADO)
 function isLoggedIn(req, res, next) {
 
     // if user is authenticated in the session, carry on 
     if (req.isAuthenticated())
+        return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+}
+
+// route middleware to make sure a user is logged in (DELEGADO)
+function isDelegado(req, res, next) {
+
+    // if user is authenticated in the session, carry on 
+    if ((req.isAuthenticated()) && ( (req.user.role == "DELEGADO") || (req.user.role == "SUPER_ADMIN"))) 
+        return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+}
+
+// route middleware to make sure a user is ADMIN
+function isAdmin(req, res, next) {
+
+    // if user is authenticated in the session, carry on 
+    if ( (req.isAuthenticated()) && ( (req.user.role == "ADMIN") || (req.user.role == "SUPER_ADMIN"))) // SUPER_ADMIN can access everything
+        return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+}
+
+// route middleware to make sure a user is SUPER_ADMIN
+function isSuperAdmin(req, res, next) {
+
+    // if user is authenticated in the session, carry on 
+    if ( (req.isAuthenticated()) && (req.user.role == "SUPER_ADMIN"))
         return next();
 
     // if they aren't redirect them to the home page

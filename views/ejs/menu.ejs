@@ -99,6 +99,61 @@
                               <span></span>
                               </a>
                             </li>
+
+                            <% if (user) { %>
+                                    <% if (user.role == "SUPER_ADMIN") { %>
+                                      <li>
+                                      <a href="/superadmin">
+                                      Super Admin
+                                      <span></span>
+                                      <span></span>
+                                      <span></span>
+                                      <span></span>
+                                      </a>
+                                    </li>
+                                    <% } %>
+                                    <% if ((user.role == "ADMIN") || (user.role =="SUPER_ADMIN")) { %>
+                                        <li>
+                                      <a href="/admin">
+                                      Admin
+                                      <span></span>
+                                      <span></span>
+                                      <span></span>
+                                      <span></span>
+                                      </a>
+                                    </li>
+                                    <% } %>
+                                    <% if ((user.role == "DELEGADO") || (user.role =="SUPER_ADMIN")) { %>
+                                     <li>
+                                      <a href="/delegado">
+                                      Delegado
+                                      <span></span>
+                                      <span></span>
+                                      <span></span>
+                                      <span></span>
+                                      </a>
+                                    </li>
+                                    <% } %>
+                                  <li>
+                                    <a href="/logout">
+                                    Salir
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    </a>
+                                  </li>
+                            <% } else { %>
+                              <li>
+                                <a href="/login">
+                                Ingresar
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                </a>
+                              </li>
+                            <% } %>
                             <!-- <li>
                                <a>
                                error
