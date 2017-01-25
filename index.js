@@ -10,11 +10,18 @@ var express         = require("express"),
     bodyParser      = require('body-parser'),
     port            = process.env.PORT || 8080,
     Client          = require('node-rest-client').Client;
+    // paginate        = require('express-paginate');
 
 client = new Client();
 var swagger = require('./config/swaggerConfig')(app);
 
 var logger = require('./logger');
+
+// app.use(paginate.middleware(10, 50));
+// app.all(function(req,res,next){
+//   if(req.query.limit <= 10) req.query.limit=10;
+//   next();
+// });
 
 // Connection to DB
 mongoose.connect('mongodb://localhost/casla', function(err, res) {
@@ -47,6 +54,7 @@ require('./config/routes.js')(express,app, passport,client, logger); // load our
 
 // Start server
 app.listen(3000, function() {
+  console.log(process.version)
   logger.info("Node server running on port 3000");
   logger.debug('Debugging info');
 });

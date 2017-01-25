@@ -1,15 +1,38 @@
 var mongoose = require('mongoose');
 var User  = mongoose.model('User');
 var logger = require('../logger');
+var paginate = require('express-paginate');
 
 //GET - Return all users in the DB
-exports.findAllUsuarios = function(req, res) {
+exports.findAllUsuarios = function(req, res, next) {
 	User.find(function(err, users) {
     if(err) res.send(500, err.message);
 
     console.log('GET /user')
 		res.status(200).jsonp(users);
 	});
+
+	// User.paginate({}, { page: req.query.page, limit: req.query.limit }, function(err, users, pageCount, itemCount) {
+ //    	if (err) res.send(500, err.message);
+	//     res.format({
+	// 	      html: function() {
+	// 	        res.render('users', {
+	// 	          users: users,
+	// 	          pageCount: pageCount,
+	// 	          itemCount: itemCount,
+	// 	          pages: paginate.getArrayPages(req)(3, pageCount, req.query.page)
+	// 	        });
+	// 	      },
+	// 	      json: function() {
+	// 	        // inspired by Stripe's API response for list objects
+	// 	        res.json({
+	// 	          object: 'list',
+	// 	          has_more: paginate.hasNextPages(req)(pageCount),
+	// 	          data: users
+	// 	        });
+	// 	      }
+ //    	});
+	// });
 };
 
 //POST - Insert a new Torneo in the DB

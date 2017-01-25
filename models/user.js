@@ -2,7 +2,8 @@
 // load the things we need
 var mongoose = require('mongoose'),
     Schema   = mongoose.Schema,
-    bcrypt   = require('bcrypt-nodejs');
+    bcrypt   = require('bcrypt-nodejs'),
+    mongoosePaginate = require('mongoose-paginate');
 
 // define the schema for our user model
 var userSchema = new Schema({  
@@ -10,6 +11,7 @@ var userSchema = new Schema({
   password:     { type: String},
   role:         { type: String, enum:['SUPER_ADMIN','ADMIN','DELEGADO']}
 });
+userSchema.plugin(mongoosePaginate);
 
 // methods ======================
 // generating a hash
