@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User  = mongoose.model('User');
+var logger = require('../logger');
 
 //GET - Return all users in the DB
 exports.findAllUsuarios = function(req, res) {
@@ -39,6 +40,7 @@ exports.deleteUser = function(req, res) {
 		if (!user) {return res.send(404, "User not found");}
 		user.remove(function(err) {
 			if(err) return res.send(500, err.message);
+			logger.info("El usuario "+req.user.email+" ha eliminado al usuario "+req.body.userid);
       		res.status(200).jsonp("Successfully deleted");
 		})
 	});

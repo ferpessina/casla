@@ -2,7 +2,7 @@ var LocalStrategy   = require('passport-local').Strategy;
 
 var User            = require('../models/user');
 
-module.exports = function(passport) {
+module.exports = function(passport,logger) {
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
@@ -98,6 +98,7 @@ module.exports = function(passport) {
                 return done(null, false, req.flash('loginMessage', 'Oops! Contraseña incorrecta.')); // create the loginMessage and save it to session as flashdata
 
             // all is well, return successful user
+            logger.info(user.email+" acaba de ingresar al sistema.");
             return done(null, user);
         });
     }));
@@ -115,6 +116,7 @@ module.exports = function(passport) {
         newUser.save(function(err) {
             if (err)
                 throw err;
+            logger.info("Nuevo usuario "+role+" registrado: "+email);
             return newUser;
         });
     }

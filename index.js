@@ -14,13 +14,15 @@ var express         = require("express"),
 client = new Client();
 var swagger = require('./config/swaggerConfig')(app);
 
+var logger = require('./logger');
+
 // Connection to DB
 mongoose.connect('mongodb://localhost/casla', function(err, res) {
   if(err) throw err;
   console.log('Connected to Database');
 });
 
-require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport,logger); // pass passport for configuration
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -40,10 +42,11 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 var models   = require('./models/includingModels')(app, mongoose);
 
 // routes ======================================================================
-require('./config/routes.js')(express,app, passport,client); // load our routes and pass in our app and fully configured passport
+require('./config/routes.js')(express,app, passport,client, logger); // load our routes and pass in our app and fully configured passport
 // require('./config/jugadorRoutes')(express,app);
 
 // Start server
 app.listen(3000, function() {
-  console.log("Node server running on "+port);
+  logger.info("Node server running on port 3000");
+  logger.debug('Debugging info');
 });

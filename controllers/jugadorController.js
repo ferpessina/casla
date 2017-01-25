@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Jugador  = mongoose.model('Jugador');
 var Equipo   = mongoose.model('Equipo');
+var logger = require('../logger');
+
 //GET - Return all jugadores in the DB
 exports.findAllJugadores = function(req, res) {
 	Jugador.find(function(err, jugadores) {
@@ -44,9 +46,11 @@ exports.addJugador = function(req, res) {
 
 		jugador.save(function(err, jugador) {
 			if(err) return res.send(500, err.message);
+			logger.info(req.user+" ha agregado al jugador "+jugador._id+" de nombre "+jugador.apellido+", "+jugador.nombre+", equipo "+equipo._id);
 			equipo.jugadores.push(jugador);
 			equipo.save(function(err, equipo) {
 				if(err) return res.send(500, err.message);
+				logger.info("El equipo "+equipo.nombre+" ha agregado al jugador "+jugador.apellido+", "+jugador.nombre);
 	    		res.status(200).jsonp(jugador);
 	    	});
 		});
@@ -79,15 +83,18 @@ exports.updateJugador = function(req, res) {
 
 			jugador.save(function(err) {
 				if(err) return res.send(500, err.message);
+					logger.info(req.user+" ha actualizado al jugador "+jugador._id);
 				if(isNuevoEquipo){  //si cambio el equipo, debo sacarlo de anterior y agregarlo al nuevo
 					equipo.jugadores.push(jugador);
 					equipo.save(function(err, equipo) {
 						if(err) return res.send(500, err.message);
+						logger.info("El equipo "+equipo.nombre+" ha agregado al jugador "+jugador.apellido+", "+jugador.nombre);
 					});
 					Equipo.findById(antiguoEquipo, function(err, equipo_antiguo) {
 						equipo_antiguo.jugadores.pop(jugador);
 						equipo_antiguo.save(function(err, equipo_antiguo) {
 							if(err) return res.send(500, err.message);
+							logger.info("El equipo "+equipo.equipo_antiguo+" ha quitado al jugador "+jugador.apellido+", "+jugador.nombre);
 						});
 					});
 				}
@@ -104,6 +111,7 @@ exports.deleteJugador = function(req, res) {
 		if (!jugador) {return res.send(404, "Jugador not found");}
 		jugador.remove(function(err) {
 			if(err) return res.send(500, err.message);
+			logger.info(req.user+" ha borrado al jugador "+jugador.apellido+", "+jugador.nombre+" de id: "+equipo._id);
       		res.status(200).jsonp("Successfully deleted");
 		})
 	});

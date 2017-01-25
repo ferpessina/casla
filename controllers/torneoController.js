@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Torneo  = mongoose.model('Torneo');
 var Equipo = mongoose.model('Equipo');
+var logger = require('../logger');
 
 //GET - Return all torneos in the DB
 exports.findAllTorneos = function(req, res) {
@@ -35,6 +36,7 @@ exports.addTorneo = function(req, res) {
 
 	torneo.save(function(err, torneo) {
 		if(err) return res.send(500, err.message);
+		logger.info(req.user+" ha agregado un nuevo torneo: "+torneo.nombre+". Jugadores por equipo: "+torneo.jugadores_por_equipo);
     	res.status(200).jsonp(torneo);
 	});
 };
@@ -52,6 +54,7 @@ exports.updateTorneo = function(req, res) {
 
 		torneo.save(function(err) {
 			if(err) return res.send(500, err.message);
+			logger.info(req.user+" ha actualizado el torneo "+torneo._id+". Nombre: "+torneo.nombre+". Jugadores por equipo: "+torneo.jugadores_por_equipo+". Activo: "+torneo.activo);
       		res.status(200).jsonp(torneo);
 		});
 	});
@@ -84,6 +87,7 @@ exports.deleteTorneo = function(req, res) {
 		if (!torneo) {return res.send(404, "Torneo not found");}
 		torneo.remove(function(err) {
 			if(err) return res.send(500, err.message);
+			logger.info(req.user+" ha borrado al torneo "+torneo._id+" de nombre "+torneo.nombre);
       		res.status(200).jsonp("Successfully deleted");
 		})
 	});

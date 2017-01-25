@@ -4,7 +4,7 @@ module.exports = function(express,app) {
 	/**
 	 * @swagger
 	 * definition:
-	 *   Jugador:
+	 *   JugadorModel:
 	 *     properties:
 	 *       nombre:
 	 *         type: string
@@ -27,7 +27,7 @@ module.exports = function(express,app) {
 	 *       subcapitan:
 	 *         type: boolean
 	 *       equipo:
-	 *         $ref: Equipo
+	 *         type: string
 	*/
 
 	var jugadores = express.Router();
@@ -37,7 +37,7 @@ module.exports = function(express,app) {
 	 * /jugador:
 	 *   get:
 	 *     tags:
-	 *       - Jugador
+	 *       - JugadorModel
 	 *     description: Returns all jugadores
 	 *     produces:
 	 *       - application/json
@@ -45,7 +45,7 @@ module.exports = function(express,app) {
 	 *       200:
 	 *         description: An array of jugadores
 	 *         schema:
-	 *           $ref: '#/definitions/Jugador'
+	 *           $ref: '#/definitions/JugadorModel'
 	 */
 	 jugadores.get('/', JugadorCtrl.findAllJugadores);
 
@@ -54,7 +54,7 @@ module.exports = function(express,app) {
 	 * /jugador:
 	 *   post:
 	 *     tags:
-	 *       - Jugador
+	 *       - JugadorModel
 	 *     description: Creates a new jugador
 	 *     produces:
 	 *       - application/json
@@ -64,7 +64,7 @@ module.exports = function(express,app) {
 	 *         in: body
 	 *         required: true
 	 *         schema:
-	 *           $ref: '#/definitions/Jugador'
+	 *           $ref: '#/definitions/JugadorModel'
 	 *     responses:
 	 *       200:
 	 *         description: Successfully created
@@ -76,7 +76,7 @@ module.exports = function(express,app) {
 	 * /jugador/{id}:
 	 *   get:
 	 *     tags:
-	 *       - Jugador
+	 *       - JugadorModel
 	 *     description: Returns a single jugador
 	 *     produces:
 	 *       - application/json
@@ -90,7 +90,7 @@ module.exports = function(express,app) {
 	 *       200:
 	 *         description: A single jugador
 	 *         schema:
-	 *           $ref: '#/definitions/Jugador'
+	 *           $ref: '#/definitions/JugadorModel'
 	 */
 	 jugadores.get('/:id', JugadorCtrl.findById);
 
@@ -100,7 +100,7 @@ module.exports = function(express,app) {
 	 * /jugador/{id}:
 	 *   put:
 	 *     tags:
-	 *       - Jugador
+	 *       - JugadorModel
 	 *     description: Updates a single jugador
 	 *     produces:
 	 *       - application/json
@@ -115,7 +115,7 @@ module.exports = function(express,app) {
 	 *         in: body
 	 *         required: true
 	 *         schema:
-	 *           $ref: '#/definitions/Jugador'
+	 *           $ref: '#/definitions/JugadorModel'
 	 *     responses:
 	 *       200:
 	 *         description: Successfully created
@@ -127,7 +127,7 @@ module.exports = function(express,app) {
 	 * /jugador/{id}:
 	 *   delete:
 	 *     tags:
-	 *       - Jugador
+	 *       - JugadorModel
 	 *     description: Deletes a single jugador
 	 *     produces:
 	 *       - application/json

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Equipo  = mongoose.model('Equipo');
 var Torneo  = mongoose.model('Torneo');
+var logger = require('../logger');
 
 //GET - Return all equipos in the DB
 exports.findAllEquipos = function(req, res) {
@@ -36,9 +37,11 @@ exports.addEquipo = function(req, res) {
 		});
 		equipo.save(function(err, equipo) {
 			if(err) return res.send(500, err.message);
+			logger.info(req.user+" ha agregado un nuevo equipo para el torneo "+equipo.torneo_actual+": "+equipo.nombre);
 			torneo.equipos.push(equipo);
 			torneo.save(function(err) {
 				if(err) return res.send(500, err.message);
+				logger.info(req.user+" ha agregado al torneo "+torneo.nombre+" un nuevo equipo: "+equipo.nombre);
 		      	res.status(200).jsonp(equipo);
 			});
 		});
@@ -65,13 +68,16 @@ exports.updateEquipo = function(req, res) {
 
 			equipo.save(function(err) {
 				if(err) return res.send(500, err.message);
+				logger.info(req.user+" ha actualizado al equipo "+equipo._id+". Nombre: "+equipo.nombre+". Torneo actual: "+equipo.torneo_actual);
 				if(isNuevoTorneo){  //si cambio el equipo, debo sacarlo de anterior y agregarlo al nuevo
 					torneo.equipos.push(equipo);
+					logger.info(req.user+" ha agregado al torneo "+torneo.nombre+" un nuevo equipo: "+equipo.nombre);
 					torneo.save(function(err) {
 						if(err) return res.send(500, err.message);
 					});
 					Torneo.findById(antiguoTorneo, function(err, torneo_antiguo) {
 						torneo_antiguo.equipos.pop(equipo);
+						logger.info(req.user+" ha sacado del torneo "+torneo_antiguo.nombre+" al equipo: "+equipo.nombre);
 						torneo_antiguo.save(function(err, torneo_antiguo) {
 							if(err) return res.send(500, err.message);
 						});
@@ -90,6 +96,7 @@ exports.deleteEquipo = function(req, res) {
 		if (!equipo) {return res.send(404, "Equipo not found");}
 		equipo.remove(function(err) {
 			if(err) return res.send(500, err.message);
+			logger.info(req.user+" ha borrado al equipo "+equipo.nombre+" de id: "+equipo._id);
       		res.status(200).jsonp("Successfully deleted");
 		})
 	});

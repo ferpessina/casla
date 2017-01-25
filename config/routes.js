@@ -1,4 +1,4 @@
-module.exports = function(express,app, passport, client) {
+module.exports = function(express,app, passport, client, logger) {
 
     require('./jugadorRoutes')(express,app);
     require('./torneoRoutes')(express,app);
@@ -80,7 +80,6 @@ module.exports = function(express,app, passport, client) {
 
     app.get('/admin', isAdmin, function(req, res) {
         client.get("http://localhost:3000/user", function (data, response) {
-            console.log("GET /user");
             res.render('./ejs/admin.ejs', { message: req.flash('signupMessage'), users: data });
         });  
     });
