@@ -111,7 +111,7 @@ exports.deleteJugador = function(req, res) {
 		if (!jugador) {return res.send(404, "Jugador not found");}
 		jugador.remove(function(err) {
 			if(err) return res.send(500, err.message);
-			logger.info(req.user+" ha borrado al jugador "+jugador.apellido+", "+jugador.nombre+" de id: "+equipo._id);
+			logger.info(req.user+" ha borrado al jugador "+jugador.apellido+", "+jugador.nombre+" de id: "+jugador._id);
       		res.status(200).jsonp("Successfully deleted");
 		})
 	});

@@ -2,7 +2,6 @@ var mongoose = require('mongoose'),
     Schema   = mongoose.Schema;
 
 var jugadorSchema = new Schema({  
-  // imagen: 				{ data: Buffer, contentType: String},
   nombre:    			    { type: String },
   apellido:     		  { type: String },
   apodo:     			    { type: String },
@@ -10,11 +9,12 @@ var jugadorSchema = new Schema({
   dni: 					      {type:Number},
   posicion: 			    {type:String},
   numero: 				    {type:Number},
-  // apto_medico:  		{},
   email: 				      {type:String},
   capitan:            {type:Boolean},
   subcapitan:         {type:Boolean},
   equipo:             {type: Schema.Types.ObjectId, ref: 'Equipo'}
+  // imagen: 				{ data: Buffer, contentType: String},
+  // apto_medico:  		{},
 });
 
 module.exports = mongoose.model('Jugador', jugadorSchema);

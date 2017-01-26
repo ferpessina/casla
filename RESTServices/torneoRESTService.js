@@ -13,10 +13,11 @@ module.exports = function(express,app) {
 	 *         type: integer
 	 *       activo:
 	 *         type: boolean
-	 *		 equipos:
+	 *       canchas:
+	 *         $ref: Cancha
+	 *       equipos:
 	 *         $ref: Equipo
 	*/
-	
 	var torneos = express.Router();
 
 
@@ -83,6 +84,29 @@ module.exports = function(express,app) {
 	 */
 	 torneos.get('/:id', TorneoCtrl.findById);
 
+	/**
+	 * @swagger
+	 * /torneo/{id}/canchas:
+	 *   get:
+	 *     tags:
+	 *       - Torneo
+	 *     description: Returns all canchas from torneo'id
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: id
+	 *         description: Torneo's id
+	 *         in: path
+	 *         required: true
+	 *         type: integer
+	 *     responses:
+	 *       200:
+	 *         description: A single torneo
+	 *         schema:
+	 *           $ref: '#/definitions/Torneo'
+	 */
+	 torneos.get('/:id/canchas', TorneoCtrl.findAllCanchas);
+
 
 	 /**
 	 * @swagger
@@ -107,7 +131,7 @@ module.exports = function(express,app) {
 	 *           $ref: '#/definitions/Torneo'
 	 *     responses:
 	 *       200:
-	 *         description: Successfully created
+	 *         description: Successfully updated
 	 */
 	 torneos.put('/:id', TorneoCtrl.updateTorneo);
 
@@ -132,7 +156,32 @@ module.exports = function(express,app) {
 	 */
 	torneos.delete('/:id', TorneoCtrl.deleteTorneo);
 
-	// torneos.put('/:id/:equipo', TorneoCtrl.addEquipo);
+	/**
+	 * @swagger
+	 * /torneo/{id}/{equipo}:
+	 *   put:
+	 *     tags:
+	 *       - Torneo
+	 *     description: Update equipos from this torneo
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: id
+	 *         description: Torneo's id
+	 *         in: path
+	 *         required: true
+	 *         type: integer
+	 *       - name: equipo
+	 *         description: Equipo id 
+	 *         in: body
+	 *         required: true
+	 *         schema:
+	 *           $ref: '#/definitions/Torneo'
+	 *     responses:
+	 *       200:
+	 *         description: Successfully updated
+	 */
+	torneos.put('/:id/:equipo', TorneoCtrl.addEquipo);
 
 
 	app.use('/torneo', torneos);

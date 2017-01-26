@@ -15,7 +15,7 @@ var options = {
   // import swaggerDefinitions
   swaggerDefinition: swaggerDefinition,
   // path to the API docs
-  apis: ['./config/*.js'],
+  apis: ['./RESTServices/*.js'],
 };
 
 // initialize swagger-jsdoc

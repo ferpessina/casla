@@ -7,7 +7,14 @@ var torneoSchema = new Schema({
   activo: 				{type: Boolean},
   equipos:[
       {type: Schema.Types.ObjectId, ref: 'Equipo'}
+  ],
+  canchas:[
+      {type: Schema.Types.ObjectId, ref: 'Cancha'}
   ]
+  //divisiones:[
+  //    {type: Schema.Types.ObjectId, ref: 'Division'}
+  //],
+  
 });
 
 module.exports = mongoose.model('Torneo', torneoSchema);

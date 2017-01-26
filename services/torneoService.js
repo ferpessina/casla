@@ -5,7 +5,7 @@ var logger = require('../logger');
 
 //GET - Return all torneos in the DB
 exports.findAllTorneos = function(req, res) {
-	Torneo.find(function(err, torneos) {
+	Torneo.find({"activo":true}, function(err, torneos) {
     if(err) res.send(500, err.message);
 
     console.log('GET /torneo')
@@ -20,6 +20,16 @@ exports.findById = function(req, res) {
     if(!torneo) return res.send(404, "Torneo not found");
     console.log('GET /torneo/' + req.params.id);
 		res.status(200).jsonp(torneo);
+	});
+};
+
+//GET - Return a Torneo with specified ID
+exports.findAllCanchas = function(req, res) {
+	Torneo.findById(req.params.id, function(err, torneo) {
+    if(err) return res.send(500, err.message);
+    if(!torneo) return res.send(404, "Torneo not found");
+    console.log('GET /torneo/canchas' + req.params.id);
+		res.status(200).jsonp(torneo.canchas);
 	});
 };
 
@@ -62,35 +72,37 @@ exports.updateTorneo = function(req, res) {
 
 
 //PUT - Agrega un equipo al torneo
-// exports.addEquipo = function(req, res) {
-// 	Torneo.findById(req.params.id, function(err, torneo) {
-// 		if(err) return res.send(500, err.message);
-// 		if (!torneo) {return res.send(404, "Torneo not found");}
+exports.addEquipo = function(req, res) {
+	Torneo.findById(req.params.id, function(err, torneo) {
+		if(err) return res.send(500, err.message);
+		if (!torneo) {return res.send(404, "Torneo not found");}
 
-// 		Equipo.findById(req.params.equipo, function(err, equipo) {
-// 			if(err) return res.send(500, err.message);
-// 			if (!equipo) {return res.send(404, "Equipo not found");}
+		Equipo.findById(req.params.equipo, function(err, equipo) {
+			if(err) return res.send(500, err.message);
+			if (!equipo) {return res.send(404, "Equipo not found");}
 
-// 			torneo.equipos.push(equipo);
-// 			torneo.save(function(err) {
-// 				if(err) return res.send(500, err.message);
-// 	      		res.status(200).jsonp(torneo);
-// 			});
-// 		});
-// 	});
-// };
+			torneo.equipos.push(equipo);
+			torneo.save(function(err) {
+				if(err) return res.send(500, err.message);
+				logger.info(req.user+" ha agregado el equipo "+equipo._id+". Nombre: "+equipo.nombre);
+	      		res.status(200).jsonp(torneo);
+			});
+		});
+	});
+};
 
-//DELETE - Delete a torneo with specified ID
+//DELETE - This method executes a logic delete. This is done this way to avoid deleting in cascade
 exports.deleteTorneo = function(req, res) {
 	Torneo.findById(req.params.id, function(err, torneo) {
 		if(err) return res.send(500, err.message);
 		if (!torneo) {return res.send(404, "Torneo not found");}
-		torneo.remove(function(err) {
+		torneo.activo = false;
+		torneo.save(function(err) {
 			if(err) return res.send(500, err.message);
-			logger.info(req.user+" ha borrado al torneo "+torneo._id+" de nombre "+torneo.nombre);
+			logger.info(req.user+" ha actualizado el torneo "+torneo._id+". Nombre: "+torneo.nombre+". Jugadores por equipo: "+torneo.jugadores_por_equipo+". Activo: "+torneo.activo);
       		res.status(200).jsonp("Successfully deleted");
-		})
-	});
+		});
+	})
 };
 
 // EXAMPLE POST:
