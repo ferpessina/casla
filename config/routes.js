@@ -5,6 +5,7 @@ module.exports = function(express,app, passport, client, logger) {
     require('../RESTServices/equipoRESTService')(express,app);
     require('../RESTServices/userRESTService')(express,app);
     require('../RESTServices/canchaRESTService')(express,app);
+    require('../RESTServices/divisionRESTService')(express,app);
 	// =====================================
     // HOME PAGE (with login links) ========
     // =====================================

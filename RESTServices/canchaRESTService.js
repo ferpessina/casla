@@ -5,7 +5,7 @@ module.exports = function(express,app) {
 	/**
 	 * @swagger
 	 * definition:
-	 *   Cancha:
+	 *   CanchaModel:
 	 *     properties:
 	 *       nombre:
 	 *         type: string
@@ -19,7 +19,7 @@ module.exports = function(express,app) {
 	 * /cancha:
 	 *   get:
 	 *     tags:
-	 *       - Cancha
+	 *       - CanchaModel
 	 *     description: Returns all canchas
 	 *     produces:
 	 *       - application/json
@@ -27,7 +27,7 @@ module.exports = function(express,app) {
 	 *       200:
 	 *         description: An array of canchas
 	 *         schema:
-	 *           $ref: '#/definitions/Cancha'
+	 *           $ref: '#/definitions/CanchaModel'
 	 */
 	canchas.get('/', CanchaRESTService.findAllCanchas);
 
@@ -36,7 +36,7 @@ module.exports = function(express,app) {
 	 * /cancha:
 	 *   post:
 	 *     tags:
-	 *       - Cancha
+	 *       - CanchaModel
 	 *     description: Creates a new cancha
 	 *     produces:
 	 *       - application/json
@@ -46,7 +46,7 @@ module.exports = function(express,app) {
 	 *         in: body
 	 *         required: true
 	 *         schema:
-	 *           $ref: '#/definitions/Cancha'
+	 *           $ref: '#/definitions/CanchaModel'
 	 *     responses:
 	 *       200:
 	 *         description: Successfully created
@@ -58,7 +58,7 @@ module.exports = function(express,app) {
 	 * /cancha/{id}:
 	 *   get:
 	 *     tags:
-	 *       - Cancha
+	 *       - CanchaModel
 	 *     description: Returns a single cancha
 	 *     produces:
 	 *       - application/json
@@ -72,7 +72,7 @@ module.exports = function(express,app) {
 	 *       200:
 	 *         description: A single cancha
 	 *         schema:
-	 *           $ref: '#/definitions/Cancha'
+	 *           $ref: '#/definitions/CanchaModel'
 	 */
 	canchas.get('/:id', CanchaRESTService.findById);
 
@@ -81,7 +81,7 @@ module.exports = function(express,app) {
 	 * /cancha/{id}:
 	 *   put:
 	 *     tags:
-	 *       - Cancha
+	 *       - CanchaModel
 	 *     description: Updates a single cancha
 	 *     produces:
 	 *       - application/json
@@ -96,7 +96,7 @@ module.exports = function(express,app) {
 	 *         in: body
 	 *         required: true
 	 *         schema:
-	 *           $ref: '#/definitions/Cancha'
+	 *           $ref: '#/definitions/CanchaModel'
 	 *     responses:
 	 *       200:
 	 *         description: Successfully updated
@@ -108,7 +108,7 @@ module.exports = function(express,app) {
 	 * /cancha/{id}:
 	 *   delete:
 	 *     tags:
-	 *       - Cancha
+	 *       - CanchaModel
 	 *     description: Deletes a single cancha
 	 *     produces:
 	 *       - application/json

@@ -5,18 +5,16 @@ module.exports = function(express,app) {
 	/**
 	 * @swagger
 	 * definition:
-	 *   Torneo:
+	 *   EquipoModel:
 	 *     properties:
+	 *       logo:
+	 *         type: string
 	 *       nombre:
 	 *         type: string
-	 *       jugadores_por_equipo:
-	 *         type: integer
-	 *       activo:
-	 *         type: boolean
-	 *       canchas:
-	 *         $ref: Cancha
-	 *       equipos:
-	 *         $ref: Equipo
+	 *       torneo_actual:
+	 *         type: string
+	 *       jugadores:
+	 *         $ref: Jugador
 	*/
 	var equipos = express.Router();
 
@@ -25,7 +23,7 @@ module.exports = function(express,app) {
 	 * /equipo:
 	 *   get:
 	 *     tags:
-	 *       - Equipo
+	 *       - EquipoModel
 	 *     description: Returns all equipos
 	 *     produces:
 	 *       - application/json
@@ -33,7 +31,13 @@ module.exports = function(express,app) {
 	 *       200:
 	 *         description: An array of equipos
 	 *         schema:
-	 *           $ref: '#/definitions/Equipo'
+	 *           {
+  	 *				"logo": "string",
+  	 *				"nombre": "string",
+  	 *				"torneo_actual": "string",
+  	 *				"division": "string",
+  	 *				"jugadores": {},
+  	 *			 }
 	 */
 	equipos.get('/', EquipoCtrl.findAllEquipos);
 
@@ -43,7 +47,7 @@ module.exports = function(express,app) {
 	 * /equipo:
 	 *   post:
 	 *     tags:
-	 *       - Equipo
+	 *       - EquipoModel
 	 *     description: Creates a new equipo
 	 *     produces:
 	 *       - application/json
@@ -53,7 +57,7 @@ module.exports = function(express,app) {
 	 *         in: body
 	 *         required: true
 	 *         schema:
-	 *           $ref: '#/definitions/Equipo'
+	 *           $ref: '#/definitions/EquipoModel'
 	 *     responses:
 	 *       200:
 	 *         description: Successfully created
@@ -65,7 +69,7 @@ module.exports = function(express,app) {
 	 * /equipo/{id}:
 	 *   get:
 	 *     tags:
-	 *       - Equipo
+	 *       - EquipoModel
 	 *     description: Returns a single equipo
 	 *     produces:
 	 *       - application/json
@@ -79,7 +83,7 @@ module.exports = function(express,app) {
 	 *       200:
 	 *         description: A single equipo
 	 *         schema:
-	 *           $ref: '#/definitions/Equipo'
+	 *           $ref: '#/definitions/EquipoModel'
 	 */
 	 equipos.get('/:id', EquipoCtrl.findById);
 
@@ -89,7 +93,7 @@ module.exports = function(express,app) {
 	 * /equipo/{id}:
 	 *   put:
 	 *     tags:
-	 *       - Equipo
+	 *       - EquipoModel
 	 *     description: Updates a single equipo
 	 *     produces:
 	 *       - application/json
@@ -104,7 +108,7 @@ module.exports = function(express,app) {
 	 *         in: body
 	 *         required: true
 	 *         schema:
-	 *           $ref: '#/definitions/Equipo'
+	 *           $ref: '#/definitions/EquipoModel'
 	 *     responses:
 	 *       200:
 	 *         description: Successfully created
@@ -116,7 +120,7 @@ module.exports = function(express,app) {
 	 * /equipo/{id}:
 	 *   delete:
 	 *     tags:
-	 *       - Equipo
+	 *       - EquipoModel
 	 *     description: Deletes a single equipo
 	 *     produces:
 	 *       - application/json

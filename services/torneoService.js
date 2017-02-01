@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Torneo  = mongoose.model('Torneo');
 var Equipo = mongoose.model('Equipo');
+var Division = mongoose.model('Division');
 var logger = require('../logger');
 
 //GET - Return all torneos in the DB
@@ -86,6 +87,26 @@ exports.addEquipo = function(req, res) {
 				if(err) return res.send(500, err.message);
 				logger.info(req.user+" ha agregado el equipo "+equipo._id+". Nombre: "+equipo.nombre);
 	      		res.status(200).jsonp(torneo);
+			});
+		});
+	});
+};
+
+//PUT - Agrega una division al torneo
+exports.addDivision = function(req, res) {
+	Torneo.findById(req.params.id, function(err, torneo) {
+		if(err) return res.send(500, err.message);
+		if (!torneo) {return res.send(404, "Torneo not found");}
+
+		Division.findById(req.params.division, function(err, division) {
+			if(err) return res.send(500, err.message);
+			if (!division) {return res.send(404, "Division not found");}
+
+			torneo.divisiones.push(division);
+			torneo.save(function(err) {
+				if(err) return res.send(500, err.message);
+				logger.info(req.user+" ha agregado la division "+division._id+". Nombre: "+division.nombre);
+	      		res.status(200).jsonp(division);
 			});
 		});
 	});

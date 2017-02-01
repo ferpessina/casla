@@ -5,16 +5,16 @@ var torneoSchema = new Schema({
   nombre: 				{ type: String},
   jugadores_por_equipo: { type: Number},
   activo: 				{type: Boolean},
-  equipos:[
+  equipos: [
       {type: Schema.Types.ObjectId, ref: 'Equipo'}
   ],
-  canchas:[
+  canchas: [
       {type: Schema.Types.ObjectId, ref: 'Cancha'}
+  ],
+  divisiones: [
+      {type: Schema.Types.ObjectId, ref: 'Division'}
   ]
-  //divisiones:[
-  //    {type: Schema.Types.ObjectId, ref: 'Division'}
-  //],
-  
+
 });
 
 module.exports = mongoose.model('Torneo', torneoSchema);

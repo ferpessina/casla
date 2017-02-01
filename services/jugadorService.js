@@ -107,6 +107,17 @@ exports.updateJugador = function(req, res) {
 //DELETE - Delete a jUGADOR with specified ID
 exports.deleteJugador = function(req, res) {
 	Jugador.findById(req.params.id, function(err, jugador) {
+
+		var equipoDelJugador = jugador.equipo;
+		
+		Equipo.findById(equipoDelJugador, function(err, equipo_del_jugador) {
+			equipo_del_jugador.jugadores.pop(jugador);
+			equipo_del_jugador.save(function(err, equipo_del_jugador) {
+				if(err) return res.send(500, err.message);
+				logger.info("El equipo "+equipo_del_jugador+" ha quitado al jugador "+jugador.apellido+", "+jugador.nombre);
+			});
+		});
+
 		if(err) return res.send(500, err.message);
 		if (!jugador) {return res.send(404, "Jugador not found");}
 		jugador.remove(function(err) {

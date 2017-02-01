@@ -17,6 +17,8 @@ module.exports = function(express,app) {
 	 *         $ref: Cancha
 	 *       equipos:
 	 *         $ref: Equipo
+	 *       divisiones:
+	 *         $ref: Division
 	*/
 	var torneos = express.Router();
 
@@ -27,7 +29,7 @@ module.exports = function(express,app) {
 	 *   get:
 	 *     tags:
 	 *       - Torneo
-	 *     description: Returns all torneos
+	 *     description: Returns all active torneos
 	 *     produces:
 	 *       - application/json
 	 *     responses:

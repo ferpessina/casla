@@ -1,0 +1,7 @@
+COSAS A CORREGIR
+
+1) cuando estás logueado con un rol y pones salir, al volver para atras con el browser te deja entrar de nuevo. Habria que cerrar la sesión.
+2) Cuando te logueas como SUPERADMIN, ves en el menú la opción de delegado. Deberían estar todas las acciones posibles desde el menu "SUPERDADMIN". Lo mismo con cada rol.
+3) Cuando se da de alta un ADMIN desde la página, toma siempre rol DELEGADO.
+4) Cuando se crea un delegado, debe ser obligatorio poner el equipo del cual es delegado
+5) En jugador: si es capitan no puede ser subcapitán, y viceversa.

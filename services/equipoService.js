@@ -6,7 +6,7 @@ var logger = require('../logger');
 //GET - Return all equipos in the DB
 exports.findAllEquipos = function(req, res) {
 	Equipo.find(function(err, equipos) {
-    if(err) res.send(500, err.message);
+    if(err) res.status(500).send(err.message);
 
     console.log('GET /equipo')
 		res.status(200).jsonp(equipos);
@@ -16,9 +16,11 @@ exports.findAllEquipos = function(req, res) {
 //GET - Return an equipo with specified ID
 exports.findById = function(req, res) {
 	Equipo.findById(req.params.id, function(err, equipo) {
-    if(err) return res.send(500, err.message);
-    if(!equipo) return res.send(404, "Equipo not found");
-    console.log('GET /equipo/' + req.params.id);
+    
+	    if(err) return res.status(500).send(err.message);
+	    if(!equipo) return res.status(404).send("Equipo not found");
+	    
+	    console.log('GET /equipo/' + req.params.id);
 		res.status(200).jsonp(equipo);
 	});
 };
@@ -31,20 +33,8 @@ exports.addEquipo = function(req, res) {
 	Torneo.findById(req.body.torneo_actual, function(err, torneo) {
 		if(err) return res.send(500, err.message);
 		if (!torneo) {return res.send(404, "Torneo id not found");}
-		var equipo = new Equipo({
-			nombre:    		req.body.nombre,
-			torneo_actual: 	req.body.torneo_actual
-		});
-		equipo.save(function(err, equipo) {
-			if(err) return res.send(500, err.message);
-			logger.info(req.user+" ha agregado un nuevo equipo para el torneo "+equipo.torneo_actual+": "+equipo.nombre);
-			torneo.equipos.push(equipo);
-			torneo.save(function(err) {
-				if(err) return res.send(500, err.message);
-				logger.info(req.user+" ha agregado al torneo "+torneo.nombre+" un nuevo equipo: "+equipo.nombre);
-		      	res.status(200).jsonp(equipo);
-			});
-		});
+		var equipo = crearEquipo(req.body);
+		guardarEquipo(req,res,equipo,torneo);	
 	});
 	
 };
@@ -92,14 +82,46 @@ exports.updateEquipo = function(req, res) {
 //DELETE - Delete an equipo with specified ID
 exports.deleteEquipo = function(req, res) {
 	Equipo.findById(req.params.id, function(err, equipo) {
+
+		var torneoDelEquipo = equipo.torneo_actual;
+		
+		Torneo.findById(torneoDelEquipo, function(err, torneo_del_equipo) {
+			torneo_del_equipo.equipos.pop(equipo);
+			torneo_del_equipo.save(function(err, torneo_del_equipo) {
+				if(err) return res.send(500, err.message);
+				logger.info("El torneo "+torneo_del_equipo+" ha quitado al equipo "+equipo.nombre);
+			});
+		});
+
 		if(err) return res.send(500, err.message);
 		if (!equipo) {return res.send(404, "Equipo not found");}
 		equipo.remove(function(err) {
 			if(err) return res.send(500, err.message);
-			logger.info(req.user+" ha borrado al equipo "+equipo.nombre+" de id: "+equipo._id);
+			logger.info(req.user+" ha borrado al equipo "+equipo.nombre);
       		res.status(200).jsonp("Successfully deleted");
 		})
 	});
+};
+
+function crearEquipo(body){
+	var equipo = new Equipo({
+		nombre:    		body.nombre,
+		torneo_actual: 	body.torneo_actual
+	});
+
+	return equipo;
+};
+
+function guardarEquipo(req,res,equipo,torneo){
+	equipo.save(function(err, equipo) {
+			if(err) return res.send(500, err.message);
+			torneo.equipos.push(equipo);
+			torneo.save(function(err) {
+				if(err) return res.send(500, err.message);
+				logger.info(req.user+" ha agregado al torneo "+torneo.nombre+" un nuevo equipo: "+equipo.nombre);
+		      	res.status(200).jsonp(equipo);
+			});
+		});
 };
 
 // EXAMPLE POST:
