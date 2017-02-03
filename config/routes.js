@@ -38,8 +38,10 @@ module.exports = function(express,app, passport, client, logger) {
     // LOGOUT ==============================
     // =====================================
     app.get('/logout', function(req, res) {
-        req.logout();
-        res.redirect('/');
+        req.session.destroy(function (err) {
+            res.clearCookie('connect.sid');
+            res.redirect('/'); 
+        });
     });
 
 
@@ -51,6 +53,12 @@ module.exports = function(express,app, passport, client, logger) {
     }));
 
     app.post('/signupadmin', passport.authenticate('local-signup-admin', {
+        successRedirect : '/usuarios', // redirect to the secure profile section
+        failureRedirect : '/usuarios', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    }));
+
+    app.post('/signupplanillero', passport.authenticate('local-signup-planillero', {
         successRedirect : '/usuarios', // redirect to the secure profile section
         failureRedirect : '/usuarios', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
@@ -122,6 +130,17 @@ function isDelegado(req, res, next) {
 
     // if user is authenticated in the session, carry on 
     if ((req.isAuthenticated()) && ( (req.user.role == "DELEGADO") || (req.user.role == "SUPER_ADMIN"))) 
+        return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+}
+
+// route middleware to make sure a user is logged in (DELEGADO)
+function isPlanillero(req, res, next) {
+
+    // if user is authenticated in the session, carry on 
+    if ((req.isAuthenticated()) && ( (req.user.role == "PLANILLERO") || (req.user.role == "SUPER_ADMIN"))) 
         return next();
 
     // if they aren't redirect them to the home page

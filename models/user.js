@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 var userSchema = new Schema({  
   email:        { type: String},
   password:     { type: String},
-  role:         { type: String, enum:['SUPER_ADMIN','ADMIN','DELEGADO']}
+  role:         { type: String, enum:['SUPER_ADMIN','ADMIN','DELEGADO', 'PLANILLERO']}
 });
 userSchema.plugin(mongoosePaginate);
 

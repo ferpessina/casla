@@ -74,6 +74,27 @@ module.exports = function(passport,logger) {
 
     }));
 
+    passport.use('local-signup-planillero', new LocalStrategy({
+        usernameField : 'email',
+        passwordField : 'password',
+        passReqToCallback : true 
+    },
+    function(req, email, password, done) {
+        process.nextTick(function() {
+        User.findOne({ 'email' :  email }, function(err, user) {
+            if (err)
+                return done(err);
+            if (user) {
+                return done(null, false, req.flash('signupMessage', 'Ese mail ya esta en uso.'));
+            } else {
+                return done(null,saveUser(email,password,"PLANILLERO"));
+            }
+        });    
+
+        });
+
+    }));
+
     passport.use('local-login', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
