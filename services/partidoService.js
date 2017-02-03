@@ -54,7 +54,8 @@ exports.addPartido = function(req, res) {
 					amonestados: 		req.body.amonestados,
 					expulsados: 		req.body.expulsados,
 					goles: 				req.body.goles,
-					cambios: 			req.body.cambios
+					cambios: 			req.body.cambios,
+					estado: 			'NO EMPEZADO'
 				});
 				partido.save(function(err, partido) {
 					if(err) return res.send(500, err.message);
@@ -156,7 +157,7 @@ exports.deletePartido = function(req, res) {
 
 //EXAMPLE POST
 // {
-//   "equipo1": "58865fe1c6058e592e000003",
+//   "equipo1": "58865fe1c6058e592e000002",
 //   "equipo2": "58865fe1c6058e592e000003",
 //   "fecha_numero": 0,
 //   "fecha": "2016-10-10",

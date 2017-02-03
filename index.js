@@ -14,7 +14,6 @@ var express         = require("express"),
 
 client = new Client();
 var swagger = require('./config/swaggerConfig')(app);
-var adminRoutes = require('./config/admin')(app);
 var logger = require('./logger');
 
 // app.use(paginate.middleware(10, 50));
@@ -50,6 +49,7 @@ var models   = require('./models/includingModels')(app, mongoose);
 
 // routes ======================================================================
 require('./config/routes.js')(express,app, passport,client, logger); // load our routes and pass in our app and fully configured passport
+require('./config/admin')(app);
 // require('./config/jugadorRoutes')(express,app);
 
 // Start server
