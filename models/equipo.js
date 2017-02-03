@@ -8,7 +8,10 @@ var equipoSchema = new Schema({
   division:     		{type: Schema.Types.ObjectId, ref: 'Division'},
   jugadores: 		[
       					{type: Schema.Types.ObjectId, ref: 'Jugador'}
-  					]
+  ],
+  partidos: [
+      {type: Schema.Types.ObjectId, ref: 'Partido'}
+  ]
   //delegado
   //capitan
   //subcapitan

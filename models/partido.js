@@ -4,8 +4,13 @@ var mongoose = require('mongoose'),
 var partidoSchema = new Schema({  
   equipo1:             {type: Schema.Types.ObjectId, ref: 'Equipo'},
   equipo2:             {type: Schema.Types.ObjectId, ref: 'Equipo'},
+  fecha_numero:               {type:Number},
+  fecha:{ type: Date, default: Date.now },
   marcador_equipo_1:   {type:Number},
   marcador_equipo_2:   {type:Number},
+  torneo:[
+      {type: Schema.Types.ObjectId, ref: 'Torneo'},
+  ]
   amonestados:[
       {type: Schema.Types.ObjectId, ref: 'Jugador'}
   ],

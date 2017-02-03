@@ -13,6 +13,9 @@ var torneoSchema = new Schema({
   ],
   divisiones: [
       {type: Schema.Types.ObjectId, ref: 'Division'}
+  ],
+  partidos: [
+      {type: Schema.Types.ObjectId, ref: 'Partido'}
   ]
 
 });

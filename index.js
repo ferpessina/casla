@@ -14,7 +14,7 @@ var express         = require("express"),
 
 client = new Client();
 var swagger = require('./config/swaggerConfig')(app);
-
+var adminRoutes = require('./config/admin')(app);
 var logger = require('./logger');
 
 // app.use(paginate.middleware(10, 50));
