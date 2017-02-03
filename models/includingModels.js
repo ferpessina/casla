@@ -4,4 +4,5 @@ module.exports = function(app, mongoose) {
 	var torneo   = require('./torneo')(app, mongoose);
     var cancha   = require('./cancha')(app, mongoose);
     var division   = require('./division')(app, mongoose);
+    var partido   = require('./partido')(app, mongoose);
 }

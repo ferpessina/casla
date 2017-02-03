@@ -9,8 +9,8 @@ var partidoSchema = new Schema({
   marcador_equipo_1:   {type:Number},
   marcador_equipo_2:   {type:Number},
   torneo:[
-      {type: Schema.Types.ObjectId, ref: 'Torneo'},
-  ]
+      {type: Schema.Types.ObjectId, ref: 'Torneo'}
+  ],
   amonestados:[
       {type: Schema.Types.ObjectId, ref: 'Jugador'}
   ],
