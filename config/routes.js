@@ -93,7 +93,7 @@ module.exports = function(express,app, passport, client, logger) {
     });
 
     app.get('/usuarios', isAdmin, function(req, res) {
-        client.get("http://localhost:3000/user", function (data, response) {
+        client.get("http://localhost:3000/user/notAdmins", function (data, response) {
             res.render('./ejs/usuarios.ejs', { message: req.flash('signupMessage'), users: data, user: req.user, resultado: req.session.statusDelete});
         });  
     });

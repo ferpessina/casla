@@ -39,6 +39,23 @@ module.exports = function(express,app) {
 	 */
 	usuarios.get('/', UserCtrl.findAllUsuarios);
 
+	/**
+	 * @swagger
+	 * /user/notAdmins:
+	 *   get:
+	 *     tags:
+	 *       - User
+	 *     description: Returns all users but admins
+	 *     produces:
+	 *       - application/json
+	 *     responses:
+	 *       200:
+	 *         description: An array of users
+	 *         schema:
+	 *           $ref: '#/definitions/User'
+	 */
+	usuarios.get('/notAdmins', UserCtrl.findAllUsuariosButAdmins);
+
 	 /**
 	 * @swagger
 	 * /user:
