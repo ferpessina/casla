@@ -88,15 +88,6 @@ module.exports = function(express,app, passport, client, logger) {
         res.render('./ejs/delegado.ejs', {user: req.user}); 
     });
 
-    app.post('/deleteUser', isAdmin, function(req, res) {
-        console.log(req.body.userid);
-        client.delete("http://localhost:3000/user/"+req.body.userid, function (data, response) {
-            console.log("DELETE /user/"+req.body.userid);
-            req.session.statusDelete = response.statusCode;
-            res.redirect('/usuarios');
-        });  
-    });
-
     app.get('/superadmin', isSuperAdmin, function(req, res) {
         res.render('./ejs/superadmin.ejs'); // load the index.ejs file
     });
@@ -137,16 +128,7 @@ function isPlanillero(req, res, next) {
     res.redirect('/');
 }
 
-// route middleware to make sure a user is ADMIN
-function isAdmin(req, res, next) {
 
-    // if user is authenticated in the session, carry on 
-    if ( (req.isAuthenticated()) && ( (req.user.role == "ADMIN") || (req.user.role == "SUPER_ADMIN"))) // SUPER_ADMIN can access everything
-        return next();
-
-    // if they aren't redirect them to the home page
-    res.redirect('/');
-}
 
 // route middleware to make sure a user is SUPER_ADMIN
 function isSuperAdmin(req, res, next) {
