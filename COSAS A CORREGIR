@@ -5,3 +5,4 @@ COSAS A CORREGIR
 3) Cuando se da de alta un ADMIN desde la página, toma siempre rol DELEGADO.
 4) Cuando se crea un delegado, debe ser obligatorio poner el equipo del cual es delegado
 5) En jugador: si es capitan no puede ser subcapitán, y viceversa.
+6) Cuando te logueas como delegado, en el menu donde dice delegado debe desplegarse la opcion "administrar mi equipo". Cuando le das click, te aparecen todos los jugadores del equipo con las opciones de agregar, quitar, modificar cada uno(es una lista de 20, pero podrian ser menos o mas, esto es configurable segun la "cantidad de jugadores por equipo" que tiene el torneo)
