@@ -37,7 +37,9 @@ exports.findAllCanchas = function(req, res) {
 //POST - Insert a new Torneo in the DB
 exports.addTorneo = function(req, res) {
 	console.log('POST');
-	console.log(req.body);
+	console.log(req);
+	console.log(req.nombre);
+	console.log(req.jugadores_por_equipo);
 
 	var torneo = new Torneo({
 		nombre:    				req.body.nombre,

@@ -20,7 +20,7 @@
       <!-- header -->
       <header class="header-main">
         <div class="header-lower clearfix">
-      <%- include menu.ejs %>
+      <%- include ../menu.ejs %>
         </div>  
 </header>
 
@@ -28,7 +28,7 @@
       <div class="innerbannerwrap">
         <div class="content"></div>
         <div class="innerbannergoleadores">
-          <h2 class="bannerHeadline">Agregar Usuario<span></span></h2>
+          <h2 class="bannerHeadline">Agregar Torneo<span></span></h2>
         </div>
       </div>
 
@@ -45,26 +45,25 @@
 					    <% } %>
 
 					    <!-- LOGIN FORM -->
-					    <form action="/signup" method="post" id="formRegistro">
-					        <div class="form-group">
-					            <div class="headline01 largepoint1">Email</div>
-					            <input type="text" class="form-control" name="email">
-					        </div>
-					        <div class="form-group">
-					            <div class="headline01 largepoint1">Contraseña</div>
-					            <input type="password" class="form-control" name="password">
-					        </div>
-					        <div class="form-group">
-					            <div class="headline01 largepoint1">Rol</div>
+					    <form action="/agregarTorneo" method="post" id="formRegistro">
 
-					            <select name="role" id="roleSelect">
-					                <option value="DELEGADO" selected>DELEGADO</option>
-                          <option value="PLANILLERO">PLANILLERO</option>
-					                <option value="ADMIN">ADMINISTRADOR</option>
-					            </select>
-					        </div>
+					          <div class="form-group">
+                      <div class="headline01 largepoint1">Nombre</div>
+                      <input type="text" class="form-control" name="nombre">
+                    </div>
 
-					        <button type="submit" class="btn btn-warning btn-lg center-block">Registrar</button>
+                     <div class="form-group">
+                      <div class="headline01 largepoint1">Jugadores por equipo</div>
+
+                      <select name="jugadores_por_equipo" id="jugadoresPorEquipoSelect">
+                          <option value="5" >5</option>
+                          <option value="7" >7</option>
+                          <option value="9">9</option>
+                          <option value="11" selected>11</option>
+                      </select>
+                    </div>
+
+					        <button type="submit" class="btn btn-warning btn-lg center-block">Agregar Torneo</button>
 					    </form>
                     </div>
                   </div>
@@ -78,7 +77,7 @@
 
       <!-- footer -->
       <footer ><!--class="footer-type01"-->
-	   <%- include footer.ejs %>
+	   <%- include ../footer.ejs %>
       </footer>
     </div>
     

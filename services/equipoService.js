@@ -30,12 +30,13 @@ exports.addEquipo = function(req, res) {
 	console.log('POST');
 	console.log(req.body);
 
-	Torneo.findById(req.body.torneo_actual, function(err, torneo) {
-		if(err) return res.send(500, err.message);
-		if (!torneo) {return res.send(404, "Torneo id not found");}
+	// Torneo.findById(req.body.torneo_actual, function(err, torneo) {
+		// if(err) return res.send(500, err.message);
+		// if (!torneo) {return res.send(404, "Torneo id not found");}
 		var equipo = crearEquipo(req.body);
-		guardarEquipo(req,res,equipo,torneo);	
-	});
+		// guardarEquipo(req,res,equipo,torneo);	
+		guardarEquipo(req,res,equipo);
+	// });
 	
 };
 
@@ -106,21 +107,22 @@ exports.deleteEquipo = function(req, res) {
 function crearEquipo(body){
 	var equipo = new Equipo({
 		nombre:    		body.nombre,
-		torneo_actual: 	body.torneo_actual
+		// torneo_actual: 	body.torneo_actual
 	});
 
 	return equipo;
 };
 
-function guardarEquipo(req,res,equipo,torneo){
+function guardarEquipo(req,res,equipo){
+	// ,torneo){
 	equipo.save(function(err, equipo) {
 			if(err) return res.send(500, err.message);
-			torneo.equipos.push(equipo);
-			torneo.save(function(err) {
-				if(err) return res.send(500, err.message);
-				logger.info(req.user+" ha agregado al torneo "+torneo.nombre+" un nuevo equipo: "+equipo.nombre);
+			// torneo.equipos.push(equipo);
+			// torneo.save(function(err) {
+				// if(err) return res.send(500, err.message);
+				// logger.info(req.user+" ha agregado al torneo "+torneo.nombre+" un nuevo equipo: "+equipo.nombre);
 		      	res.status(200).jsonp(equipo);
-			});
+			// });
 		});
 };
 
