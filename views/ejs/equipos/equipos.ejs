@@ -68,8 +68,31 @@
                           <div class="subPoint_table">
                           <div class="headline01 largepoint1"><%= equipos[i].logo %></div>
                           <div class="headline01 largepoint1"><%= equipos[i].nombre %></div>
-                          <div class="headline01 largepoint1"><%= equipos[i].torneo_actual %></div>
-                          <div class="headline01 largepoint1"><%= equipos[i].division %></div>
+                          <div class="headline01 largepoint1">
+                              <% if (torneosMap[equipos[i].torneo_actual]) { %>
+                                <%= torneosMap[equipos[i].torneo_actual] %> 
+                              <% } else { %>
+                                Ninguno
+                              <% } %>
+                              - Elegir nuevo:
+                              <form action="/updateEquipo" method="post" id="formUpdate" onsubmit="return confirm('Seguro que desea cambiar el torneo del equipo <%= equipos[i].nombre %>?');">
+                                <select name="torneo_actual" id="torneo_actualSelect">
+                                  <% for(var j=0; j < torneos.length; j++) { %> 
+                                    <option value="<%= torneos[j]._id %>" selected><%=torneos[j].nombre%></option>
+                                  <% } %>
+                                </select>
+                                <input type="hidden" class="form-control" name="equipoid" value="<%= equipos[i]._id %>">
+                                <input type="hidden" class="form-control" name="nombre" value="<%= equipos[i].nombre %>">
+                                <button type="submit" >Confirmar</button>
+                              </form>
+                          </div>
+                          <div class="headline01 largepoint1">
+                            <% if (equipos[i].division ) { %>
+                                <%= equipos[i].division  %> 
+                              <% } else { %>
+                                Ninguna
+                              <% } %>
+                          </div>
                           <div class="headline01 largepoint1"><%= equipos[i].jugadores %></div>
                           <div class="headline01 largepoint1"><%= equipos[i].partidos %></div>
                           <div class="headline01 largepoint1 row row">

@@ -43,7 +43,6 @@ exports.addEquipo = function(req, res) {
 //PUT - Update a register already exists
 exports.updateEquipo = function(req, res) {
 	Equipo.findById(req.params.id, function(err, equipo) {
-
 		if(err) return res.send(500, err.message);
 		if (!equipo) {return res.send(404, "Equipo not found");}
 
@@ -57,6 +56,7 @@ exports.updateEquipo = function(req, res) {
 			equipo.nombre 				= req.body.nombre,
 			equipo.torneo_actual		= req.body.torneo_actual
 
+			console.log("YA LLEGUE ACA");
 			equipo.save(function(err) {
 				if(err) return res.send(500, err.message);
 				logger.info(req.user+" ha actualizado al equipo "+equipo._id+". Nombre: "+equipo.nombre+". Torneo actual: "+equipo.torneo_actual);
@@ -67,11 +67,14 @@ exports.updateEquipo = function(req, res) {
 						if(err) return res.send(500, err.message);
 					});
 					Torneo.findById(antiguoTorneo, function(err, torneo_antiguo) {
-						torneo_antiguo.equipos.pop(equipo);
-						logger.info(req.user+" ha sacado del torneo "+torneo_antiguo.nombre+" al equipo: "+equipo.nombre);
-						torneo_antiguo.save(function(err, torneo_antiguo) {
-							if(err) return res.send(500, err.message);
-						});
+						if(err) return res.send(500, err.message);
+						if (torneo_antiguo) { //AL PPIO NO TIENEN TORNEO ASIGNADO!
+							torneo_antiguo.equipos.pop(equipo);
+							logger.info(req.user+" ha sacado del torneo "+torneo_antiguo.nombre+" al equipo: "+equipo.nombre);
+							torneo_antiguo.save(function(err, torneo_antiguo) {
+								if(err) return res.send(500, err.message);
+							});
+						}
 					});
 				}
 				res.status(200).jsonp(equipo);

@@ -52,8 +52,15 @@ module.exports = function(app) {
 
     //------------------------------EQUIPOS----------------------------------------//
     app.get('/equipos', isAdmin, function(req, res) {
-        client.get("http://localhost:3000/equipo", function (data, response) {
-            res.render('./ejs/equipos/equipos.ejs', { message: req.flash('signupMessage'), equipos: data, user: req.user, resultado: req.session.statusDelete});
+        client.get("http://localhost:3000/equipo", function (equipos, response) {
+            client.get("http://localhost:3000/torneo", function (torneos, response) {
+                var torneosMap =  {};
+                for (var i = 0; i < torneos.length; i++) {
+                    torneosMap[torneos[i]._id] = torneos[i].nombre;
+                };
+                console.log(torneosMap);
+                res.render('./ejs/equipos/equipos.ejs', { message: req.flash('signupMessage'), equipos: equipos, torneosMap:torneosMap, torneos:torneos, user: req.user, resultado: req.session.statusDelete});
+            }); 
         });  
     });
 
@@ -66,11 +73,24 @@ module.exports = function(app) {
             data:  req.body ,
             headers: { "Content-Type": "application/json" }
         };
-        client.post("http://localhost:3000/equipo", args, function (data, response) {
+        client.post("http://localhost:3000/equipo/", args, function (data, response) {
             console.log("POST /equipo");
             res.redirect('/equipos');
         });  
     });
+
+    app.post('/updateEquipo', isAdmin, function(req, res) {
+        var args = {
+            data:  req.body ,
+            headers: { "Content-Type": "application/json" }
+        };
+        console.log("Por pegarle a http://localhost:3000/equipo/"+req.body.equipoid);
+        client.put("http://localhost:3000/equipo/"+req.body.equipoid, args, function (data, response) {
+            console.log("PUT /equipo");
+            res.redirect('/equipos');
+        });  
+    });
+    
 
     app.post('/deleteEquipo', isAdmin, function(req, res) {
         client.delete("http://localhost:3000/equipo/"+req.body.equipoid, function (data, response) {
