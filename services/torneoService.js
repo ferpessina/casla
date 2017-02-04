@@ -24,6 +24,22 @@ exports.findById = function(req, res) {
 	});
 };
 
+//GET - Return equipos from a torneo
+exports.findEquipos = function(req, res) {
+	Torneo.findById(req.params.id, function(err, torneo) {
+    	if(err) return res.send(500, err.message);
+    	if(!torneo) return res.send(404, "Torneo not found");
+		Equipo.find({ 'torneo_actual': torneo}, function(err, equipos) {
+			var data = {
+				equipos : equipos,
+				torneo: torneo.nombre
+			};
+		    if(err) return res.send(500, err.message);
+			res.status(200).jsonp(data);
+		});
+	});
+};
+
 //GET - Return a Torneo with specified ID
 exports.findAllCanchas = function(req, res) {
 	Torneo.findById(req.params.id, function(err, torneo) {

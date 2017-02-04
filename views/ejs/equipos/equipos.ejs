@@ -66,15 +66,22 @@
                       <% for(var i=0; i < equipos.length; i++) { %> 
 					               <li class="clearfix">
                           <div class="subPoint_table">
-                          <div class="headline01 largepoint1"><%= equipos[i].logo %></div>
-                          <div class="headline01 largepoint1"><%= equipos[i].nombre %></div>
                           <div class="headline01 largepoint1">
+                              <% if (equipos[i].logo) { %>
+                                <%= equipos[i].logo %> 
+                              <% } else { %>
+                                Ninguno
+                              <% } %>
+                            </div>
+                          <div class="headline01 largepoint1"><%= equipos[i].nombre %></div>
+                          <div >
+                              <div class="headline01 largepoint1">
                               <% if (torneosMap[equipos[i].torneo_actual]) { %>
                                 <%= torneosMap[equipos[i].torneo_actual] %> 
                               <% } else { %>
                                 Ninguno
                               <% } %>
-                              - Elegir nuevo:
+                              - Elegir nuevo: </div>
                               <form action="/updateEquipo" method="post" id="formUpdate" onsubmit="return confirm('Seguro que desea cambiar el torneo del equipo <%= equipos[i].nombre %>?');">
                                 <select name="torneo_actual" id="torneo_actualSelect">
                                   <% for(var j=0; j < torneos.length; j++) { %> 

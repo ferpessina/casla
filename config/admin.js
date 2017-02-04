@@ -22,13 +22,25 @@ module.exports = function(app) {
 
     //------------------------------TORNEOS----------------------------------------//
     app.get('/torneos', isAdmin, function(req, res) {
-        client.get("http://localhost:3000/torneo", function (data, response) {
-            res.render('./ejs/torneos/torneos.ejs', { message: req.flash('signupMessage'), torneos: data, user: req.user, resultado: req.session.statusDelete});
+        client.get("http://localhost:3000/torneo", function (torneos, response) {
+            client.get("http://localhost:3000/equipo", function (equipos, response) {
+                var equiposMap =  {};
+                for (var i = 0; i < equipos.length; i++) {
+                    equiposMap[equipos[i]._id] = equipos[i].nombre;
+                };
+            res.render('./ejs/torneos/torneos.ejs', { message: req.flash('signupMessage'), torneos: torneos, equiposMap:equiposMap, user: req.user, resultado: req.session.statusDelete});
         });  
+        }); 
     });
 
     app.get('/agregarTorneos', isAdmin, function(req, res) {
          res.render('./ejs/torneos/agregarTorneos.ejs', {user: req.user, message: req.flash('loginMessage')}); 
+    });
+
+    app.post('/equiposTorneo', isAdmin, function(req, res) {
+        client.get("http://localhost:3000/torneo/"+req.body.torneoid+"/equipos", function (data, response) {
+         res.render('./ejs/torneos/equiposTorneo.ejs', {user: req.user, equipos:data.equipos, torneo: data.torneo, message: req.flash('loginMessage')}); 
+        });
     });
 
     app.post('/agregarTorneo', isAdmin, function(req, res) {
@@ -58,7 +70,6 @@ module.exports = function(app) {
                 for (var i = 0; i < torneos.length; i++) {
                     torneosMap[torneos[i]._id] = torneos[i].nombre;
                 };
-                console.log(torneosMap);
                 res.render('./ejs/equipos/equipos.ejs', { message: req.flash('signupMessage'), equipos: equipos, torneosMap:torneosMap, torneos:torneos, user: req.user, resultado: req.session.statusDelete});
             }); 
         });  

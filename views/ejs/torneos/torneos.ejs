@@ -71,7 +71,12 @@
                           <div class="headline01 largepoint1">
                               <% if (torneos[i].activo) { %> Si <% } else { %> No  <% } %>  
                           </div>
-                          <div class="headline01 largepoint1"><%= torneos[i].equipos %></div>
+                          <div >
+                            <form action="/equiposTorneo" method="post">
+                              <input type="hidden" value=<%= torneos[i]._id %> name="torneoid"/>
+                              <button  type="submit">Ver Equipos</button>
+                            </form>
+                          </div>
                           <div class="headline01 largepoint1"><%= torneos[i].canchas %></div>
                           <div class="headline01 largepoint1"><%= torneos[i].divisiones %></div>
                           <div class="headline01 largepoint1"><%= torneos[i].partidos %></div>

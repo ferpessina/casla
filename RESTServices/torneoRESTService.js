@@ -41,6 +41,29 @@ module.exports = function(express,app) {
 	torneos.get('/', TorneoCtrl.findAllTorneos);
 
 
+	/**
+	 * @swagger
+	 * /torneo/{id}/equipos:
+	 *   get:
+	 *     tags:
+	 *       - Torneo
+	 *     description: Returns all equipos from a torneo
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: id
+	 *         description: Torneo's id
+	 *         in: path
+	 *         required: true
+	 *         type: integer
+	 *     responses:
+	 *       200:
+	 *         description: An array of equipos
+	 *         schema:
+	 *           $ref: '#/definitions/Equipo'
+	 */
+	torneos.get('/:id/equipos', TorneoCtrl.findEquipos);  //PASAR ESTA FUNCION A EQUIPO, NO A TORNEO
+
 	 /**
 	 * @swagger
 	 * /torneo:
