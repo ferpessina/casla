@@ -28,7 +28,7 @@
       <div class="innerbannerwrap">
         <div class="content"></div>
         <div class="innerbannergoleadores">
-          <h2 class="bannerHeadline">Agregar Partido<span></span></h2>
+          <h2 class="bannerHeadline">Ingresar al Sistema<span></span></h2>
         </div>
       </div>
 
@@ -45,28 +45,17 @@
 					    <% } %>
 
 					    <!-- LOGIN FORM -->
-					    <form action="/addPartido" method="post" id="formRegistro">
-  					    	<div class="form-group">
-  					          <div class="headline01 largepoint1">Torneo</div>
-  						          <select name="torneo" id="torneoSelect">
-                            <option value="none" selected></option>
-  						          	<% for(var i=0; i < torneos.length; i++) { %> 
-  						          		<option value="<%=torneos[i]._id%>"><%=torneos[i].nombre%></option>
-  						          	<% } %>
-  						          </select>
-                  </div>
-
-                  <div class="form-group" id="elegirEquipo1">
-                      <div class="headline01 largepoint1">Equipo 1</div>
-                        <select name="equipo1" id="equipo1Select"></select>
-                  </div>
-
-                  <div class="form-group" id="elegirEquipo2">
-                      <div class="headline01 largepoint1">Equipo 2</div>
-                        <select name="equipo2" id="equipo2Select"></select>
-                  </div>
-
-					        <button type="submit" class="btn btn-warning btn-lg center-block" disabled>Agregar Partido</button>
+					    <form action="/login" method="post">
+					        <div class="form-group">
+					            <div class="headline01 largepoint1">Email</div>
+					            <input type="text" class="form-control" name="email">
+					        </div>
+					        <div class="form-group">
+					            <div class="headline01 largepoint1">Contraseña</div>
+					            <input type="password" class="form-control" name="password">
+					        </div>
+					        
+					        <button type="submit" class="btn btn-warning btn-lg center-block">Ingresar</button>
 					    </form>
                     </div>
                   </div>
@@ -89,6 +78,5 @@
     <script src="js/vendor/vendor.js"></script>     
     <script src="js/main.js"></script>
     <script src="js/admin.js"></script>
-    <script src="js/equiposPorTorneo.js"></script>
 </body>
 </html>

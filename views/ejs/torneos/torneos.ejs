@@ -65,21 +65,44 @@
 
                       <% for(var i=0; i < torneos.length; i++) { %> 
 					               <li class="clearfix">
+
                         <div class="subPoint_table">
                           <div class="headline01 largepoint1"><%= torneos[i].nombre %></div>
                           <div class="headline01 largepoint1"><%= torneos[i].jugadores_por_equipo %></div>
                           <div class="headline01 largepoint1">
                               <% if (torneos[i].activo) { %> Si <% } else { %> No  <% } %>  
                           </div>
-                          <div >
+
+                          <div class="headline01 largepoint1 row row">
+                          <div class="headline01 smallpoint1"><span>
                             <form action="/equiposTorneo" method="post">
                               <input type="hidden" value=<%= torneos[i]._id %> name="torneoid"/>
-                              <button  type="submit">Ver Equipos</button>
+                              <button  type="submit">Ver Equipos</button></span>
                             </form>
+                        </div></div>
+
+                          <div class="headline01 largepoint1">
+                            <% if (torneos[i].canchas.length==0) { %> 
+                              Ninguna
+                            <% } else { %>
+                              <%= torneos[i].canchas %>
+                            <% } %> 
                           </div>
-                          <div class="headline01 largepoint1"><%= torneos[i].canchas %></div>
-                          <div class="headline01 largepoint1"><%= torneos[i].divisiones %></div>
-                          <div class="headline01 largepoint1"><%= torneos[i].partidos %></div>
+                          <div class="headline01 largepoint1">
+                          <% if (torneos[i].divisiones.length==0) { %> 
+                              Ninguna
+                            <% } else { %>
+                              <%= torneos[i].divisiones %>
+                            <% } %> 
+                          </div>
+                          <div class="headline01 largepoint1">
+                            <% if (torneos[i].partidos.length==0) { %> 
+                              Ninguno
+                            <% } else { %>
+                              <%= torneos[i].partidos %>
+                            <% } %> 
+                            </div>
+
                           <div class="headline01 largepoint1 row row">
             							<div class="headline01 smallpoint1"><span>
             								<form onsubmit="return confirm('Seguro que desea eliminar al torneo <%= torneos[i].nombre %>?');" action="/deleteTorneo" method="post">

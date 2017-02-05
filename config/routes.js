@@ -19,9 +19,8 @@ module.exports = function(express,app, passport, client, logger) {
     // =====================================
     // show the login form
     app.get('/login', function(req, res) {
-
         // render the page and pass in any flash data if it exists
-        res.render('./ejs/login/login.ejs', { message: req.flash('loginMessage') }); 
+        res.render('./ejs/usuarios/login.ejs', {user: req.user , message: req.flash('loginMessage') }); 
     });
 
     // =====================================
