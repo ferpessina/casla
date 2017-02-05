@@ -14,6 +14,10 @@ module.exports = function(express,app, passport, client, logger) {
         res.render('./ejs/index.ejs', {user: req.user}); // load the index.ejs file
     });
 
+     app.get('/test', function(req, res) {
+        res.render('./ejs/partidos/test.ejs', {user: req.user}); // load the index.ejs file
+    });
+
     // =====================================
     // LOGIN ===============================
     // =====================================

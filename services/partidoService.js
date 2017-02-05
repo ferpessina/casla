@@ -24,6 +24,23 @@ exports.findById = function(req, res) {
 	});
 };
 
+//GET - Return partidos from a fecha_numero
+exports.findByFechaNumero = function(req, res) {
+	Partido.find({ 'fecha_numero': req.params.fecha_numero}, function(err, partidos) {
+    	if(err) return res.send(500, err.message);
+    	console.log('GET /partido/fecha_numero/' + req.params.fecha_numero);
+		res.status(200).jsonp(partidos);
+	});
+};
+
+//GET - Returns distinct fecha_numero from partidos
+exports.findNumerosFechasDisponibles = function(req, res){
+	Partido.find().distinct('fecha_numero', function(error, numeros_fechas) {
+        console.log('GET /partido/numeros_fechas');
+		res.status(200).jsonp(numeros_fechas);
+    });
+}
+
 //POST - Insert a new partido in the DB
 exports.addPartido = function(req, res) {
 	console.log('POST');
@@ -59,19 +76,19 @@ exports.addPartido = function(req, res) {
 				});
 				partido.save(function(err, partido) {
 					if(err) return res.send(500, err.message);
-					logger.info(req.user+" ha agregado al partido "+partido._id+": "+partido.equipo1.nombre+" VS "+partido.equipo2.nombre+", fecha "+partido.fecha_numero+", el "+partido.fecha);
+					logger.info(req.user+" ha agregado al partido "+partido._id+": "+partido.equipo1+" VS "+partido.equipo2+", fecha "+partido.fecha_numero+", el "+partido.fecha);
 					equipo1.partidos.push(partido);
 					equipo1.save(function(err, equipo1) {
 						if(err) return res.send(500, err.message);
-						logger.info("El equipo "+equipo1.nombre+" ha agregado al partido "+partido._id+": "+partido.equipo1.nombre+" VS "+partido.equipo2.nombre);
+						logger.info("El equipo "+equipo1.nombre+" ha agregado al partido "+partido._id+": "+partido.equipo1+" VS "+partido.equipo2);
 			    		equipo2.partidos.push(partido);
 						equipo2.save(function(err, equipo2) {
 							if(err) return res.send(500, err.message);
-							logger.info("El equipo "+equipo2.nombre+" ha agregado al partido "+partido._id+": "+partido.equipo1.nombre+" VS "+partido.equipo2.nombre);
+							logger.info("El equipo "+equipo2.nombre+" ha agregado al partido "+partido._id+": "+partido.equipo1+" VS "+partido.equipo2);
 				    		torneo.partidos.push(partido);
 							torneo.save(function(err, torneo) {
 								if(err) return res.send(500, err.message);
-								logger.info("El torneo "+torneo.nombre+" ha agregado al partido "+partido._id+": "+partido.equipo1.nombre+" VS "+partido.equipo2.nombre);
+								logger.info("El torneo "+torneo.nombre+" ha agregado al partido "+partido._id+": "+partido.equipo1+" VS "+partido.equipo2);
 					    		res.status(200).jsonp(partido);
 					    	});
 				    	});

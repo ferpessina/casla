@@ -74,12 +74,17 @@
                           </div>
 
                           <div class="headline01 largepoint1 row row">
-                          <div class="headline01 smallpoint1"><span>
-                            <form action="/equiposTorneo" method="post">
-                              <input type="hidden" value=<%= torneos[i]._id %> name="torneoid"/>
-                              <button  type="submit">Ver Equipos</button></span>
-                            </form>
-                        </div></div>
+                            <% if (torneos[i].equipos.length==0) { %> 
+                              Ninguno
+                            <% } else { %>
+                              <div class="headline01 smallpoint1"><span>
+                                <form action="/equiposTorneo" method="post">
+                                  <input type="hidden" value=<%= torneos[i]._id %> name="torneoid"/>
+                                  <button  type="submit">Ver Equipos</button></span>
+                                </form>
+                              </div>
+                             <% } %> 
+                          </div>
 
                           <div class="headline01 largepoint1">
                             <% if (torneos[i].canchas.length==0) { %> 
@@ -95,11 +100,17 @@
                               <%= torneos[i].divisiones %>
                             <% } %> 
                           </div>
-                          <div class="headline01 largepoint1">
+
+                          <div class="headline01 largepoint1 row row">
                             <% if (torneos[i].partidos.length==0) { %> 
                               Ninguno
                             <% } else { %>
-                              <%= torneos[i].partidos %>
+                                <div class="headline01 smallpoint1"><span>
+                                  <form action="/partidosTorneo" method="post">
+                                    <input type="hidden" value=<%= torneos[i]._id %> name="torneoid"/>
+                                    <button  type="submit">Ver Partidos</button></span>
+                                  </form>
+                                </div>
                             <% } %> 
                             </div>
 

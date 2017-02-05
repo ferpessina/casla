@@ -62,7 +62,30 @@ module.exports = function(express,app) {
 	 *         schema:
 	 *           $ref: '#/definitions/Equipo'
 	 */
-	torneos.get('/:id/equipos', TorneoCtrl.findEquipos);  //PASAR ESTA FUNCION A EQUIPO, NO A TORNEO
+	torneos.get('/:id/equipos', TorneoCtrl.findEquiposFromTorneo);  //PASAR ESTA FUNCION A EQUIPO?? NO A TORNEO
+
+	/**
+	 * @swagger
+	 * /torneo/{id}/partidos:
+	 *   get:
+	 *     tags:
+	 *       - Torneo
+	 *     description: Returns all partidos from a torneo
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: id
+	 *         description: Torneo's id
+	 *         in: path
+	 *         required: true
+	 *         type: integer
+	 *     responses:
+	 *       200:
+	 *         description: An array of partidos
+	 *         schema:
+	 *           $ref: '#/definitions/Partido'
+	 */
+	torneos.get('/:id/partidos', TorneoCtrl.findPartidosFromTorneo);  //PASAR ESTA FUNCION A PARTIDO?? NO A TORNEO
 
 	 /**
 	 * @swagger

@@ -51,6 +51,46 @@ module.exports = function(express,app) {
 
 	 /**
 	 * @swagger
+	 * /partido/fecha_numero/{fecha_numero}:
+	 *   get:
+	 *     tags:
+	 *       - PartidoModel
+	 *     description: Returns partidos with a specific fecha_numero
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: fecha_numero
+	 *         description: fecha_numero's number
+	 *         in: path
+	 *         required: true
+	 *         type: integer
+	 *     responses:
+	 *       200:
+	 *         description: An array of partidos
+	 *         schema:
+	 *           $ref: '#/definitions/PartidoModel'
+	 */
+	 partidos.get('/fecha_numero/:fecha_numero', PartidoCtrl.findByFechaNumero);
+
+	 /**
+	 * @swagger
+	 * /partido/numeros_fechas:
+	 *   get:
+	 *     tags:
+	 *       - PartidoModel
+	 *     description: Returns all distinct numero_fecha from partidos
+	 *     produces:
+	 *       - application/json
+	 *     responses:
+	 *       200:
+	 *         description: An array of numero_fecha
+	 *         schema:
+	 *           type: integer
+	 */
+	 partidos.get('/numeros_fechas', PartidoCtrl.findNumerosFechasDisponibles);
+
+	 /**
+	 * @swagger
 	 * /partido:
 	 *   post:
 	 *     tags:

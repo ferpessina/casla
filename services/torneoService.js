@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Torneo  = mongoose.model('Torneo');
 var Equipo = mongoose.model('Equipo');
 var Division = mongoose.model('Division');
+var Partido = mongoose.model('Partido');
 var logger = require('../logger');
 
 //GET - Return all torneos in the DB
@@ -25,13 +26,29 @@ exports.findById = function(req, res) {
 };
 
 //GET - Return equipos from a torneo
-exports.findEquipos = function(req, res) {
+exports.findEquiposFromTorneo = function(req, res) {
 	Torneo.findById(req.params.id, function(err, torneo) {
     	if(err) return res.send(500, err.message);
     	if(!torneo) return res.send(404, "Torneo not found");
 		Equipo.find({ 'torneo_actual': torneo}, function(err, equipos) {
 			var data = {
 				equipos : equipos,
+				torneo: torneo.nombre
+			};
+		    if(err) return res.send(500, err.message);
+			res.status(200).jsonp(data);
+		});
+	});
+};
+
+//GET - Return partidos from a torneo
+exports.findPartidosFromTorneo = function(req, res) {
+	Torneo.findById(req.params.id, function(err, torneo) {
+    	if(err) return res.send(500, err.message);
+    	if(!torneo) return res.send(404, "Torneo not found");
+		Partido.find({ 'torneo': torneo}, function(err, partidos) {
+			var data = {
+				partidos : partidos,
 				torneo: torneo.nombre
 			};
 		    if(err) return res.send(500, err.message);

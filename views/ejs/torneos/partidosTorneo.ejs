@@ -28,36 +28,18 @@
       <div class="innerbannerwrap">
         <div class="content"></div>
         <div class="innerbannergoleadores">
-          <h2 class="bannerHeadline">Administración de Partidos<span></span></h2>
+          <h2 class="bannerHeadline">Partidos del torneo <%= torneo %><span></span></h2>
         </div>
       </div>
 
-      <% if (resultado) { %>
-          <% if (resultado == 200) { %>
-                <div class="alert alert-success">El partido ha sido eliminado con exito</div>
-          <% } else { %>
-              <div class="alert alert-danger">El partido no se pudo eliminar. Inténtelo nuevamente más tarde</div>
-          <% } %>
-      <% } %>
 
       <section class="innerpage_all_wrap bg-white"> 
         <div class="container">
 			<div class="row">
 			<div class="matchSchedule_details row">
-          
-          
-
+                
 				 <div class="match_versus-wrap2">
                   <div class="wrap_match-innerdetails">
-
-                    <div class="headline01 largepoint1">Ver partidos fecha:</div>
-                    <select name="fechaSelectName" id="fechaSelect">
-                          <option value="none"></option>
-                           <% for(var i=0; i < numeros_fechas.length; i++) { %> 
-                              <option value="<%= numeros_fechas[i] %>"><%= numeros_fechas[i] %></option>
-                            <% } %>
-                    </select>
-
                     <ul class="point_table2">
                        <li class="clearfix">
                         <div class="subPoint_table">
@@ -68,21 +50,32 @@
                           <div class="headline01 largepoint1">Equipo 2</div>
                           <div class="headline01 largepoint1">N° Fecha</div>
                           <div class="headline01 largepoint1">Fecha</div>
-                          <div class="headline01 largepoint1">Torneo</div>
-                          <div class="headline01 largepoint1">Amonestados</div>
-                          <div class="headline01 largepoint1">Expulsados</div>
-                          <div class="headline01 largepoint1">Goles</div>
-                          <div class="headline01 largepoint1">Cambios</div>
-
-                          <div class="headline01 largepoint1 row row">
-							<div class="headline01 smallpoint1"><span>ELIMINAR</span></div>
-                        </div>
-						</div>
                       </li>
 
-                      <div id="dataPartidosConFecha">
+                      <% for(var i=0; i < partidos.length; i++) { %> 
+					               <li class="clearfix">
+                          <div class="subPoint_table">
+                          <div class="headline01 largepoint1"><%= partidos[i].estado %></div>
+                          <div class="headline01 largepoint1"><%= equipos[partidos[i].equipo1] %></div>
+                          <div class="headline01 largepoint1">
+                            <% if (partidos[i].marcador_equipo_1 == undefined )  { %>
+                                0
+                          <% } else { %>
+                              <%= partidos[i].marcador_equipo_1 %>
+                          <% } %>
+                          </div>
+                          <div class="headline01 largepoint1">
+                            <% if (partidos[i].marcador_equipo_2 == undefined )  { %>
+                                0
+                          <% } else { %>
+                              <%= partidos[i].marcador_equipo_2 %>
+                          <% } %>
+                          </div>
+                          <div class="headline01 largepoint1"><%= equipos[partidos[i].equipo2] %></div>
+                          <div class="headline01 largepoint1"><%= partidos[i].fecha_numero %></div>
+                          <div class="headline01 largepoint1"><%= moment(partidos[i].fecha).format( 'DD MMM, YYYY') %></div>
+                      <% } %>
 
-                        </div>
                     </ul>
                     </div>
                   </div>
@@ -90,7 +83,9 @@
             </div>
         </div>
 		
-		
+		  <form action="/torneos" method="get">
+             <button type="submit">VOLVER A TORNEOS</button>
+        </form>
       </section>
     
 
@@ -105,6 +100,6 @@
     <script src="js/vendor/vendor.js"></script>     
     <script src="js/main.js"></script>
 	<script src="js/admin.js"></script> 
-    <script src="js/partidos.js"></script> 
+        
 </body>
 </html>

@@ -10,7 +10,14 @@
      <link rel="stylesheet" href="vendor.css">       
      <link rel="stylesheet" href="style.css">   
      <link rel="stylesheet" type="text/css" href="css/layerslider.css">
-    <script src="js/vendor/modernizr.js"></script>    
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <script src="js/vendor/modernizr.js"></script>    
+     <script>
+  </script>
   </head>
   <body>
     <!--[if lt IE 10]>
@@ -45,15 +52,26 @@
 					    <% } %>
 
 					    <!-- LOGIN FORM -->
-					    <form action="/addPartido" method="post" id="formRegistro">
-  					    	<div class="form-group">
-  					          <div class="headline01 largepoint1">Torneo</div>
-  						          <select name="torneo" id="torneoSelect">
+					    <form action="/agregarPartido" method="post" id="formAgregarPartido">
+  					    	
+                  <div class="form-group" id="elegirFechaNumero">
+                      <div class="headline01 largepoint1">Numero fecha</div>
+                      <input type="number" name="fecha_numero" min="1" value="1">
+                  </div>
+
+                  <div class="form-group" id="elegirFecha">
+                      <div class="headline01 largepoint1">Fecha</div>
+                      <input type="text" id="fecha" name="fecha">
+                  </div>
+
+                  <div class="form-group">
+                      <div class="headline01 largepoint1">Torneo</div>
+                        <select name="torneo" id="torneoSelect">
                             <option value="none" selected></option>
-  						          	<% for(var i=0; i < torneos.length; i++) { %> 
-  						          		<option value="<%=torneos[i]._id%>"><%=torneos[i].nombre%></option>
-  						          	<% } %>
-  						          </select>
+                          <% for(var i=0; i < torneos.length; i++) { %> 
+                            <option value="<%=torneos[i]._id%>"><%=torneos[i].nombre%></option>
+                          <% } %>
+                        </select>
                   </div>
 
                   <div class="form-group" id="elegirEquipo1">
@@ -66,7 +84,7 @@
                         <select name="equipo2" id="equipo2Select"></select>
                   </div>
 
-					        <button type="submit" class="btn btn-warning btn-lg center-block" disabled>Agregar Partido</button>
+					        <button type="submit" class="btn btn-warning btn-lg center-block" id="submitForm" disabled>Agregar Partido</button>
 					    </form>
                     </div>
                   </div>
@@ -83,12 +101,11 @@
 	   <%- include ../footer.ejs %>
       </footer>
     </div>
-    
 
-      
-    <script src="js/vendor/vendor.js"></script>     
+  
     <script src="js/main.js"></script>
     <script src="js/admin.js"></script>
     <script src="js/equiposPorTorneo.js"></script>
+
 </body>
 </html>
