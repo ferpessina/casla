@@ -8,7 +8,7 @@ var partidoSchema = new Schema({
   fecha:{ type: Date, default: Date.now },
   marcador_equipo_1:   {type:Number},
   marcador_equipo_2:   {type:Number},
-  estado:   { type: String, enum:['NO EMPEZADO','TERMINADO','SUSPENDIDO', 'POSTERGADO']},
+  estado:   { type: String, enum:['N.E.','FIN','SUSP', 'POST']},
   torneo:[
       {type: Schema.Types.ObjectId, ref: 'Torneo'}
   ],

@@ -72,7 +72,7 @@ exports.addPartido = function(req, res) {
 					expulsados: 		req.body.expulsados,
 					goles: 				req.body.goles,
 					cambios: 			req.body.cambios,
-					estado: 			'NO EMPEZADO'
+					estado: 			'N.E.'
 				});
 				partido.save(function(err, partido) {
 					if(err) return res.send(500, err.message);

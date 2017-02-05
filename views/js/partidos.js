@@ -1,5 +1,17 @@
 $("#dataPartidosConFecha").hide();
 
+
+$(document).on( "click", ".deletePartido", function(e){
+	e.preventDefault();
+	var id = $(this).attr("id");
+	var partidoId = id.split("-")[0];
+	var team1 = id.split("-")[1];
+	var team2 = id.split("-")[2];
+	if (confirm("Seguro que desea eliminar al partido "+team1+" VS "+team2+"?")) {
+        $("#formDelete"+partidoId).submit();
+    }
+});
+
 $("#fechaSelect").change(function(){
 	if($("#fechaSelect").val()=="none"){
 		$("#dataPartidosConFecha").hide();
@@ -27,36 +39,36 @@ $("#fechaSelect").change(function(){
 				  	for (var i = 0; i < partidos.length; i++) {
 				  		html += '<li class="clearfix">';
 				  		html += '<div class="subPoint_table">';
-				  		html += '<div class="headline01 largepoint1">'+partidos[i].estado+'</div>';
-				  		html += '<div class="headline01 largepoint1">'+equiposMap[partidos[i].equipo1]+'</div>';
-				  		html += '<div class="headline01 largepoint1">';
+				  		html += '<div class="headline01 smallpoint">'+partidos[i].estado+'</div>';
+				  		html += '<div class="headline01 smallpoint">'+equiposMap[partidos[i].equipo1]+'</div>';
+				  		html += '<div class="headline01 smallpoint">';
 				  		if(partidos[i].marcador_equipo_1 == undefined ){
 				  			html += "0";
 				  		} else {
 				  			html += partidos[i].marcador_equipo_1;
 				  		}
 				  		html += "</div>";
-				  		html += '<div class="headline01 largepoint1">';
+				  		html += '<div class="headline01 smallpoint">';
 				  		if(partidos[i].marcador_equipo_2 == undefined ){
 				  			html += "0";
 				  		} else {
 				  			html += partidos[i].marcador_equipo_2;
 				  		}
 				  		html += "</div>";
-				  		html += '<div class="headline01 largepoint1">'+equiposMap[partidos[i].equipo2]+'</div>';
-				  		html += '<div class="headline01 largepoint1">'+partidos[i].fecha_numero+'</div>';
+				  		html += '<div class="headline01 smallpoint">'+equiposMap[partidos[i].equipo2]+'</div>';
+				  		html += '<div class="headline01 smallpoint">'+partidos[i].fecha_numero+'</div>';
 
-				  		html += '<div class="headline01 largepoint1">'+partidos[i].amonestados+'</div>';
-				  		html += '<div class="headline01 largepoint1">'+partidos[i].expulsados+'</div>';
-				  		html += '<div class="headline01 largepoint1">'+partidos[i].cambios+'</div>';
-				  		html += '<div class="headline01 largepoint1">'+partidos[i].cambios+'</div>';
-				  		html += '<div class="headline01 largepoint1">'+formatDate(partidos[i].fecha)+'</div>';
-				  		html += '<div class="headline01 largepoint1">'+torneosMap[partidos[i].torneo]+'</div>';
+				  		html += '<div class="headline01 smallpoint">'+partidos[i].amonestados+'</div>';
+				  		html += '<div class="headline01 smallpoint">'+partidos[i].expulsados+'</div>';
+				  		html += '<div class="headline01 smallpoint">'+partidos[i].cambios+'</div>';
+				  		html += '<div class="headline01 smallpoint">'+partidos[i].cambios+'</div>';
+				  		html += '<div class="headline01 smallpoint">'+formatDate(partidos[i].fecha)+'</div>';
+				  		html += '<div class="headline01 smallpoint">'+torneosMap[partidos[i].torneo]+'</div>';
 
-				  		html += '<div class="headline01 largepoint1 row row">'+
-				  				'<div class="headline01 smallpoint1"><span>';
-				  				'<form onsubmit="return confirm("Seguro que desea eliminar al partido '+ equiposMap[partidos[i].equipo1] +' VS '+ equiposMap[partidos[i].equipo2] +'?"");" action="/deletePartido" method="post">'+
-				  					'<button type="submit">Eliminar</button>'+
+				  		html += '<div class="headline01 smallpoint row row">'+
+				  				'<div class="headline01 smallpoint1"><span>'+
+				  				'<form action="/deletePartido" method="post" id="formDelete'+partidos[i]._id+'">'+
+				  					'<button class="deletePartido" id="'+partidos[i]._id+'-'+equiposMap[partidos[i].equipo1]+'-'+equiposMap[partidos[i].equipo2]+'" type="submit">Eliminar</button>'+
 				  					'<input type="hidden" value='+ partidos[i]._id +' name="partidoid"/>'+
 				  				'</form></span></div></div></div></li>';
 				  	}

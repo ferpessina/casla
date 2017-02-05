@@ -16,15 +16,21 @@ client = new Client();
 var swagger = require('./config/swaggerConfig')(app);
 var logger = require('./logger');
 
-// app.use(paginate.middleware(10, 50));
-// app.all(function(req,res,next){
-//   if(req.query.limit <= 10) req.query.limit=10;
-//   next();
-// });
+//uploading images
+var multer = require('multer');
+var upload = multer({dest: "../views/images/team-logo/"});
+var gfs;
+
+var Grid = require("gridfs-stream");
+Grid.mongo = mongoose.mongo;
+
+mongoose.connect('mongodb://localhost/casla');
+var conn = mongoose.connection;
+
 
 // Connection to DB
-mongoose.connect('mongodb://localhost/casla', function(err, res) {
-  if(err) throw err;
+conn.once("open", function(){
+  gfs = Grid(conn.db);
   console.log('Connected to Database');
 });
 
