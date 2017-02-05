@@ -2,11 +2,11 @@ var express         = require("express"),
     app             = express(),
     methodOverride  = require("method-override"),
     mongoose        = require('mongoose'),
-    morgan       	  = require('morgan'),
-    passport 		    = require('passport'),
-	  flash    		    = require('connect-flash'),
-	  cookieParser 	  = require('cookie-parser'),
-	  session      	  = require('express-session'),
+    morgan          = require('morgan'),
+    passport        = require('passport'),
+    flash           = require('connect-flash'),
+    cookieParser    = require('cookie-parser'),
+    session         = require('express-session'),
     bodyParser      = require('body-parser'),
     port            = process.env.PORT || 8080,
     Client          = require('node-rest-client').Client;
@@ -16,23 +16,13 @@ client = new Client();
 var swagger = require('./config/swaggerConfig')(app);
 var logger = require('./logger');
 
-//uploading images
-var multer = require('multer');
-var upload = multer({dest: "../views/images/team-logo/"});
-var gfs;
-
-var Grid = require("gridfs-stream");
-Grid.mongo = mongoose.mongo;
-
-mongoose.connect('mongodb://localhost/casla');
-var conn = mongoose.connection;
-
 
 // Connection to DB
-conn.once("open", function(){
-  gfs = Grid(conn.db);
+mongoose.connect('mongodb://localhost/casla', function(err, res) {
+  if(err) throw err;
   console.log('Connected to Database');
 });
+
 
 require('./config/passport')(passport,logger); // pass passport for configuration
 

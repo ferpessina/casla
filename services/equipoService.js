@@ -90,11 +90,14 @@ exports.deleteEquipo = function(req, res) {
 		var torneoDelEquipo = equipo.torneo_actual;
 		
 		Torneo.findById(torneoDelEquipo, function(err, torneo_del_equipo) {
-			torneo_del_equipo.equipos.pop(equipo);
-			torneo_del_equipo.save(function(err, torneo_del_equipo) {
-				if(err) return res.send(500, err.message);
-				logger.info("El torneo "+torneo_del_equipo+" ha quitado al equipo "+equipo.nombre);
-			});
+			if (torneo_del_equipo){
+				torneo_del_equipo.equipos.pop(equipo);
+				torneo_del_equipo.save(function(err, torneo_del_equipo) {
+					if(err) return res.send(500, err.message);
+					logger.info("El torneo "+torneo_del_equipo+" ha quitado al equipo "+equipo.nombre);
+				});
+			}
+
 		});
 
 		if(err) return res.send(500, err.message);
