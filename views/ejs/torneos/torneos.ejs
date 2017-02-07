@@ -86,9 +86,7 @@
 
                            <div class="headline01 smallpoint">
                             <% if (!(torneos[i].divisiones.length==0 )) { %>
-                                <form action="/divisionesDelTorneo?torneoid=<%= torneos[i]._id %>" method="get">
-                                  <button  type="submit">Ver Divisiones</button></span>
-                                </form>
+                              <a href="/divisionesDelTorneo?torneoid=<%= torneos[i]._id %>">Ver Divisiones</a>
                               <% } else { %>
                                 Ninguna
                               <% } %>

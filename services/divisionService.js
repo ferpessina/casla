@@ -44,7 +44,7 @@ exports.addDivision = function(req, res) {
 	console.log('POST');
 	console.log(req.body);
 
-	Torneo.findById(req.body.torneoid, function(err, torneo) {
+	Torneo.findById(req.body.torneo, function(err, torneo) {
 		if(err) return res.send(500, err.message);
 		if (!torneo) {return res.send(404, "Torneo id not found");}
 		var division = new Division({

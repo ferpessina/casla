@@ -175,7 +175,7 @@ module.exports = function(express,app) {
 	 *       200:
 	 *         description: Successfully deleted
 	 */
-	 //divisiones.delete('/:id', DivisionCtrl.deleteDivision);
+	 divisiones.delete('/:id', DivisionCtrl.deleteDivision);
 
 
 	app.use('/division', divisiones);
