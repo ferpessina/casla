@@ -1,12 +1,13 @@
 module.exports = function(app,isAdmin) {
 	app.get('/equipos', isAdmin, function(req, res) {
         client.get("http://localhost:3000/equipo", function (equipos, response) {
-            client.get("http://localhost:3000/torneo", function (torneos, response) {
-                var torneosMap =  {};
-                for (var i = 0; i < torneos.length; i++) {
-                    torneosMap[torneos[i]._id] = torneos[i].nombre;
+            client.get("http://localhost:3000/division", function (divisiones, response) {
+                var divisionesMap =  {};
+                for (var i = 0; i < divisiones.length; i++) {
+                    divisionesMap[divisiones[i]._id] = divisiones[i].nombre;
                 };
-                res.render('./ejs/equipos/equipos.ejs', { message: req.flash('signupMessage'), equipos: equipos, torneosMap:torneosMap, torneos:torneos, user: req.user, resultado: req.session.statusDelete});
+                res.render('./ejs/equipos/equipos.ejs', { message: req.flash('signupMessage'), equipos: equipos, divisionesMap:divisionesMap, 
+                                                divisiones:divisiones, user: req.user, resultado: req.session.statusDelete});
             }); 
         });  
     });

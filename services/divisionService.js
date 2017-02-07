@@ -17,23 +17,49 @@ exports.findAllDivisiones = function(req, res) {
 //GET - Return a division with specified ID
 exports.findById = function(req, res) {
 	Division.findById(req.params.id, function(err, division) {
-    if(err) return res.send(500, err.message);
-    if(!cancha) return res.send(404, "Division not found");
-    console.log('GET /division/' + req.params.id);
-		res.status(200).jsonp(division);
-	});
+	    if(err) return res.send(500, err.message);
+	    if(!division) return res.send(404, "Division not found");
+	    console.log('GET /division/' + req.params.id);
+			res.status(200).jsonp(division);
+		});
 };
+
+//GET - Return divisiones from a torneo
+exports.findByTorneoId = function(req, res) {
+	Torneo.findById(req.params.id, function(err, torneo) {
+		if(err) return res.send(500, err.message);
+		if (!torneo) {return res.send(404, "Torneo id not found");}
+		Division.find({ 'torneo': torneo}, function(err, divisiones) {
+		    if(err) return res.send(500, err.message);
+		    console.log('GET /division/torneo' + req.params.id);
+			res.status(200).jsonp(divisiones);
+		});
+	}); 
+};
+
+
 
 //POST - Insert a new Division in the DB
 exports.addDivision = function(req, res) {
 	console.log('POST');
 	console.log(req.body);
 
-	Torneo.findById(req.body.torneo, function(err, torneo_encontrado) {
+	Torneo.findById(req.body.torneoid, function(err, torneo) {
 		if(err) return res.send(500, err.message);
-		if (!torneo_encontrado) {return res.send(404, "Torneo id not found");}
-		var division = crearDivision(req.body);
-		guardarDivision(req,res,division,torneo_encontrado);	
+		if (!torneo) {return res.send(404, "Torneo id not found");}
+		var division = new Division({
+			nombre:    				req.body.nombre,
+			torneo: 				torneo
+		});
+		division.save(function(err, division) {
+			if(err) return res.status(500).send(err.message);
+			torneo.divisiones.push(division);
+			torneo.save(function(err) {
+				if(err) return res.status(500).send(err.message);
+				logger.info(req.user+" ha agregado al torneo "+torneo.nombre+" una nueva division: "+division.nombre);
+		      	res.status(200).jsonp(division);
+			});
+		});	
 	});
 };
 
@@ -89,27 +115,43 @@ exports.addEquipo = function(req, res) {
 	})
 };
 
+//DELETE - Delete a division with specified ID
+exports.deleteDivision = function(req, res) {
+	Division.findById(req.params.id, function(err, division) {
 
-function crearDivision(body){
-	var division = new Division({
-		nombre:    				body.nombre,
-		torneo: 				body.torneo,
-		equipos: 	            body.equipos
-	});
+		if(err) return res.send(500, err.message);
+		if (!division) {return res.send(404, "Equipo not found");}
 
-	return division;
-};
-
-function guardarDivision(req,res,division,torneo){
-	division.save(function(err, division) {
-			if(err) return res.status(500).send(err.message);
-			torneo.divisiones.push(division);
-			torneo.save(function(err) {
-				if(err) return res.status(500).send(err.message);
-				logger.info(req.user+" ha agregado al torneo "+torneo.nombre+" una nueva division: "+division.nombre);
-		      	res.status(200).jsonp(division);
-			});
+		var torneoDeLaDivision = division.torneo;
+		
+		Torneo.findById(torneoDeLaDivision, function(err, torneoDeLaDivision) {
+			if (torneoDeLaDivision){
+				torneoDeLaDivision.divisiones.pop(division);
+				torneoDeLaDivision.save(function(err, torneoDeLaDivision) {
+					if(err) return res.send(500, err.message);
+					logger.info("El torneo "+torneoDeLaDivision+" ha quitado la division "+division.nombre);
+				});
+			}
 		});
+
+		for (var i = 0; i<division.equipos.length; i++) {
+			Equipo.findById(division.equipos[i], function(err, equipo) {
+				if (equipo){
+					equipo.division = null;
+					equipo.save(function(err, equipo) {
+						if(err) return res.send(500, err.message);
+						logger.info("El equipo "+equipo.nombre+" ha abandonado la division "+division.nombre);
+					});
+				}
+			});
+		};
+
+		division.remove(function(err) {
+			if(err) return res.send(500, err.message);
+			logger.info(req.user+" ha borrado la division "+division.nombre);
+      		res.status(200).jsonp(torneoDeLaDivision); //para redirigir en la vista
+		})
+	});
 };
 
 // EXAMPLE POST:

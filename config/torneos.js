@@ -3,13 +3,7 @@ var moment = require('moment');
  module.exports = function(app, isAdmin) {
     app.get('/torneos', isAdmin, function(req, res) {
         client.get("http://localhost:3000/torneo", function (torneos, response) {
-            client.get("http://localhost:3000/equipo", function (equipos, response) {
-                var equiposMap =  {};
-                for (var i = 0; i < equipos.length; i++) {
-                    equiposMap[equipos[i]._id] = equipos[i].nombre;
-                };
-            res.render('./ejs/torneos/torneos.ejs', { message: req.flash('signupMessage'), torneos: torneos, equiposMap:equiposMap, user: req.user, resultado: req.session.statusDelete});
-        });  
+            res.render('./ejs/torneos/torneos.ejs', { message: req.flash('signupMessage'), torneos: torneos, user: req.user, resultado: req.session.statusDelete});
         }); 
     });
 

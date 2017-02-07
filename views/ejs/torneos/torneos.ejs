@@ -53,7 +53,6 @@
                           <div class="headline01 smallpoint">Nombre</div>
                           <div class="headline01 smallpoint">J.x.E.</div>
                           <div class="headline01 smallpoint">Activo</div>
-                          <div class="headline01 smallpoint">Equipos</div>
                           <div class="headline01 smallpoint">Canchas</div>
                           <div class="headline01 smallpoint">Divisiones</div>
                           <div class="headline01 smallpoint">Partidos</div>
@@ -73,17 +72,6 @@
                               <% if (torneos[i].activo) { %> Si <% } else { %> No  <% } %>  
                           </div>
 
-                          <div class="headline01 smallpoint">
-                            <% if (!(torneos[i].equipos.length==0 )) { %>
-                                <form action="/equiposTorneo" method="post">
-                                  <input type="hidden" value=<%= torneos[i]._id %> name="torneoid"/>
-                                  <button  type="submit">Ver Equipos</button></span>
-                                </form>
-                              <% } else { %>
-                                Ninguno
-                              <% } %>
-                          </div>
-
                            <div class="headline01 smallpoint">
                             <% if (!(torneos[i].canchas.length==0 )) { %>
                                 <form action="#" method="post">
@@ -98,13 +86,16 @@
 
                            <div class="headline01 smallpoint">
                             <% if (!(torneos[i].divisiones.length==0 )) { %>
-                                <form action="#" method="post">
-                                  <input type="hidden" value=<%= torneos[i]._id %> name="torneoid"/>
+                                <form action="/divisionesDelTorneo?torneoid=<%= torneos[i]._id %>" method="get">
                                   <button  type="submit">Ver Divisiones</button></span>
                                 </form>
                               <% } else { %>
                                 Ninguna
                               <% } %>
+                              <form action="/nuevaDivision" method="post" id="formNuevaDivision">
+                                <input type="hidden" class="form-control" name="torneoid" value="<%= torneos[i]._id %>">
+                                <button type="submit" >Nueva</button>
+                              </form>
                           </div>
 
                         <div class="headline01 smallpoint">

@@ -52,7 +52,6 @@
                         <div class="subPoint_table">
                           <div class="headline01 smallpoint">Logo</div>
                           <div class="headline01 smallpoint">Nombre</div>
-                          <div class="headline01 smallpoint">Torneo actual</div>
                           <div class="headline01 smallpoint">Division</div>
                           <div class="headline01 smallpoint">Jugadores</div>
                           <div class="headline01 smallpoint">Partidos</div>
@@ -76,16 +75,16 @@
                           <div class="headline01 smallpoint"><%= equipos[i].nombre %></div>
                           <div >
                               <div class="headline01 smallpoint">
-                              <% if (torneosMap[equipos[i].torneo_actual]) { %>
-                                <%= torneosMap[equipos[i].torneo_actual] %> 
+                              <% if (divisionesMap[equipos[i].division]) { %>
+                                <%= divisionesMap[equipos[i].division] %> 
                               <% } else { %>
-                                Ninguno
+                                Ninguna
                               <% } %>
                               
-                              <form action="/updateEquipo" method="post" id="formUpdate" onsubmit="return confirm('Seguro que desea cambiar el torneo del equipo <%= equipos[i].nombre %>?');">
-                                <select name="torneo_actual" id="torneo_actualSelect">
-                                  <% for(var j=0; j < torneos.length; j++) { %> 
-                                    <option value="<%= torneos[j]._id %>" selected><%=torneos[j].nombre%></option>
+                              <form action="/updateEquipo" method="post" id="formUpdate" onsubmit="return confirm('Seguro que desea cambiar la division del equipo <%= equipos[i].nombre %>?');">
+                                <select name="division" id="divisionSelect">
+                                  <% for(var j=0; j < divisiones.length; j++) { %> 
+                                    <option value="<%= divisiones[j]._id %>" selected><%=divisiones[j].nombre%></option>
                                   <% } %>
                                 </select>
                                 <input type="hidden" class="form-control" name="equipoid" value="<%= equipos[i]._id %>">
@@ -93,13 +92,6 @@
                                 <button type="submit" >Cambiar</button>
                               </form>
                               </div>
-                          </div>
-                          <div class="headline01 smallpoint">
-                            <% if (equipos[i].division ) { %>
-                                <%= equipos[i].division  %> 
-                              <% } else { %>
-                                Ninguna
-                              <% } %>
                           </div>
                           <div class="headline01 smallpoint">
                             <% if (equipos[i].jugadores ) { %>

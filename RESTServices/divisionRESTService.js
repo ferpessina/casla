@@ -78,6 +78,29 @@ module.exports = function(express,app) {
 	 */
 	 divisiones.get('/:id', DivisionCtrl.findById);
 
+	 /**
+	 * @swagger
+	 * /division/torneo/{id}:
+	 *   get:
+	 *     tags:
+	 *       - DivisionModel
+	 *     description: Returns all divisiones from a specific torneo
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: id
+	 *         description: Torneo's id
+	 *         in: path
+	 *         required: true
+	 *         type: integer
+	 *     responses:
+	 *       200:
+	 *         description: An array of divisiones
+	 *         schema:
+	 *           $ref: '#/definitions/DivisionModel'
+	 */
+	 divisiones.get('/torneo/:id', DivisionCtrl.findByTorneoId);
+
 
 	 /**
 	 * @swagger

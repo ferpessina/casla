@@ -14,7 +14,8 @@ module.exports = function(app) {
     //------------------------------PARTIDOS----------------------------------------//
     require("./partidos.js")(app,isAdmin);
 
-
+    //------------------------------DIVISIONES----------------------------------------//
+    require("./divisiones.js")(app,isAdmin);
 
 }
 

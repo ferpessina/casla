@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Equipo  = mongoose.model('Equipo');
 var Torneo  = mongoose.model('Torneo');
+var Division  = mongoose.model('Division');
 var logger = require('../logger');
 
 //GET - Return all equipos in the DB
@@ -24,6 +25,21 @@ exports.findById = function(req, res) {
 		res.status(200).jsonp(equipo);
 	});
 };
+
+//GET - Return equipos from a specific division
+exports.findByDivisionId = function(req, res) {
+	Division.findById(req.params.id, function(err, equipo) {
+	    if(err) return res.status(500).send(err.message);
+	    if(!equipo) return res.status(404).send("Division not found");
+		Equipo.find({'division':req.params.id}, function(err, equipos) {
+	    	if(err) return res.status(500).send(err.message);	    
+	    	console.log('GET /equipo/division/' + req.params.id);
+			res.status(200).jsonp(equipos);
+		});
+	});
+};
+
+
 
 //POST - Insert a new Equipo in the DB
 exports.addEquipo = function(req, res) {

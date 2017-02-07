@@ -4,7 +4,6 @@ var mongoose = require('mongoose'),
 var equipoSchema = new Schema({  
   logo: 				{ data: Buffer, contentType: String},
   nombre: 				{ type: String},
-  torneo_actual:        {type: Schema.Types.ObjectId, ref: 'Torneo'},
   division:     		{type: Schema.Types.ObjectId, ref: 'Division'},
   jugadores: 		[
       					{type: Schema.Types.ObjectId, ref: 'Jugador'}
