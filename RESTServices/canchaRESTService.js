@@ -9,8 +9,8 @@ module.exports = function(express,app) {
 	 *     properties:
 	 *       nombre:
 	 *         type: string
-	 *       torneo_actual:
-	 *         type: string
+	 *       torneo:
+	 *         $ref: Torneo
 	*/
 	var canchas = express.Router();
 
@@ -122,7 +122,7 @@ module.exports = function(express,app) {
 	 *       200:
 	 *         description: Successfully deleted
 	 */
-	canchas.delete('/:id', CanchaRESTService.deleteCancha);
+	//canchas.delete('/:id', CanchaRESTService.deleteCancha);
 
 
 	app.use('/cancha', canchas);

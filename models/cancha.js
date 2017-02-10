@@ -2,8 +2,7 @@ var mongoose = require('mongoose'),
     Schema   = mongoose.Schema;
 
 var canchaSchema = new Schema({  
-  nombre:             {type:String},
-  torneo_actual: 	  {type: Schema.Types.ObjectId, ref: 'Torneo'}
+  nombre:             {type:String}
   //imagen             {data: Buffer, contentType: String}
 });
 

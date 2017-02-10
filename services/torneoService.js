@@ -3,6 +3,7 @@ var Torneo  = mongoose.model('Torneo');
 var Equipo = mongoose.model('Equipo');
 var Division = mongoose.model('Division');
 var Partido = mongoose.model('Partido');
+var Cancha = mongoose.model('Cancha');
 var logger = require('../logger');
 
 //GET - Return all torneos in the DB
@@ -102,6 +103,27 @@ exports.updateTorneo = function(req, res) {
 			if(err) return res.send(500, err.message);
 			logger.info(req.user+" ha actualizado el torneo "+torneo._id+". Nombre: "+torneo.nombre+". Jugadores por equipo: "+torneo.jugadores_por_equipo+". Activo: "+torneo.activo);
       		res.status(200).jsonp(torneo);
+		});
+	});
+};
+
+//PUT - Update a register already exists
+exports.addCancha = function(req, res) {
+	Torneo.findById(req.params.id, function(err, torneo) {
+
+		if(err) return res.send(500, err.message);
+		if (!torneo) {return res.send(404, "Torneo not found");}
+
+		Cancha.findById(req.params.idCancha, function(err, cancha) {
+			if(err) return res.send(500, err.message);
+			if (!cancha) {return res.send(404, "Cancha not found");}
+
+			torneo.canchas.push(cancha);
+			torneo.save(function(err) {
+				if(err) return res.send(500, err.message);
+				logger.info(req.user+" ha agregado la cancha "+cancha.nombre+" al torneo: "+torneo.nombre);
+	      		res.status(200).jsonp(torneo);
+			});
 		});
 	});
 };

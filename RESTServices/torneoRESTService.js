@@ -185,6 +185,33 @@ module.exports = function(express,app) {
 
 	 /**
 	 * @swagger
+	 * /torneo/{id}/{idCancha}:
+	 *   put:
+	 *     tags:
+	 *       - Torneo
+	 *     description: Add a cancha to this torneo
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: id
+	 *         description: Torneo's id
+	 *         in: path
+	 *         required: true
+	 *         type: integer
+	 *       - name: idCancha
+	 *         description: Cancha's Id
+	 *         in: path
+	 *         required: true
+	 *         schema:
+	 *           $ref: '#/definitions/Torneo'
+	 *     responses:
+	 *       200:
+	 *         description: Successfully updated
+	 */
+	 torneos.put('/:id/:idCancha', TorneoCtrl.addCancha);
+
+	 /**
+	 * @swagger
 	 * /torneo/{id}:
 	 *   delete:
 	 *     tags:

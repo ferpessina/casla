@@ -74,13 +74,14 @@
 
                            <div class="headline01 smallpoint">
                             <% if (!(torneos[i].canchas.length==0 )) { %>
-                                <form action="#" method="post">
-                                  <input type="hidden" value=<%= torneos[i]._id %> name="torneoid"/>
-                                  <button  type="submit">Ver Canchas</button></span>
-                                </form>
+                              <a href="/canchasDelTorneo?torneoid=<%= torneos[i]._id %>">Ver Canchas</a>
                               <% } else { %>
                                 Ninguna
                               <% } %>
+                              <form action="/nuevaCancha" method="post" id="formNuevaCancha">
+                                <input type="hidden" class="form-control" name="torneoid" value="<%= torneos[i]._id %>">
+                                <button type="submit" >Nueva</button>
+                              </form>
                           </div>
 
 

@@ -29,6 +29,18 @@ var moment = require('moment');
         });
     });
 
+    app.post('/canchasTorneo', isAdmin, function(req, res) {
+        client.get("http://localhost:3000/torneo/"+req.body.torneoid+"/canchas", function (data, response) {
+            client.get("http://localhost:3000/cancha", function (canchas, response) {
+            var canchasMap = {};
+                for(var i =0; i<canchas.length;i++){
+                    canchasMap[canchas[i]._id] = canchas[i].nombre;
+                }
+                res.render('./ejs/torneos/canchasTorneo.ejs', {user: req.user, canchas:canchasMap, torneo: data.torneo, moment:moment, message: req.flash('loginMessage')}); 
+            });
+        });
+    });
+
     app.post('/agregarTorneo', isAdmin, function(req, res) {
         var args = {
             data:  req.body ,
