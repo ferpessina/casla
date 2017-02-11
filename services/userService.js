@@ -13,12 +13,28 @@ exports.findAllUsuarios = function(req, res, next) {
 	});
 };
 
-//GET - Return all users in the DB
+//GET - Return all users in the DB that are not superadmins
 exports.findAllUsuariosButAdmins = function(req, res, next) {
-	User.find({$or: [{role : 'DELEGADO'}, {role : 'PLANILLERO'}]}, function(err, users) {
+	User.find({role: {'$ne':'SUPER_ADMIN' }}).sort({email: 1}).exec( function(err, users) {
     if(err) res.send(500, err.message);
 
-    console.log('GET /user')
+    console.log('GET /user/notAdmins')
+		res.status(200).jsonp(users);
+	});
+};
+
+//GET - Return all users in the DB not superadmins and with a filter
+exports.findAllUsuariosButAdminsRegex = function(req, res, next) {
+	var filtro = req.params.username;
+	User.find( {
+      "$and": [
+		 {role: {'$ne':'SUPER_ADMIN' } },
+         {'email' : new RegExp(filtro, "i") }
+      ]
+    }).sort({email: 1}).exec( function(err, users) {
+	    if(err) res.send(500, err.message);
+
+	    console.log('GET /user/username/'+filtro);
 		res.status(200).jsonp(users);
 	});
 };

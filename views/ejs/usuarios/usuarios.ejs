@@ -44,7 +44,13 @@
         <div class="container">
 			<div class="row">
 			<div class="matchSchedule_details row">
-                
+         
+         <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+              <input type="text" id="buscadorUsuario" class="form-control" placeholder="Buscar usuario">
+          </div>
+      </form>
+
 				 <div class="match_versus-wrap2">
                   <div class="wrap_match-innerdetails">
                     <ul class="point_table2">
@@ -56,28 +62,35 @@
 							<div class="headline01 smallpoint1"><span>ELIMINAR</span></div>
                         </div>
 						</div>
-                      </li>
 
-                      <% for(var i=0; i < users.length; i++) { %> 
-					  <li class="clearfix">
-                        <div class="subPoint_table">
-                          <div class="headline01 largepoint1"><%= users[i].email %></div>
-                          <div class="headline01 largepoint1"><%= users[i].role %></div>
-                          <div class="headline01 largepoint1 row row">
-							<div class="headline01 smallpoint1"><span>
-								<form onsubmit="return confirm('Seguro que desea eliminar al usuario <%= users[i].email %>?');" action="/deleteUser" method="post">
-					                <button type="submit">Eliminar</button>
-					                <input type="hidden" value=<%= users[i]._id %> name="userid"/>
-					            </form>
-							</span></div>
-						  </div>
-						</div>
-                      </li>
-                      <% } %>
+            </li>
 
-                    </ul>
-                    </div>
-                  </div>
+            <div id="datosUsers">
+              <% for(var i=0; i < users.length; i++) { %> 
+  					     <li class="clearfix">
+                            <div class="subPoint_table">
+                            <div class="headline01 largepoint1"><%= users[i].email %></div>
+                            <div class="headline01 largepoint1"><%= users[i].role %></div>
+                            <!-- <div class="headline01 largepoint1 row row"> -->
+              							<div class="headline01 smallpoint1">
+                               <% if (users[i].role == "ADMIN") { %>
+                                  No Disponible
+                               <% } else { %>
+                  								<form onsubmit="return confirm('Seguro que desea eliminar al usuario <%= users[i].email %>?');" action="/deleteUser" method="post">
+                  					                <button type="submit">Eliminar</button>
+                  					                <input type="hidden" value=<%= users[i]._id %> name="userid"/>
+                  					     </form>
+                              <% } %>
+              							</div>
+              						  <!-- </div> -->
+              						</div>
+                        </li>
+               <% } %>
+           </div>
+
+             </ul>
+             </div>
+             </div>
  				</div>
             </div>
         </div>

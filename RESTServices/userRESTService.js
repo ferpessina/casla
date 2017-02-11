@@ -45,7 +45,7 @@ module.exports = function(express,app) {
 	 *   get:
 	 *     tags:
 	 *       - User
-	 *     description: Returns all users but admins
+	 *     description: Returns all users but superadmins
 	 *     produces:
 	 *       - application/json
 	 *     responses:
@@ -55,6 +55,29 @@ module.exports = function(express,app) {
 	 *           $ref: '#/definitions/User'
 	 */
 	usuarios.get('/notAdmins', UserCtrl.findAllUsuariosButAdmins);
+
+	/**
+	 * @swagger
+	 * /user/username/{username}:
+	 *   get:
+	 *     tags:
+	 *       - User
+	 *     description: Get not superadmin users with a regex in their email
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: username
+	 *         description: User's email regex
+	 *         in: path
+	 *         required: true
+	 *         type: integer
+	 *     responses:
+	 *       200:
+	 *         description: An array of users
+	 *         schema:
+	 *           $ref: '#/definitions/User'
+	 */
+	usuarios.get('/username/:username', UserCtrl.findAllUsuariosButAdminsRegex);
 
 	 /**
 	 * @swagger
