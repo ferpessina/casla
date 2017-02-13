@@ -13,6 +13,8 @@ module.exports = function(express,app) {
 	 *         type: string
 	 *       password:
 	 *         type: string
+	 *       equipo:
+	 *         type: string
 	 *       role:
 	 *         type: string
      *   	   enum:

@@ -6,8 +6,17 @@
                 for (var i = 0; i < equipos.length; i++) {
                     equiposMap[equipos[i]._id] = equipos[i].nombre;
                 };
+                var equiposSinDelegado =  {};
+                for (var i = 0; i < equipos.length; i++) {
+                    if (equipos[i].delegado == undefined){
+                        equiposSinDelegado[equipos[i]._id] = true;
+                    } else {
+                        equiposSinDelegado[equipos[i]._id] = false;
+                    }
+                };
+
                 res.render('./ejs/usuarios/usuarios.ejs', { message: req.flash('signupMessage'), users: data, equiposMap:equiposMap,
-                                                            equipos: equipos, user: req.user, resultado: req.session.statusDelete});
+                                                            equiposSinDelegado:equiposSinDelegado, equipos: equipos, user: req.user, resultado: req.session.statusDelete});
             }); 
         });  
     });

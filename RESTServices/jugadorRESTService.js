@@ -94,6 +94,28 @@ module.exports = function(express,app) {
 	 */
 	 jugadores.get('/:id', JugadorCtrl.findById);
 
+	 /**
+	 * @swagger
+	 * /jugador/equipo/{id}:
+	 *   get:
+	 *     tags:
+	 *       - JugadorModel
+	 *     description: Returns jugadores from an equipo
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: id
+	 *         description: Equipo's id
+	 *         in: path
+	 *         required: true
+	 *         type: integer
+	 *     responses:
+	 *       200:
+	 *         description: An array of jugadores
+	 *         schema:
+	 *           $ref: '#/definitions/JugadorModel'
+	 */
+	 jugadores.get('/equipo/:id', JugadorCtrl.findByEquipoId);
 
 	 /**
 	 * @swagger

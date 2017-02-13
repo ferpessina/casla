@@ -81,16 +81,42 @@ exports.updateUser = function(req, res) {
 		if(err) return res.send(500, err.message);
 		if (!usuario) {return res.send(404, "User not found");}
 
-		Equipo.findById(req.body.equipo, function(err, equipo) {
-			if(err) return res.send(500, err.message);
-			if (!equipo) {return res.send(404, "Equipo not found");}
+		var previoEquipo = usuario.equipo;
+		if (previoEquipo != undefined){
+			Equipo.findById(previoEquipo, function(err, equipo) {	
+				if(err) return res.send(500, err.message);
+				equipo.delegado = undefined;
+				equipo.save(function(err, equipo) {
+					if(err) return res.send(500, err.message);
+				});
+			});
+		}
 
-			usuario.equipo = req.body.equipo;
-			logger.info("El usuario "+req.body.userid+" ha sido actualizado");
+		if (req.body.equipo == "none"){
+			usuario.equipo = undefined;
+
 			usuario.save(function(err, usuario) {
 				if(err) return res.send(500, err.message);
 		    	res.status(200).jsonp(usuario);
 			});
-		});
+		} else {
+			Equipo.findById(req.body.equipo, function(err, equipo) {
+				if(err) return res.send(500, err.message);
+				if (!equipo) {return res.send(404, "Equipo not found");}
+
+				equipo.delegado = req.params.id;
+				equipo.save(function(err, equipo) {
+					if(err) return res.send(500, err.message);
+				});
+				
+				usuario.equipo = req.body.equipo;
+				logger.info("El usuario "+req.body.userid+" ha sido actualizado");
+
+				usuario.save(function(err, usuario) {
+					if(err) return res.send(500, err.message);
+			    	res.status(200).jsonp(usuario);
+				});
+			});
+		}
 	});
 };

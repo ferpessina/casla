@@ -23,6 +23,21 @@ exports.findById = function(req, res) {
 	});
 };
 
+//GET - Return Jugadores from an equipo
+exports.findByEquipoId = function(req, res) {
+	Equipo.findById(req.params.id, function(err, equipo) {
+    	if(err) return res.send(500, err.message);
+    	if(!equipo) return res.send(404, "Equipo not found");
+
+		Jugador.find({'equipo':req.params.id}, function(err, jugadores) {
+		    if(err) return res.send(500, err.message);
+		    console.log('GET /jugador/equipo/' + req.params.id);
+			res.status(200).jsonp(jugadores);
+		});
+	});
+};
+
+
 //POST - Insert a new Jugador in the DB
 exports.addJugador = function(req, res) {
 	console.log('POST');

@@ -66,6 +66,7 @@
 
             </li>
 
+
             <div id="datosUsers">
               <% for(var i=0; i < users.length; i++) { %> 
   					     <li class="clearfix">
@@ -83,11 +84,14 @@
                                   <% } %>
                                   <form  action="/delegarEquipo" method="post" id="formDelegar<%=users[i]._id%>">
                                        <select name="equipo" id="equipo">
-                                         <% for(var i=0; i < equipos.length; i++) { %> 
-                                            <option value="<%= equipos[i]._id %>"><%= equipos[i].nombre %></option>
+                                         <option value="none">Ninguno</option>
+                                         <% for(var j=0; j < equipos.length; j++) { %> 
+                                            <% if (equiposSinDelegado[equipos[j]._id]) { %>
+                                              <option value="<%= equipos[j]._id %>"><%= equipos[j].nombre %></option>
+                                            <% } %>
                                          <% } %>
                                        </select>  
-                                       <input type="hidden" value=<%= users[i]._id %> name="userid"/>
+                                       <input type="hidden" value="<%=users[i]._id%>" name="userid"/>
                                        <button type="submit" class="asignarEquipo" id="boton-<%=users[i].email%>-<%=users[i]._id%>">Asignar</button>
                                    </form>
                               <% } %>

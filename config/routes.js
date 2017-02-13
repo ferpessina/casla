@@ -88,10 +88,6 @@ module.exports = function(express,app, passport, client, logger) {
         res.render('./ejs/fairplay.ejs', {user: req.user}); 
     });
 
-    app.get('/delegado', isDelegado, function(req, res) {
-        res.render('./ejs/delegado.ejs', {user: req.user}); 
-    });
-
     app.get('/superadmin', isSuperAdmin, function(req, res) {
         res.render('./ejs/superadmin.ejs'); // load the index.ejs file
     });
@@ -104,17 +100,6 @@ function isLoggedIn(req, res, next) {
 
     // if user is authenticated in the session, carry on 
     if (req.isAuthenticated())
-        return next();
-
-    // if they aren't redirect them to the home page
-    res.redirect('/');
-}
-
-// route middleware to make sure a user is logged in (DELEGADO)
-function isDelegado(req, res, next) {
-
-    // if user is authenticated in the session, carry on 
-    if ((req.isAuthenticated()) && ( (req.user.role == "DELEGADO") || (req.user.role == "SUPER_ADMIN"))) 
         return next();
 
     // if they aren't redirect them to the home page
