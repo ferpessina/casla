@@ -28,7 +28,7 @@
       <div class="innerbannerwrap">
         <div class="content"></div>
         <div class="innerbannergoleadores">
-          <h2 class="bannerHeadline">Administración de Mi Equipo<span></span></h2>
+          <h2 class="bannerHeadline">Administración de <%= equipo.nombre %> <span></span></h2>
         </div>
       </div>
 
@@ -54,9 +54,9 @@
 			                        <div class="subPoint_table">
 			                          <div class="headline01 smallpoint">Index</div>
 			                          <div class="headline01 smallpoint">Nombre</div>
-			                          <div class="headline01 smallpoint">Apellido</div>
 			                          <div class="headline01 smallpoint">Numero</div>
-			                          <div class="headline01 smallpoint">Posicion</div>
+                                <div class="headline01 smallpoint">Capitan</div>
+                                <div class="headline01 smallpoint">SubCapitan</div>
 			                          <div class="headline01 smallpoint">Ver mas datos</div>
                           			  <div class="headline01 smallpoint row row">
             						  <div class="headline01 smallpoint1"><span>ELIMINAR/AGREGAR</span></div>
@@ -70,11 +70,19 @@
 
                                             <% if (jugadores[i]!=undefined) { %>
                                                   <div class="headline01 smallpoint"><%= i+1 %></div>
-                                            			 <div class="headline01 smallpoint"><%= jugadores[i].nombre %></div>
-                                            			 <div class="headline01 smallpoint"><%= jugadores[i].apellido %></div>
+                                            			 <div class="headline01 smallpoint"><%= jugadores[i].apellido %>, <%= jugadores[i].nombre %></div>
                                             			 <div class="headline01 smallpoint"><%= jugadores[i].numero %></div>
                                             			 <div class="headline01 smallpoint"><%= jugadores[i].posicion %></div>
-
+                                                   <div class="headline01 smallpoint">
+                                                      <% if ( equipo.capitan == jugadores[i]._id ) { %>
+                                                        SI
+                                                      <% } else { %> NO <% } %>
+                                                    </div>
+                                                  <div class="headline01 smallpoint">
+                                                      <% if ( equipo.subcapitan == jugadores[i]._id ) { %>
+                                                        SI
+                                                      <% } else { %> NO <% } %>
+                                                    </div>
                                             			<div class="headline01 smallpoint"><a href="#">Ver mas </a></div>
                                           
                   			                          <div class="headline01 smallpoint row row">
@@ -99,9 +107,9 @@
                                                   <div class="headline01 smallpoint row row">
                                                   <div class="headline01 smallpoint1">
                                                     <span>
-                                                    <form action="/addJugador" method="post">
+                                                    <form action="/addJugador" method="get">
                                                               <button type="submit">Agregar</button>
-                                                          </form>
+                                                    </form>
                                                     </span>
                                                   </div>
                                                   </div>

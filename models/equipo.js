@@ -12,6 +12,8 @@ var equipoSchema = new Schema({
       {type: Schema.Types.ObjectId, ref: 'Partido'}
   ],
   delegado: {type: Schema.Types.ObjectId, ref: 'User'},
+  capitan: {type: Schema.Types.ObjectId, ref: 'Jugador'},
+  subcapitan: {type: Schema.Types.ObjectId, ref: 'Jugador'}
   //delegado
   //capitan
   //subcapitan
