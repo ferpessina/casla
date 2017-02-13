@@ -122,6 +122,33 @@ module.exports = function(express,app) {
 	 */
 	usuarios.delete('/:id', UserCtrl.deleteUser);
 
+	/**
+	 * @swagger
+	 * /user/{id}:
+	 *   put:
+	 *     tags:
+	 *       - User
+	 *     description: Updates a single user
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: id
+	 *         description: User's id
+	 *         in: path
+	 *         required: true
+	 *         type: integer
+	 *       - name: user
+	 *         description: New fields for the User resource
+	 *         in: body
+	 *         required: true
+	 *         schema:
+	 *           $ref: '#/definitions/User'
+	 *     responses:
+	 *       200:
+	 *         description: Successfully updated
+	 */
+	 usuarios.put('/:id', UserCtrl.updateUser);
+
 
 
 	app.use('/user', usuarios);

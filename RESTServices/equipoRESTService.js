@@ -134,7 +134,7 @@ module.exports = function(express,app) {
 	 *           $ref: '#/definitions/EquipoModel'
 	 *     responses:
 	 *       200:
-	 *         description: Successfully created
+	 *         description: Successfully updated
 	 */
 	 equipos.put('/:id', EquipoCtrl.updateEquipo);
 

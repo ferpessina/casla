@@ -34,9 +34,9 @@
 
       <% if (resultado) { %>
           <% if (resultado == 200) { %>
-                <div class="alert alert-success">El usuario ha sido eliminado con exito</div>
+                <div class="alert alert-success">La operacion fue realizada con exito</div>
           <% } else { %>
-              <div class="alert alert-danger">El usuario no se pudo eliminar. Inténtelo nuevamente más tarde</div>
+              <div class="alert alert-danger">La operacion fallo. Inténtelo nuevamente más tarde</div>
           <% } %>
       <% } %>
 
@@ -56,8 +56,9 @@
                     <ul class="point_table2">
                        <li class="clearfix">
                         <div class="subPoint_table">
-                          <div class="headline01 largepoint1">EMAIL</div>
-                          <div class="headline01 largepoint1">ROL</div>
+                          <div class="headline01 smallpoint">EMAIL</div>
+                          <div class="headline01 smallpoint">ROL</div>
+                          <div class="headline01 smallpoint">EQUIPO QUE DELEGA</div>
                           <div class="headline01 largepoint1 row row">
 							<div class="headline01 smallpoint1"><span>ELIMINAR</span></div>
                         </div>
@@ -69,8 +70,28 @@
               <% for(var i=0; i < users.length; i++) { %> 
   					     <li class="clearfix">
                             <div class="subPoint_table">
-                            <div class="headline01 largepoint1"><%= users[i].email %></div>
-                            <div class="headline01 largepoint1"><%= users[i].role %></div>
+                            <div class="headline01 smallpoint"><%= users[i].email %></div>
+                            <div class="headline01 smallpoint"><%= users[i].role %></div>
+                            <div class="headline01 smallpoint">
+                              <% if (users[i].role != "DELEGADO") { %>
+                                  No Disponible
+                               <% } else { %>
+                                  <% if (users[i].equipo) { %>
+                                    <%= equiposMap[users[i].equipo] %>
+                                  <% } else { %>
+                                    Ninguno
+                                  <% } %>
+                                  <form  action="/delegarEquipo" method="post" id="formDelegar<%=users[i]._id%>">
+                                       <select name="equipo" id="equipo">
+                                         <% for(var i=0; i < equipos.length; i++) { %> 
+                                            <option value="<%= equipos[i]._id %>"><%= equipos[i].nombre %></option>
+                                         <% } %>
+                                       </select>  
+                                       <input type="hidden" value=<%= users[i]._id %> name="userid"/>
+                                       <button type="submit" class="asignarEquipo" id="boton-<%=users[i].email%>-<%=users[i]._id%>">Asignar</button>
+                                   </form>
+                              <% } %>
+                            </div>
                             <!-- <div class="headline01 largepoint1 row row"> -->
               							<div class="headline01 smallpoint1">
                                <% if (users[i].role == "ADMIN") { %>

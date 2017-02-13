@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User  = mongoose.model('User');
+var Equipo  = mongoose.model('Equipo');
 var logger = require('../logger');
 var paginate = require('express-paginate');
 
@@ -71,5 +72,25 @@ exports.deleteUser = function(req, res) {
 			if(err) return res.send(500, err.message);
       		res.status(200).jsonp("Successfully deleted");
 		})
+	});
+};
+
+//PUT - Update a register already exists
+exports.updateUser = function(req, res) {
+	User.findById(req.params.id, function(err, usuario) {
+		if(err) return res.send(500, err.message);
+		if (!usuario) {return res.send(404, "User not found");}
+
+		Equipo.findById(req.body.equipo, function(err, equipo) {
+			if(err) return res.send(500, err.message);
+			if (!equipo) {return res.send(404, "Equipo not found");}
+
+			usuario.equipo = req.body.equipo;
+			logger.info("El usuario "+req.body.userid+" ha sido actualizado");
+			usuario.save(function(err, usuario) {
+				if(err) return res.send(500, err.message);
+		    	res.status(200).jsonp(usuario);
+			});
+		});
 	});
 };
