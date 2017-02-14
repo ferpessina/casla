@@ -51,55 +51,60 @@
 					    <% } %>
 
 					    <!-- LOGIN FORM -->
-					    <form action="/signup" method="post" id="formRegistro">
+					    <form action="/agregarJugador" method="post" id="formAgregarJugador">
 					        <div class="form-group">
 					            <div class="headline01 largepoint1">Nombre</div>
-					            <input type="text" class="form-control" name="nombre">
+					            <input type="text" class="form-control" name="nombre" id="nombre">
 					        </div>
 					        <div class="form-group">
 					            <div class="headline01 largepoint1">Apellido</div>
-					            <input type="text" class="form-control" name="apellido">
+					            <input type="text" class="form-control" name="apellido" id="apellido">
 					        </div>
 					        <div class="form-group">
 					            <div class="headline01 largepoint1">Apodo</div>
-					            <input type="text" class="form-control" name="apodo">
+					            <input type="text" class="form-control" name="apodo" id="apodo">
 					        </div>
 					        <div class="form-group">
 					            <div class="headline01 largepoint1">Fecha de nacimiento (yyyy-mm-dd)</div>
-					            <input type="text" id="fecha_de_nacimiento" class="form-control" name="fecha_de_nacimiento">
+					            <input type="text" id="fecha_de_nacimiento" class="form-control" name="fecha_de_nacimiento" id="fecha_de_nacimiento">
 					        </div>
 					         <div class="form-group">
 					            <div class="headline01 largepoint1">DNI</div>
-					            <input type="text" class="form-control" name="dni">
+					            <input type="text" class="form-control" name="dni" id="dni">
 					        </div>
 					         <div class="form-group">
 					            <div class="headline01 largepoint1">Posicion</div>
-					            <input type="text" class="form-control" name="posicion">
+                      <select name="posicion" id="posicionSelect">
+                                <option value="ARQUERO">ARQUERO</option>
+                                <option value="DEFENSOR">DEFENSOR</option>
+                                <option value="VOLANTE" selected>VOLANTE</option>
+                                <option value="DELANTERO">DELANTERO</option>
+                       </select>
 					        </div>
 					         <div class="form-group">
 					            <div class="headline01 largepoint1">Numero</div>
-					            <input type="text" class="form-control" name="numero">
+					            <input type="text" class="form-control" name="numero" id="numero">
 					        </div>
 					         <div class="form-group">
 					            <div class="headline01 largepoint1">Email</div>
-					            <input type="text" class="form-control" name="email">
+					            <input type="text" class="form-control" name="email" id="email">
 					        </div>
 					         <div class="form-group">
 					            <div class="headline01 largepoint1">Capitan</div>
 					            <select name="capitan" id="capitanSelect">
-                            		<option value="no" selected>NO</option>
-                            		<option value="si" selected>SI</option>
+                            		<option value="false" selected>NO</option>
+                            		<option value="true">SI</option>
                             	</select>
 					        </div>
 					        <div class="form-group">
 					            <div class="headline01 largepoint1">SubCapitan</div>
 					            <select name="subcapitan" id="subcapitanSelect">
-                            		<option value="no" selected>NO</option>
-                            		<option value="si" selected>SI</option>
+                            		<option value="false" selected>NO</option>
+                            		<option value="true">SI</option>
                             	</select>
 					        </div>
-
-					        <button type="submit" class="btn btn-warning btn-lg center-block">Agregar</button>
+                  <input type="hidden" value=<%= equipo._id %> name="equipo"/>
+					        <button type="submit" id="botonAgregarJugador" class="btn btn-warning btn-lg center-block">Agregar</button>
 					    </form>
                     </div>
                   </div>

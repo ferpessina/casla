@@ -7,11 +7,9 @@ var jugadorSchema = new Schema({
   apodo:     			    { type: String },
   fecha_de_nacimiento:{ type: Date, default: Date.now },
   dni: 					      {type:Number},
-  posicion: 			    {type:String},
+  posicion:           { type: String, enum:['ARQUERO','DEFENSOR','VOLANTE', 'DELANTERO']},
   numero: 				    {type:Number},
   email: 				      {type:String},
-  capitan:            {type:Boolean},
-  subcapitan:         {type:Boolean},
   equipo:             {type: Schema.Types.ObjectId, ref: 'Equipo'}
   // imagen: 				{ data: Buffer, contentType: String},
   // apto_medico:  		{},

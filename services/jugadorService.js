@@ -48,21 +48,28 @@ exports.addJugador = function(req, res) {
 		if (!equipo) {return res.send(404, "Equipo not found");}
 
 		var jugador = new Jugador({
-			nombre:    req.body.nombre,
-			apellido: 	  req.body.apellido,
-			apodo:  req.body.apodo,
-			fecha_de_nacimiento:   req.body.fecha_de_nacimiento,
-			dni:  req.body.dni,
-			posicion:    req.body.posicion,
-			numero:  req.body.numero,
-			email:  req.body.email,
-			equipo: equipo
+			nombre:    			req.body.nombre,
+			apellido: 	  		req.body.apellido,
+			apodo:  			req.body.apodo,
+			fecha_de_nacimiento:req.body.fecha_de_nacimiento,
+			dni:  				req.body.dni,
+			posicion:    		req.body.posicion,
+			numero:  			req.body.numero,
+			email:  			req.body.email,
+			equipo: 			req.body.equipo
 		});
 
 		jugador.save(function(err, jugador) {
 			if(err) return res.send(500, err.message);
 			logger.info(req.user+" ha agregado al jugador "+jugador._id+" de nombre "+jugador.apellido+", "+jugador.nombre+", equipo "+equipo._id);
 			equipo.jugadores.push(jugador);
+			if (req.body.capitan == "true"){
+				equipo.capitan = jugador._id;
+			} else {
+				if (req.body.subcapitan == "true"){
+					equipo.subcapitan = jugador._id;
+				}
+			}
 			equipo.save(function(err, equipo) {
 				if(err) return res.send(500, err.message);
 				logger.info("El equipo "+equipo.nombre+" ha agregado al jugador "+jugador.apellido+", "+jugador.nombre);
@@ -127,6 +134,13 @@ exports.deleteJugador = function(req, res) {
 		
 		Equipo.findById(equipoDelJugador, function(err, equipo_del_jugador) {
 			equipo_del_jugador.jugadores.pop(jugador);
+			if (equipo_del_jugador.capitan == jugador._id){
+				equipo_del_jugador.capitan = undefined;
+			} else {
+				if (equipo_del_jugador.subcapitan == jugador._id){
+					equipo_del_jugador.subcapitan = undefined;
+				}
+			}
 			equipo_del_jugador.save(function(err, equipo_del_jugador) {
 				if(err) return res.send(500, err.message);
 				logger.info("El equipo "+equipo_del_jugador+" ha quitado al jugador "+jugador.apellido+", "+jugador.nombre);

@@ -21,6 +21,26 @@ module.exports = function(app) {
 	        }); 
 		 
     });
+
+    app.post('/agregarJugador', isDelegado, function(req, res) {
+        var args = {
+            data:  req.body ,
+            headers: { "Content-Type": "application/json" }
+        };
+        client.post("http://localhost:3000/jugador", args, function (data, response) {
+            console.log("POST /jugador");
+            res.redirect('/delegado');
+        });  
+    });
+
+    app.post('/deleteJugador', isDelegado, function(req, res) {
+        client.delete("http://localhost:3000/jugador/"+req.body.jugadorid, function (data, response) {
+            console.log("DELETE /jugador/"+req.body.jugadorid);
+            req.session.statusDelete = response.statusCode;
+            res.redirect('/delegado');
+        });  
+    });
+    
     
 }
 

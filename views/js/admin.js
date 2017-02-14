@@ -54,6 +54,14 @@ function showUsers(users, equipos){
             for (var i = 0; i < equipos.length; i++) {
                 equiposMap[equipos[i]._id] = equipos[i].nombre;
             };
+            var equiposSinDelegado =  {};
+            for (var i = 0; i < equipos.length; i++) {
+            	if (equipos[i].delegado == undefined){
+                	equiposSinDelegado[equipos[i]._id] = true;
+				} else {
+                	equiposSinDelegado[equipos[i]._id] = false;
+				}
+            };
 
 			var html = "";
 			for (var i = 0; i < users.length; i++) {
@@ -75,8 +83,11 @@ function showUsers(users, equipos){
                     html += '<form action="/delegarEquipo" method="post" id="formDelegar'+users[i]._id+'">'
                     	html += '<input type="hidden" value='+users[i]._id+' name="userid"/>';
 		            	html += '<select name="equipo" id="equipo">';
+		            	html += '<option value="none">Ninguno</option>';
 		            	for (var j = 0; j < equipos.length; j++) {
-		            		 html+='<option value="'+equipos[j]._id+'">'+equipos[j].nombre+'</option>';
+		            		if (equiposSinDelegado[equipos[j]._id]) {
+                                  html+='<option value="'+equipos[j]._id+'">'+equipos[j].nombre+'</option>';
+                            } 
 		            	};
 		            	html += '</select>';
 	            	html += '<button type="submit" class="asignarEquipo" id="boton-'+users[i].email+'-'+users[i]._id+'">Asignar</button></form>'

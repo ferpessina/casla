@@ -28,7 +28,7 @@
       <div class="innerbannerwrap">
         <div class="content"></div>
         <div class="innerbannergoleadores">
-          <h2 class="bannerHeadline">Administración de <%= equipo.nombre %> <span></span></h2>
+          <h2 class="bannerHeadline">Administración de <% if (equipo!=null) { %> <%= equipo.nombre %> <% } else { %> Mi equipo <% } %> <span></span></h2>
         </div>
       </div>
 
@@ -52,7 +52,7 @@
 			                    <ul class="point_table2">
 			                       <li class="clearfix">
 			                        <div class="subPoint_table">
-			                          <div class="headline01 smallpoint">Index</div>
+			                          <div class="headline01 smallpoint">Indice</div>
 			                          <div class="headline01 smallpoint">Nombre</div>
 			                          <div class="headline01 smallpoint">Numero</div>
                                 <div class="headline01 smallpoint">Capitan</div>
@@ -71,8 +71,7 @@
                                             <% if (jugadores[i]!=undefined) { %>
                                                   <div class="headline01 smallpoint"><%= i+1 %></div>
                                             			 <div class="headline01 smallpoint"><%= jugadores[i].apellido %>, <%= jugadores[i].nombre %></div>
-                                            			 <div class="headline01 smallpoint"><%= jugadores[i].numero %></div>
-                                            			 <div class="headline01 smallpoint"><%= jugadores[i].posicion %></div>
+                                            			 <div class="headline01 smallpoint"><%= jugadores[i].numero %> (<%= jugadores[i].posicion %>)</div>
                                                    <div class="headline01 smallpoint">
                                                       <% if ( equipo.capitan == jugadores[i]._id ) { %>
                                                         SI

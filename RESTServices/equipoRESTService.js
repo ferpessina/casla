@@ -11,10 +11,19 @@ module.exports = function(express,app) {
 	 *         type: string
 	 *       nombre:
 	 *         type: string
-	 *       torneo_actual:
-	 *         type: string
 	 *       jugadores:
 	 *         $ref: Jugador
+	 *       division:
+	 *         $ref: Division
+	 *       partidos:
+	 *         $ref: Partido
+	 *       delegado:
+	 *         $ref: User
+	 *       capitan:
+	 *         $ref: Jugador
+	 *       subcapitan:
+	 *         $ref: Jugador
+
 	*/
 	var equipos = express.Router();
 

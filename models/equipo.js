@@ -14,9 +14,6 @@ var equipoSchema = new Schema({
   delegado: {type: Schema.Types.ObjectId, ref: 'User'},
   capitan: {type: Schema.Types.ObjectId, ref: 'Jugador'},
   subcapitan: {type: Schema.Types.ObjectId, ref: 'Jugador'}
-  //delegado
-  //capitan
-  //subcapitan
 });
 
 module.exports = mongoose.model('Equipo', equipoSchema);
