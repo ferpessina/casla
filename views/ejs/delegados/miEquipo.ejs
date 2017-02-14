@@ -82,7 +82,12 @@
                                                         SI
                                                       <% } else { %> NO <% } %>
                                                     </div>
-                                            			<div class="headline01 smallpoint"><a href="#">Ver mas </a></div>
+                                            			<div class="headline01 smallpoint">
+                                                    <form action="/datosJugador" method="post">
+                                                              <button type="submit">Ver mas </button>
+                                                              <input type="hidden" value=<%= jugadores[i]._id %> name="jugadorid"/>
+                                                    </form>
+                                                  </div>
                                           
                   			                          <div class="headline01 smallpoint row row">
                               										<div class="headline01 smallpoint1">

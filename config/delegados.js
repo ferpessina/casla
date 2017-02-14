@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 module.exports = function(app) {
 	app.get('/delegado', isDelegado, function(req, res) {
 		if (req.user.equipo){
@@ -21,6 +23,17 @@ module.exports = function(app) {
 	        }); 
 		 
     });
+
+    app.post('/datosJugador', isDelegado, function(req, res) {
+            client.get("http://localhost:3000/jugador/"+req.body.jugadorid, function (jugador, response) {
+                client.get("http://localhost:3000/equipo/"+req.user.equipo, function (equipo, response) {
+                    res.render('./ejs/delegados/datosJugador.ejs', {user: req.user, equipo:equipo, jugador:jugador, message: req.flash('loginMessage'),
+                                                                resultado: req.session.statusDelete, moment:moment});
+                 }); 
+            }); 
+         
+    });
+    
 
     app.post('/agregarJugador', isDelegado, function(req, res) {
         var args = {
