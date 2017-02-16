@@ -41,32 +41,26 @@
 
 				 <div class="match_versus-wrap2">
                   <div class="wrap_match-innerdetails">
+                  <div class="headline01 largepoint1">Canchas</div>
 
-                    <div class="headline01 largepoint1">Ver datos cancha:</div>
-                    <select name="division" id="divisionSelect">
-                    		<option value="none" selected></option>
-						    <% for(var i=0; i < canchas.length; i++) { %> 
-						    	<option value=<%= canchas[i]._id %>> <%=canchas[i].nombre %></option>
-						    <% } %>
-					</select>
-
- 					<ul class="point_table2">
-                       <li class="clearfix">
-                        <div class="subPoint_table">
-                          <div class="headline01 smallpoint">Imagen</div>
-                          <div class="headline01 smallpoint">Nombre</div>
-                          <div class="headline01 smallpoint">Torneo</div>
+                    <ul class="point_table2">
+                        
+                        <li class="clearfix">
+                          <div class="subPoint_table">
+                            <div class="headline01 smallpoint">
+                              <% for(var i=0; i < canchas.length; i++) { %> 
+                              <%=canchas[i].nombre %>
+                              <% } %>
+                            </div>
                           <div class="headline01 smallpoint row row">
-                        </div>
-						</div>
-                      </li>
+                          </div>
+                          </div>
+                        </li>
 
-                      <div id="dataCancha">
-
-                      </div>
+                        <div id="dataCancha"></div>
                     </ul>
-                    </div>
                   </div>
+        </div>
  				</div>
             </div>
         </div>

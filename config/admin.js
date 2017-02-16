@@ -17,6 +17,9 @@ module.exports = function(app) {
     //------------------------------DIVISIONES----------------------------------------//
     require("./divisiones.js")(app,isAdmin);
 
+        //------------------------------CANCHAS----------------------------------------//
+    require("./canchas.js")(app,isAdmin);
+
 }
 
 // route middleware to make sure a user is ADMIN
