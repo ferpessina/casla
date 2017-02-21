@@ -72,8 +72,9 @@
                               <% if (torneos[i].activo) { %> Si <% } else { %> No  <% } %>  
                           </div>
 
-                           <div class="headline01 smallpoint">
+                          <div class="headline01 smallpoint">
                             <% if (!(torneos[i].canchas.length==0 )) { %>
+                            <% console.log('entre a torneos.ejs') %>
                               <a href="/canchasDelTorneo?torneoid=<%= torneos[i]._id %>">Ver Canchas</a>
                               <% } else { %>
                                 Ninguna
@@ -84,8 +85,7 @@
                               </form>
                           </div>
 
-
-                           <div class="headline01 smallpoint">
+                          <div class="headline01 smallpoint">
                             <% if (!(torneos[i].divisiones.length==0 )) { %>
                               <a href="/divisionesDelTorneo?torneoid=<%= torneos[i]._id %>">Ver Divisiones</a>
                               <% } else { %>

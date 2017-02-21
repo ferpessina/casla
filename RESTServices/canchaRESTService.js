@@ -78,6 +78,30 @@ module.exports = function(express,app) {
 
 	/**
 	 * @swagger
+	 * /cancha/torneo/{id}:
+	 *   get:
+	 *     tags:
+	 *       - CanchaModel
+	 *     description: Returns all canchas from a specific torneo
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: id
+	 *         description: Torneo's id
+	 *         in: path
+	 *         required: true
+	 *         type: integer
+	 *     responses:
+	 *       200:
+	 *         description: An array of canchas
+	 *         schema:
+	 *           $ref: '#/definitions/CanchaModel'
+	 */
+	 canchas.get('/torneo/:id', CanchaRESTService.findByTorneoId);
+
+
+	/**
+	 * @swagger
 	 * /cancha/{id}:
 	 *   put:
 	 *     tags:

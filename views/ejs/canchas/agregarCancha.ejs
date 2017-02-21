@@ -34,45 +34,45 @@
 
       <section class="innerpage_all_wrap bg-white"> 
         <div class="container">
-			<div class="row">
-			<div class="matchSchedule_details row">
+      <div class="row">
+      <div class="matchSchedule_details row">
                 
-				 <div class="match_versus-wrap2">
+         <div class="match_versus-wrap2">
                   <div class="wrap_match-innerdetails">
                     <!-- show any messages that come back with authentication -->
-					    <% if (message.length > 0) { %>
-					        <div class="alert alert-danger"><%= message %></div>
-					    <% } %>
+              <% if (message.length > 0) { %>
+                  <div class="alert alert-danger"><%= message %></div>
+              <% } %>
 
-					    <!-- LOGIN FORM --> 
-					    <form action="/agregarCancha" method="post" id="formAgregarCancha">
-					    	
-					    	<div class="form-group">
-		                      <div class="headline01 largepoint1">Torneo: <%= torneo.nombre %></div>
-		                    </div>
+              <!-- LOGIN FORM --> 
+              <form action="/agregarCancha" method="post" id="formAgregarCancha">
+                
+                <div class="form-group">
+                          <div class="headline01 largepoint1">Torneo: <%= torneo.nombre %></div>
+                        </div>
 
-		                    <div class="form-group">
-		                      <div class="headline01 largepoint1">Nombre</div>
-		                      <input type="text" class="form-control" name="nombre" id="nombre">
-		                    </div>
+                        <div class="form-group">
+                          <div class="headline01 largepoint1">Nombre</div>
+                          <input type="text" class="form-control" name="nombre" id="nombre">
+                        </div>
 
-		                    <input type="hidden" value=<%= torneo._id %> name="torneo"/>
+                        <input type="hidden" value=<%= torneo._id %> name="torneo"/>
 
-					        <button type="submit" class="btn btn-warning btn-lg center-block" id="agregarCan">Agregar Cancha</button>
-					    </form>
+                  <button type="submit" class="btn btn-warning btn-lg center-block" id="agregarCan">Agregar Cancha</button>
+              </form>
                     </div>
                   </div>
- 				</div>
+        </div>
             </div>
         </div>
-		
-		
+    
+    
       </section>
       
 
       <!-- footer -->
       <footer ><!--class="footer-type01"-->
-	   <%- include ../footer.ejs %>
+     <%- include ../footer.ejs %>
       </footer>
     </div>
     

@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Cancha = mongoose.model('Cancha');
+var Torneo = mongoose.model('Torneo');
 var logger = require('../logger');
 
 //GET - Return all canchas in the DB
@@ -22,17 +23,40 @@ exports.findById = function(req, res) {
 	});
 };
 
+//GET - Return canchas from a torneo
+exports.findByTorneoId = function(req, res) {
+	Torneo.findById(req.params.id, function(err, torneo) {
+		if(err) return res.send(500, err.message);
+		if (!torneo) {return res.send(404, "Torneo id not found");}
+		Cancha.find({ 'torneo': torneo}, function(err, canchas) {
+		    if(err) return res.send(500, err.message);
+		    console.log('GET /cancha/torneo' + req.params.id);
+			res.status(200).jsonp(canchas);
+		});
+	}); 
+};
+
 //POST - Insert a new cancha in the DB
 exports.addCancha = function(req, res) {
 	console.log('POST');
 	console.log(req.body);
 
-	var cancha = new Cancha({
-		nombre:    		req.body.nombre
-	});
-	cancha.save(function(err, cancha) {
+	Torneo.findById(req.body.torneo, function(err, torneo) {
 		if(err) return res.send(500, err.message);
-		res.status(200).jsonp(cancha);
+		if (!torneo) {return res.send(404, "Torneo id not found");}
+		var cancha = new Cancha({
+			nombre:    				req.body.nombre,
+			torneo: 				torneo
+		});
+		cancha.save(function(err, cancha) {
+			if(err) return res.status(500).send(err.message);
+			torneo.canchas.push(cancha);
+			torneo.save(function(err) {
+				if(err) return res.status(500).send(err.message);
+				logger.info(req.user+" ha agregado al torneo "+torneo.nombre+" una nueva cancha: "+cancha.nombre);
+		      	res.status(200).jsonp(cancha);
+			});
+		});	
 	});
 };
 
@@ -42,13 +66,23 @@ exports.updateCancha = function(req, res) {
 
 		if(err) return res.send(500, err.message);
 		if (!cancha) {return res.send(404, "Cancha not found");}
-		
-			cancha.nombre 				= req.body.nombre
+
+		Torneo.findById(req.body.torneo, function(err, torneo) {
+			if(err) return res.send(500, err.message);
+			if (!torneo) {return res.send(404, "Torneo id not found");}
+			
+			cancha.nombre 				= req.body.nombre,
+			cancha.torneo		= req.body.torneo
 
 			cancha.save(function(err) {
 				if(err) return res.send(500, err.message);
-				res.status(200).jsonp(cancha);
+				torneo.canchas.push(cancha);
+				torneo.save(function(err) {
+					if(err) return res.send(500, err.message);
+					res.status(200).jsonp(cancha);
+				});
 			});
+		});
 	})
 };
 
