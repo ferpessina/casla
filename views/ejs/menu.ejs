@@ -177,6 +177,19 @@
                                       </a>
                                     </li>
                                     <% } %>
+
+                                    <% if ((user.role == "PLANILLERO") || (user.role =="SUPER_ADMIN")) { %>
+                                     <li>
+                                      <a href="/planillero">
+                                      Cargar Partido
+                                      <span></span>
+                                      <span></span>
+                                      <span></span>
+                                      <span></span>
+                                      </a>
+                                    </li>
+                                    <% } %>
+
                                   <li>
                                     <a href="/logout">
                                     Salir
