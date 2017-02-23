@@ -62,41 +62,45 @@ exports.updateEquipo = function(req, res) {
 		if(err) return res.send(500, err.message);
 		if (!equipo) {return res.send(404, "Equipo not found");}
 
-		Torneo.findById(req.body.torneo_actual, function(err, torneo) {
-			if(err) return res.send(500, err.message);
-			if (!torneo) {return res.send(404, "Torneo id not found");}
+		//Torneo.findById(req.body.torneo_actual, function(err, torneo) {
+		//	if(err) return res.send(500, err.message);
+		//	if (!torneo) {return res.send(404, "Torneo id not found");}
 
-			var antiguoTorneo = equipo.torneo_actual;		//guardo antiguo torneo
-			var isNuevoTorneo = antiguoTorneo != req.body.torneo_actual;
+		//	var antiguoTorneo = equipo.torneo_actual;		//guardo antiguo torneo
+		//	var isNuevoTorneo = antiguoTorneo != req.body.torneo_actual;
 			
 			equipo.nombre 				= req.body.nombre,
-			equipo.torneo_actual		= req.body.torneo_actual
+			equipo.division             = req.body.division,
+			equipo.jugadores            = req.body.jugadores,
+			equipo.partidos            = req.body.partidos,
+			equipo.delegado            = req.body.delegado,
+			equipo.capitan            = req.body.capitan,
+			equipo.subcapitan            = req.body.subcapitan
 
-			console.log("YA LLEGUE ACA");
+		//	equipo.torneo_actual		= req.body.torneo_actual
+
 			equipo.save(function(err) {
 				if(err) return res.send(500, err.message);
-				logger.info(req.user+" ha actualizado al equipo "+equipo._id+". Nombre: "+equipo.nombre+". Torneo actual: "+equipo.torneo_actual);
-				if(isNuevoTorneo){  //si cambio el equipo, debo sacarlo de anterior y agregarlo al nuevo
-					torneo.equipos.push(equipo);
-					logger.info(req.user+" ha agregado al torneo "+torneo.nombre+" un nuevo equipo: "+equipo.nombre);
-					torneo.save(function(err) {
-						if(err) return res.send(500, err.message);
-					});
-					Torneo.findById(antiguoTorneo, function(err, torneo_antiguo) {
-						if(err) return res.send(500, err.message);
-						if (torneo_antiguo) { //AL PPIO NO TIENEN TORNEO ASIGNADO!
-							torneo_antiguo.equipos.pop(equipo);
-							logger.info(req.user+" ha sacado del torneo "+torneo_antiguo.nombre+" al equipo: "+equipo.nombre);
-							torneo_antiguo.save(function(err, torneo_antiguo) {
-								if(err) return res.send(500, err.message);
-							});
-						}
-					});
-				}
+				logger.info(req.user+" ha actualizado al equipo "+equipo._id+". Nombre: "+equipo.nombre);
+				//if(isNuevoTorneo){  //si cambio el equipo, debo sacarlo de anterior y agregarlo al nuevo
+				//	torneo.equipos.push(equipo);
+				//	logger.info(req.user+" ha agregado al torneo "+torneo.nombre+" un nuevo equipo: "+equipo.nombre);
+				//	torneo.save(function(err) {
+				//		if(err) return res.send(500, err.message);
+				//	});
+				//	Torneo.findById(antiguoTorneo, function(err, torneo_antiguo) {
+				//		if(err) return res.send(500, err.message);
+				//		if (torneo_antiguo) { //AL PPIO NO TIENEN TORNEO ASIGNADO!
+				//			torneo_antiguo.equipos.pop(equipo);
+				//			logger.info(req.user+" ha sacado del torneo "+torneo_antiguo.nombre+" al equipo: "+equipo.nombre);
+				//			torneo_antiguo.save(function(err, torneo_antiguo) {
+				//				if(err) return res.send(500, err.message);
+				//			});
+				//		}
+				//	});
+				});
 				res.status(200).jsonp(equipo);
-			});
 		});
-	});
 };
 
 //DELETE - Delete an equipo with specified ID
