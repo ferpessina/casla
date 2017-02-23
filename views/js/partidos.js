@@ -24,15 +24,15 @@ $("#fechaSelect").change(function(){
 		var fecha_numero = $("#fechaSelect").val();
 		$.get('http://localhost:3000/partido/fecha_numero/'+fecha_numero, function(partidos) {
 			$.get('http://localhost:3000/equipo', function(equipos) {
-				$.get('http://localhost:3000/torneo', function(torneos) {
+				$.get('http://localhost:3000/division', function(divisiones) {
 
 					var equiposMap =  {};
 	                for (var i = 0; i < equipos.length; i++) {
 	                    equiposMap[equipos[i]._id] = equipos[i].nombre;
 	                };
-	                var torneosMap =  {};
-                    for (var i = 0; i < torneos.length; i++) {
-                        torneosMap[torneos[i]._id] = torneos[i].nombre;
+	                var divisionesMap =  {};
+                    for (var i = 0; i < divisiones.length; i++) {
+                        divisionesMap[divisiones[i]._id] = divisiones[i].nombre;
                     };
 
 					var html = "";
@@ -57,14 +57,41 @@ $("#fechaSelect").change(function(){
 				  		html += "</div>";
 				  		html += '<div class="headline01 smallpoint">'+equiposMap[partidos[i].equipo2]+'</div>';
 				  		html += '<div class="headline01 smallpoint">'+partidos[i].fecha_numero+'</div>';
-
-				  		html += '<div class="headline01 smallpoint">'+partidos[i].amonestados+'</div>';
-				  		html += '<div class="headline01 smallpoint">'+partidos[i].expulsados+'</div>';
-				  		html += '<div class="headline01 smallpoint">'+partidos[i].cambios+'</div>';
-				  		html += '<div class="headline01 smallpoint">'+partidos[i].cambios+'</div>';
 				  		html += '<div class="headline01 smallpoint">'+formatDate(partidos[i].fecha)+'</div>';
-				  		html += '<div class="headline01 smallpoint">'+torneosMap[partidos[i].torneo]+'</div>';
+				  		html += '<div class="headline01 smallpoint">'+divisionesMap[partidos[i].division]+'</div>';
 
+				  		html += '<div class="headline01 smallpoint">';
+				  		if (partidos[i].amonestados.length == 0 ){
+				  			html += 'Ninguno';
+				  		} else {
+				  			html += "VER AMONESTADOS";
+				  		}
+				  		html += '</div>';
+
+				  		html += '<div class="headline01 smallpoint">';
+				  		if (partidos[i].expulsados.length == 0 ){
+				  			html += 'Ninguno';
+				  		} else {
+				  			html += "VER EXPULSADOS";
+				  		}
+				  		html += '</div>';
+
+				  		html += '<div class="headline01 smallpoint">';
+				  		if (partidos[i].goles.length == 0 ){
+				  			html += 'Ninguno';
+				  		} else {
+				  			html += "VER GOLES";
+				  		}
+				  		html += '</div>';
+
+				  		html += '<div class="headline01 smallpoint">';
+				  		if (partidos[i].cambios.length == 0 ){
+				  			html += 'Ninguno';
+				  		} else {
+				  			html += "VER CAMBIOS";
+				  		}
+				  		html += '</div>';			  		
+				  		
 				  		html += '<div class="headline01 smallpoint row row">'+
 				  				'<div class="headline01 smallpoint1"><span>'+
 				  				'<form action="/deletePartido" method="post" id="formDelete'+partidos[i]._id+'">'+

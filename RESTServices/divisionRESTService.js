@@ -104,6 +104,29 @@ module.exports = function(express,app) {
 
 	 /**
 	 * @swagger
+	 * /division/{id}/equipos:
+	 *   get:
+	 *     tags:
+	 *       - DivisionModel
+	 *     description: Returns all equipos from a Division
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: id
+	 *         description: Division's id
+	 *         in: path
+	 *         required: true
+	 *         type: integer
+	 *     responses:
+	 *       200:
+	 *         description: An array of equipos
+	 *         schema:
+	 *           $ref: '#/definitions/Equipo'
+	 */
+	divisiones.get('/:id/equipos', DivisionCtrl.findEquiposFromDivision);
+
+	 /**
+	 * @swagger
 	 * /division/{id}:
 	 *   put:
 	 *     tags:

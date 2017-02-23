@@ -12,7 +12,6 @@
      <link rel="stylesheet" type="text/css" href="css/layerslider.css">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
      <script src="js/vendor/modernizr.js"></script>    
@@ -72,6 +71,13 @@
                             <option value="<%=torneos[i]._id%>"><%=torneos[i].nombre%></option>
                           <% } %>
                         </select>
+                  </div>
+
+                  <div class="form-group" id="divisionesTorneo">
+                      <div class="headline01 largepoint1">Division</div>
+                        <select name="division" id="divisionSelect">
+                        </select>
+                      </div>
                   </div>
 
                   <div class="form-group" id="elegirEquipo1">

@@ -31,12 +31,25 @@ exports.findByTorneoId = function(req, res) {
 		if (!torneo) {return res.send(404, "Torneo id not found");}
 		Division.find({ 'torneo': torneo}, function(err, divisiones) {
 		    if(err) return res.send(500, err.message);
-		    console.log('GET /division/torneo' + req.params.id);
+		    console.log('GET /division/torneo/' + req.params.id);
 			res.status(200).jsonp(divisiones);
 		});
 	}); 
 };
 
+
+//GET - Return equipos from a division
+exports.findEquiposFromDivision = function(req, res) {
+	Division.findById(req.params.id, function(err, division) {
+		if(err) return res.send(500, err.message);
+		if (!division) {return res.send(404, "Division id not found");}
+		Equipo.find({ 'division': division}, function(err, equipos) {
+		    if(err) return res.send(500, err.message);
+		    console.log('GET /division/' + req.params.id+'/equipos');
+			res.status(200).jsonp(equipos);
+		});
+	}); 
+};
 
 
 //POST - Insert a new Division in the DB
