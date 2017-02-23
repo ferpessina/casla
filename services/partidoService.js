@@ -34,6 +34,16 @@ exports.findByFechaNumero = function(req, res) {
 	});
 };
 
+//GET - Return partidos with an estado
+exports.findByEstado = function(req, res) {
+	Partido.find({ 'estado': req.params.estado}, function(err, partidos) {
+    	if(err) return res.send(500, err.message);
+    	console.log('GET /partido/estado/' + req.params.estado);
+		res.status(200).jsonp(partidos);
+	});
+};
+
+
 //GET - Returns distinct fecha_numero from partidos
 exports.findNumerosFechasDisponibles = function(req, res){
 	Partido.find().distinct('fecha_numero', function(error, numeros_fechas) {

@@ -74,6 +74,29 @@ module.exports = function(express,app) {
 
 	 /**
 	 * @swagger
+	 * /partido/estado/{estado}:
+	 *   get:
+	 *     tags:
+	 *       - PartidoModel
+	 *     description: Returns partidos with a specific estado
+	 *     produces:
+	 *       - application/json
+	 *     parameters:
+	 *       - name: estado
+	 *         description: estado
+	 *         in: path
+	 *         required: true
+	 *         type: string
+	 *     responses:
+	 *       200:
+	 *         description: An array of partidos
+	 *         schema:
+	 *           $ref: '#/definitions/PartidoModel'
+	 */
+	 partidos.get('/estado/:estado', PartidoCtrl.findByEstado);
+
+	 /**
+	 * @swagger
 	 * /partido/numeros_fechas:
 	 *   get:
 	 *     tags:
