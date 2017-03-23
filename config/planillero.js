@@ -1,4 +1,4 @@
-var moment = require('moment');
+//var moment = require('moment');
 
 module.exports = function(app) {
 	app.get('/planillero', isPlanillero, function(req, res) {
@@ -14,8 +14,10 @@ module.exports = function(app) {
                         divisionesMap[divisiones[i]._id] = divisiones[i].nombre;
                     };
                     client.get("http://localhost:3000/partido/numeros_fechas", function (numeros_fechas, response) {
-	        			res.render('./ejs/planilleros/planillero.ejs', {user: req.user, partidos:partidos, message: req.flash('loginMessage'),
-	         													numeros_fechas:numeros_fechas, divisiones:divisionesMap, equipos:equiposMap, resultado: req.session.statusDelete});
+	        			//res.render('./ejs/planilleros/planillero.ejs', {user: req.user, partidos:partidos, message: req.flash('loginMessage'),
+	         			//										numeros_fechas:numeros_fechas, divisiones:divisionesMap, equipos:equiposMap, resultado: req.session.statusDelete});
+                        res.render('./ejs/partidos/partidos.ejs', {user: req.user, partidos:partidos, message: req.flash('loginMessage'),
+                                                              numeros_fechas:numeros_fechas, divisiones:divisionesMap, equipos:equiposMap, resultado: req.session.statusDelete});
 	        }); 
 	    }); 
     });

@@ -58,9 +58,12 @@
                             <% } %>
                     </select>
 
+                    
+
                     <ul class="point_table2">
                        <li class="clearfix">
                         <div class="subPoint_table">
+                          <div class="headline01 smallpoint">Estado partido</div>
                           <div class="headline01 smallpoint">Equipo 1</div>
                           <div class="headline01 smallpoint">Equipo 2</div>
                           <div class="headline01 smallpoint">N° Fecha</div>
@@ -68,10 +71,14 @@
                           <div class="headline01 smallpoint">Division</div>
 
                           <div class="headline01 smallpoint row row">
-							<div class="headline01 smallpoint1"><span>ACTUALIZAR</span></div>
-                        </div>
-						</div>
+							             <div class="headline01 smallpoint1"><span>ACTUALIZAR</span></div>
+                          </div>
+					              </div>
                       </li>
+
+                      <div id="dataPartidosConFecha">
+
+                        </div>
 
                       <% for(var i=0; i < partidos.length; i++) { %> 
       					     <li class="clearfix">
@@ -116,5 +123,6 @@
     <script src="js/main.js"></script>
 	<script src="js/admin.js"></script> 
     <script src="js/partidos.js"></script> 
+    <script src="js/planillero.js"></script> 
 </body>
 </html>
