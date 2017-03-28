@@ -13,10 +13,55 @@ $(document).on("click", ".deletePartido", function (e) {
 });
 
 $(document).on("click", ".cargarPartido", function (e) {
-	console.log('Entrando en cargarPartido');
 	e.preventDefault();
 	var id = $(this).attr("id");
-	
+	$.get('http://localhost:3000/partido/' + id, function (partido){
+		$.get('http://localhost:3000/equipo', function (equipos) {
+			$.get('http://localhost:3000/jugador/equipo/'+partido.equipo1, function (jugadores1) {
+				$.get('http://localhost:3000/jugador/equipo/'+partido.equipo2, function (jugadores2) {
+					console.log('Entrando en cargarPartido, partido: '+id);
+					
+					var equiposMap = {};
+					for (var i = 0; i < equipos.length; i++) {
+						equiposMap[equipos[i]._id] = equipos[i].nombre;
+					};
+						
+
+					$('#myModal').modal();
+					$('#teams-header').html(equiposMap[partido.equipo1]+' vs '+equiposMap[partido.equipo2]);
+					$('#team1').html('<b>'+equiposMap[partido.equipo1]+'</b>');
+					$('#team2').html('<b>'+equiposMap[partido.equipo2]+'</b>');
+					$('#nro-fecha').val(partido.fecha_numero);
+					$('#fecha').val(formatDate2(partido.fecha));
+
+					var lista = '<form id="form-amonestados1">';
+					for (var i = 0; i < jugadores1.length; i++) {
+						lista += '<input type="checkbox" value="' + jugadores1[i].numero + '">' + jugadores1[i].numero + ' - ' + jugadores1[i].apellido + '<br>';
+					};
+					$('#amonestados1').html(lista);
+
+					var lista = '<form id="form-expulsados1">';
+					for (var i = 0; i < jugadores1.length; i++) {
+						lista += '<input type="checkbox" value="' + jugadores1[i].numero + '">' + jugadores1[i].numero + ' - ' + jugadores1[i].apellido + '<br>';
+					};
+					$('#expulsados1').html(lista);
+
+					var lista = '<form id="form-amonestados2">';
+					for (var i = 0; i < jugadores2.length; i++) {
+						lista += '<input type="checkbox" value="' + jugadores2[i].numero + '">' + jugadores2[i].numero + ' - ' + jugadores2[i].apellido + '<br>';
+					};
+					$('#amonestados2').html(lista);
+
+					var lista = '<form id="form-expulsados2">';
+					for (var i = 0; i < jugadores2.length; i++) {
+						lista += '<input type="checkbox" value="' + jugadores2[i].numero + '">' + jugadores2[i].numero + ' - ' + jugadores2[i].apellido + '<br>';
+					};
+					$('#expulsados2').html(lista);
+					
+				});
+			});
+		});
+	});
 });
 
 $("#fechaSelect").change(function () {
@@ -99,9 +144,12 @@ $("#fechaSelect").change(function () {
 						}
 						html += '</div>';
 
-						html += '<div class="headline01 smallpoint row">';
-						html += '<div class="headline01 smallpoint1"><span><button class="cargarPartido" id="' + partidos[i]._id + '" type="submit">Cargar</button></span></div>';
-						html += '</div>';
+						html += '<div class="headline01 smallpoint row">' +
+							'<div class="headline01 smallpoint1"><span>' +
+							'<form action="/cargarPartido" method="put" id="formCargar' + partidos[i]._id + '">' +
+							'<button class="cargarPartido" id="' + partidos[i]._id + '" type="submit">Cargar</button>' +
+							'<input type="hidden" value=' + partidos[i]._id + ' name="partidoid"/>' +
+							'</form></span></div></div>';
 
 						html += '<div class="headline01 smallpoint">' +
 							'<div class="headline01 smallpoint"><span>' +
@@ -126,6 +174,14 @@ function formatDate(date) {
 	month = dteSplit[1];
 	day = dteSplit[2][0] + dteSplit[0][1];
 	return day + "/" + month + "/" + year;
+}
+
+function formatDate2(date) {
+	dteSplit = date.split("-");
+	year = dteSplit[0];
+	month = dteSplit[1];
+	day = dteSplit[2][0] + dteSplit[0][1];
+	return year + "-" + month + "-" + day;
 }
 
 //CODIGO QUE IRIA SI LA LOGICA FUERA EN LA VISTA
